@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ebony Rose</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%;
+  background: #0d0d0d;
+  color: #fff;
+  font-family: 'Epilogue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  overflow: hidden;
+  cursor: none;
+}
+
+/* ── INTRO ── */
+#intro {
+  position: fixed; inset: 0;
+  background: #0d0d0d;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.9s ease;
+}
+#intro.fade-out { opacity: 0; pointer-events: none; }
+#intro-text {
+  font-size: 15px; font-weight: 400; color: #fff;
+  opacity: 0; transition: opacity 0.9s ease;
+}
+#intro-text.visible { opacity: 1; }
+
+/* ── CUSTOM CURSOR ── */
+#cursor {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: background 0.3s ease, opacity 0.2s ease;
+}
+#cursor.filled { background: rgba(255,255,255,1); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) { :root { --sidebar: 320px; } }
+@media (max-width: 768px) {
+  html, body { overflow: auto; cursor: auto; }
+  #cursor { display: none; }
+  .layout { flex-direction: column; height: auto; min-height: 100vh; }
+  .sidebar { width: 100%; min-width: unset; height: auto; padding: 20px 20px 28px; border-bottom: 1px solid #222; }
+  .site-name { margin-bottom: 28px; }
+  .cv-row { grid-template-columns: 110px 1fr; margin-bottom: 20px; }
+  .right { height: auto; overflow-y: visible; }
+  .grid, .proj-imgs { columns: 1; }
+  .proj-title { font-size: 18px; }
+}
+
+/* ── LAYOUT ── */
+.layout { display:flex; height:100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 460px; min-width: 460px;
+  height: 100vh; overflow-y: auto;
+  padding: 22px 32px 48px 24px;
+  scrollbar-width: none; flex-shrink: 0;
+}
+.sidebar::-webkit-scrollbar { display:none; }
+
+.site-name { font-size: 13.5px; font-weight: 400; margin-bottom: 48px; }
+
+.cv-row { display:grid; grid-template-columns:130px 1fr; margin-bottom:26px; }
+.cv-label { display:flex; align-items:flex-start; gap:8px; color:#fff; }
+.cv-label .dot { font-size:10px; margin-top:3px; flex-shrink:0; transition: opacity 0.25s ease; }
+.cv-content p { margin:0; }
+.cv-content .sub { color:#888; margin-bottom:10px; }
+.cv-content .sub:last-child { margin-bottom:0; }
+.cv-content a { color:#fff; text-decoration:none; }
+.cv-content a:hover { text-decoration:underline; }
+
+/* ── PROJECT DETAIL ── */
+.proj-panel { display:none; }
+.proj-panel.on { display:block; }
+.cv-info.off { display:none; }
+
+.back-btn {
+  background:none; border:none; color:#888; font:inherit;
+  font-size:13.5px; cursor:pointer; padding:0;
+  margin-bottom:30px; display:inline-flex; align-items:center; gap:5px;
+}
+.back-btn:hover { color:#fff; }
+
+.proj-title { font-size:21px; font-weight:400; line-height:1.25; margin-bottom:8px; }
+.proj-sub { color:#888; margin-bottom:22px; }
+.proj-desc { color:#c8c8c8; line-height:1.65; margin-bottom:22px; }
+.proj-desc p { margin-bottom:14px; }
+.proj-desc p:last-child { margin-bottom:0; }
+.proj-link { color:#fff; text-decoration:none; font-size:13.5px; }
+.proj-link:hover { text-decoration:underline; }
+
+/* ── RIGHT PANEL ── */
+.right { flex:1; height:100vh; overflow-y:auto; scrollbar-width:none; min-width:0; }
+.right::-webkit-scrollbar { display:none; }
+
+.grid { columns:2; column-gap:2px; padding:2px; }
+.grid.off { display:none; }
+
+.grid-item { break-inside:avoid; margin-bottom:2px; cursor:pointer; overflow:hidden; display:block; }
+.grid-item img { width:100%; display:block; transition:opacity 0.15s; }
+.grid-item:hover img { opacity:0.8; }
+
+.proj-imgs { display:none; columns:2; column-gap:2px; padding:2px; }
+.proj-imgs.on { display:block; }
+.proj-imgs .pi { break-inside:avoid; margin-bottom:2px; }
+.proj-imgs .pi img { width:100%; display:block; }
+
+.ph { width:100%; display:block; background:#1c1c1c; }
+</style>
+</head>
+<body>
+
+<div id="intro"><span id="intro-text">Hey, my name is Ebony.</span></div>
+<div id="cursor"></div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <p class="site-name">Ebony Rose</p>
+
+    <div class="cv-info" id="cvInfo">
+      <div class="cv-row">
+        <div class="cv-label"><span class="dot">○</span>About me</div>
+        <div class="cv-content">
+          <p>Designer based in Melbourne, Australia.<br>With experience in websites, social media, retail campaigns, motion graphics, eDMs &amp; print.</p>
+        </div>
+      </div>
+      <div class="cv-row">
+        <div class="cv-label"><span class="dot">○</span>Currently</div>
+        <div class="cv-content">
+          <p>BRX – Prahran</p>
+          <p class="sub">2024 – Now</p>
+        </div>
+      </div>
+      <div class="cv-row">
+        <div class="cv-label"><span class="dot">○</span>Previously</div>
+        <div class="cv-content">
+          <p>Woo Agency – Brunswick</p>
+          <p class="sub">2022 – 2024</p>
+          <p>Sky Foundry – Adelaide</p>
+          <p class="sub">2021 – 2022</p>
+          <p>Freelancer</p>
+          <p class="sub">2019 – Now</p>
+        </div>
+      </div>
+      <div class="cv-row">
+        <div class="cv-label"><span class="dot">○</span>Education</div>
+        <div class="cv-content">
+          <p>Bachelor of Design<br>(Communication Design)</p>
+          <p class="sub">2019 – 2021 (RMIT University)</p>
+          <p>High Achievers Award<br>(Visual Communication)</p>
+          <p class="sub">2017</p>
+        </div>
+      </div>
+      <div class="cv-row">
+        <div class="cv-label"><span class="dot">○</span>Software</div>
+        <div class="cv-content">
+          <p>Figma &amp; Sketch</p>
+          <p>Adobe Creative Suite</p>
+          <p>p5.js – learning. very slowwwly.</p>
+        </div>
+      </div>
+      <div class="cv-row">
+        <div class="cv-label"><span class="dot">○</span>Links</div>
+        <div class="cv-content">
+          <p><a href="https://linkedin.com" target="_blank">LinkedIn</a></p>
+          <p><a href="https://ebnyrose.github.io" target="_blank">ebnyrose.github.io</a></p>
+          <p><a href="mailto:ebonyroseaugustin@gmail.com">ebonyroseaugustin@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-panel" id="projPanel">
+      <button class="back-btn" id="backBtn">← back</button>
+      <p class="site-name">Ebony Rose</p>
+      <h2 class="proj-title" id="dTitle"></h2>
+      <p class="proj-sub" id="dSub"></p>
+      <div class="proj-desc" id="dDesc"></div>
+      <a class="proj-link" id="dLink" href="#" target="_blank"></a>
+    </div>
+  </aside>
+
+  <main class="right" id="right">
+    <div class="grid" id="grid"></div>
+    <div class="proj-imgs" id="projImgs"></div>
+  </main>
+</div>
+
+<script>
+const PROJECTS = [
+  {
+    id:'pirate-life', thumb:'images/pirate-life-thumb.jpg', aspect:'land',
+    title:'Pirate Life Website', subtitle:'Brewery company in South Australia',
+    desc:`<p>Pirate Life Brewing, situated in South Australia, represents a swiftly expanding craft beer producer. In light of this growth, the company sought to revitalise its existing online retail presence to highlight a new lineup of merchandise, aiming to forge a more unified site experience.</p>
+<p>To achieve this, I implemented a blocky, robust layout that aligns with the brand's youthful and spirited character, subtly infusing this personality throughout the site. This approach is manifest in the playful illustration featured in the footer, the vibrant use of photography, and the strategic employment of emojis and icons to add depth and clarity to textual content.</p>`,
+    link:'https://shop.piratelife.com.au', linkLabel:'shop.piratelife.com.au ↗',
+    images:[
+      {src:'images/pirate-life-1.jpg', aspect:'land'},
+      {src:'images/pirate-life-2.jpg', aspect:'port'},
+      {src:'images/pirate-life-3.jpg', aspect:'land'},
+      {src:'images/pirate-life-4.jpg', aspect:'land'},
+    ]
+  },
+  {
+    id:'small-victories', thumb:'images/small-victories-thumb.jpg', aspect:'land',
+    title:'Small Victories Website', subtitle:'Winery in South Australia',
+    desc:`<p>Small Victories is an innovative boutique wine brand nestled in the Barossa Valley, South Australia. This brand distinctly appeals to the 20 to 40-year-old fashionable female demographic residing in urban centres. Originating from Elderton Wines, traditionally catering to an audience aged between 30 and 60, Small Victories marks a significant departure towards a more contemporary market focus.</p>
+<p>In alignment with its refreshed branding strategy and to captivate its targeted audience, there was a clear directive for a minimalist and sophisticated user interface. This was to be achieved with a pronounced emphasis on typographic layout, drawing heavily on the aesthetic cues of their existing wine labels to guide the visual direction.</p>`,
+    link:'https://smallvictorieswine.com', linkLabel:'smallvictorieswine.com ↗',
+    images:[
+      {src:'images/small-victories-1.jpg', aspect:'land'},
+      {src:'images/small-victories-2.jpg', aspect:'land'},
+      {src:'images/small-victories-3.jpg', aspect:'land'},
+      {src:'images/small-victories-4.jpg', aspect:'land'},
+    ]
+  },
+  {
+    id:'more-dood', thumb:'images/more-dood-thumb.jpg', aspect:'sq',
+    title:'LESS Festival Collage Activity', subtitle:'RMIT University',
+    desc:`<p>In the concluding semester of my studio course, we were tasked with conceiving a potential contribution for the 2021 Less Festival. The mandate was that our proposals should centrally feature collage as an artistic technique, while also offering an engaging activity for attendees. In response to this brief, I developed a preliminary user interface (UI) design for a platform named "More Dood."</p>
+<p>This UI design is intended to enable users to craft collaged gifs by augmenting each other's mini-animations, thereby fostering a collaborative and creative expression in a casual and approachable art style.</p>
+<p>Although concepts were developed for mobile accessibility, the full richness and functionality of the UI are optimally experienced via desktop.</p>`,
+    link:'https://lessfestivalofcollage.com/less-festival-2021', linkLabel:'lessfestivalofcollage.com ↗',
+    images:[
+      {src:'images/more-dood-1.jpg', aspect:'sq'},
+      {src:'images/more-dood-2.jpg', aspect:'land'},
+      {src:'images/more-dood-3.jpg', aspect:'land'},
+    ]
+  },
+  {
+    id:'spellmans', thumb:'images/spellmans-thumb.jpg', aspect:'port',
+    title:"Spellmans' Social", subtitle:'Cafe in South Australia',
+    desc:`<p>Situated in the heart of Adelaide, Spellmans' Social is a café that prides itself on creating an atmosphere that feels both inviting and intimate. In their pursuit of a unique brand identity, they expressed a desire for a design that seamlessly marries the nostalgia of yesteryears with the crisp, clean lines of modernity. They envisioned a colour palette that draws inspiration from nature, with deep, rich emerald green as the centrepiece, complemented by the warmth of browns and the subtlety of beige tones.</p>
+<p>The introduction of a monogram was a thoughtful nod to classic design principles, ensuring that the essence of Spellmans' Social could be distilled into a simple, yet elegant, symbol.</p>
+<p>The client's enthusiastic response to this idea was a testament to its alignment with their vision for a brand that speaks of quality, warmth, and a timeless appeal, making Spellmans' Social not just a café, but a destination.</p>`,
+    link:'', linkLabel:'',
+    images:[
+      {src:'images/spellmans-1.jpg', aspect:'port'},
+      {src:'images/spellmans-2.jpg', aspect:'land'},
+      {src:'images/spellmans-3.jpg', aspect:'land'},
+    ]
+  },
+  {
+    id:'modern-merino', thumb:'images/modern-merino-thumb.jpg', aspect:'land',
+    title:'Modern Merino', subtitle:'Quality Modern Merino Wool Farmers',
+    desc:`<p>Modern Merino, rooted in South Australia, is a family-led wool business renowned for its premium quality wool and ethical animal care practices. Aiming to elevate their brand presence, they sought a fresh and professional logo to represent their values on a range of products, from apparel to winter essentials like blankets, coats, and activewear.</p>
+<p>Guided by an in-depth analysis of their brand, the decision was made to develop a logo inspired by the molecular structure of merino wool. This concept was envisioned to act as a distinctive emblem, symbolising Modern Merino's dedication to excellence and ethical standards, seamlessly blending with their product line in a refined and meaningful manner.</p>`,
+    link:'', linkLabel:'',
+    images:[
+      {src:'images/modern-merino-1.jpg', aspect:'land'},
+      {src:'images/modern-merino-2.jpg', aspect:'land'},
+      {src:'images/modern-merino-3.jpg', aspect:'land'},
+    ]
+  },
+  {
+    id:'clearkind', thumb:'images/clearkind-thumb.jpg', aspect:'land',
+    title:'clearkind. Health & Lifestyle App', subtitle:'Conceptual Project',
+    desc:`<p>I developed an application tailored for young individuals struggling with organisation and daily management, with a strong emphasis on mental health support. This app incorporates specialised features such as break reminders, visualisers, calming timers, and music integration to aid stress management.</p>
+<p>Additionally, it includes notifications for physical activity and hydration, along with access to mental health professionals and techniques for anxiety and breathing management. Colour psychology is strategically utilized to enhance user engagement, employing red for energy, green for motivation, and blue for calm, particularly in sections dedicated to mental health.</p>
+<p>The application not only assists users in completing tasks but also promotes a balanced approach to time management, addressing the underlying issues of fatigue and demotivation. There is also potential to extend this application into a web-based platform for both Mac and Windows, further increasing its accessibility and utility.</p>`,
+    link:'', linkLabel:'',
+    images:[
+      {src:'images/clearkind-1.jpg', aspect:'land'},
+      {src:'images/clearkind-2.jpg', aspect:'land'},
+      {src:'images/clearkind-3.jpg', aspect:'land'},
+      {src:'images/clearkind-4.jpg', aspect:'port'},
+      {src:'images/clearkind-5.jpg', aspect:'land'},
+    ]
+  },
+  {
+    id:'rufus', thumb:'images/rufus-thumb.jpg', aspect:'land',
+    title:'Rufus Du Sol Album Cover', subtitle:'Conceptual Project',
+    desc:`<p>Known for their albums 'Atlas' and 'Bloom', the group sought a fresh album cover and packaging design for their upcoming album 'Radiance', to be featured on standard-sized vinyl.</p>
+<p>The initial design concepts explored various themes, drawing direct inspiration from the album title "Radiance," though it was deemed too literal. Further iterations aimed at achieving a balance between being engaging and reflecting the album's essence.</p>
+<p>Another concept evolved through experimentation with watercolour gradients for a calming visual effect, geometric shapes to create focal points, and a shift from angular to more harmonious designs that integrate well with the intended backdrop.</p>
+<p>The final design aims to mirror the expansive and immersive quality of RÜFÜS's music, as described in their album creation process and thematic content.</p>`,
+    link:'', linkLabel:'',
+    images:[
+      {src:'images/rufus-1.jpg', aspect:'land'},
+      {src:'images/rufus-2.jpg', aspect:'land'},
+      {src:'images/rufus-3.jpg', aspect:'land'},
+    ]
+  },
+  {
+    id:'link', thumb:'images/link-thumb.jpg', aspect:'port',
+    title:'Link NFC Badge', subtitle:'Wearable Technology',
+    desc:`<p>The concept revolves around a badge equipped with an NFC (Near Field Communication) chip, designed for convenience and ease of use without the necessity for charging. Activation occurs exclusively upon interaction with a reader, facilitating a seamless experience. Users can effortlessly detach the main compartment for swiping and subsequently reattach it to the base.</p>
+<p>This device is customisable to suit the unique daily requirements of each user. The design ensures that the brooch component securely fits within the main compartment, minimising the risk of misplacement. Furthermore, users have the flexibility to wear just the pin independently, offering versatility for days when the full functionality of the device is not needed.</p>`,
+    link:'', linkLabel:'',
+    images:[
+      {src:'images/link-1.jpg', aspect:'port'},
+      {src:'images/link-2.jpg', aspect:'port'},
+      {src:'images/link-3.jpg', aspect:'port'},
+      {src:'images/link-4.jpg', aspect:'land'},
+      {src:'images/link-5.jpg', aspect:'sq'},
+      {src:'images/link-6.jpg', aspect:'land'},
+      {src:'images/link-7.jpg', aspect:'sq'},
+    ]
+  },
+];
+
+const ratios = { land:'66%', port:'133%', sq:'100%' };
+const grid     = document.getElementById('grid');
+const projImgs = document.getElementById('projImgs');
+const cvInfo   = document.getElementById('cvInfo');
+const projPanel= document.getElementById('projPanel');
+const backBtn  = document.getElementById('backBtn');
+const right    = document.getElementById('right');
+const cur      = document.getElementById('cursor');
+
+function makeThumb(src, aspect, alt) {
+  const div = document.createElement('div');
+  div.innerHTML = `<div class="ph" style="padding-bottom:${ratios[aspect]||'66%'}"></div>`;
+  const img = new Image();
+  img.onload = () => { div.innerHTML=''; div.appendChild(img); };
+  img.src = src; img.alt = alt;
+  img.style.cssText = 'width:100%;display:block;';
+  return div;
+}
+
+PROJECTS.forEach(p => {
+  const item = document.createElement('div');
+  item.className = 'grid-item';
+  item.appendChild(makeThumb(p.thumb, p.aspect, p.title));
+  item.addEventListener('click', () => openProject(p));
+  grid.appendChild(item);
+});
+
+function openProject(p) {
+  document.getElementById('dTitle').textContent = p.title;
+  document.getElementById('dSub').textContent   = p.subtitle;
+  document.getElementById('dDesc').innerHTML    = p.desc;
+  const lnk = document.getElementById('dLink');
+  lnk.href = p.link || '#';
+  lnk.textContent = p.linkLabel;
+  lnk.style.display = p.link ? '' : 'none';
+
+  projImgs.innerHTML = '';
+  p.images.forEach(img => {
+    const wrap = document.createElement('div');
+    wrap.className = 'pi';
+    wrap.appendChild(makeThumb(img.src, img.aspect, p.title));
+    projImgs.appendChild(wrap);
+  });
+
+  cvInfo.classList.add('off');
+  projPanel.classList.add('on');
+  grid.classList.add('off');
+  projImgs.classList.add('on');
+  right.scrollTo(0, 0);
+
+  // bind cursor to new images
+  projImgs.querySelectorAll('.pi').forEach(el => bindFill(el));
+}
+
+backBtn.addEventListener('click', () => {
+  cvInfo.classList.remove('off');
+  projPanel.classList.remove('on');
+  grid.classList.remove('off');
+  projImgs.classList.remove('on');
+});
+
+// intro
+const intro     = document.getElementById('intro');
+const introText = document.getElementById('intro-text');
+setTimeout(() => introText.classList.add('visible'), 300);
+setTimeout(() => intro.classList.add('fade-out'), 2000);
+setTimeout(() => intro.remove(), 2900);
+
+// cursor
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+document.addEventListener('mouseleave', () => cur.style.opacity = '0');
+document.addEventListener('mouseenter', () => cur.style.opacity = '1');
+
+function bindFill(el) {
+  el.addEventListener('mouseenter', () => cur.classList.add('filled'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('filled'));
+}
+document.querySelectorAll('a, button, .grid-item').forEach(bindFill);
+
+// dot hover
+document.querySelectorAll('.cv-row').forEach(row => {
+  const dot = row.querySelector('.dot');
+  if (!dot) return;
+  row.addEventListener('mouseenter', () => {
+    dot.style.opacity = '0';
+    setTimeout(() => { dot.textContent = '●'; dot.style.opacity = '1'; }, 130);
+  });
+  row.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    setTimeout(() => { dot.textContent = '○'; dot.style.opacity = '1'; }, 130);
+  });
+});
+</script>
+</body>
+</html>
