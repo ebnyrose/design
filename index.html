@@ -241,37 +241,16 @@ body:not(.play):not(.build) .pitch em { color:#D4FF3A; } /* in Work, nod to Buil
 .role { color:#fff; }
 .todo { color:#777; border:1px dashed #444; border-radius:3px; padding:0 5px; font-size:12px; white-space:nowrap; }
 
-/* ── REDESIGN: YOUR ROUND (the 2-minute version) ──
-   Borrowed from Rounds: open on a plan that's already made. Three stops, in order,
-   with the walk drawn between them. Shuffle deals a different round. */
-.round { padding:12px 12px 4px; }
-.round.off { display:none; }
-.round-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:14px; }
-.round-title { font-size:13.5px; }
-.round-title span { color:#666; margin-left:10px; }
-.round-shuffle { background:none; border:1px solid #2a2a2a; border-radius:999px; color:#fff; font:inherit; font-size:12px; padding:5px 12px;
-  transition:border-color 0.2s, color 0.2s; }
-.round-shuffle:hover { border-color:var(--accent); }
-.round-route { position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.round-route::before { /* the walk between stops */
-  content:''; position:absolute; left:6px; right:calc((100% - 24px) / 3 - 6px); top:5px; height:0;
-  border-top:1.5px dashed #3a3a3a; }
-a.stop { text-decoration:none; }
-.stop { position:relative; background:none; border:none; padding:0; color:#fff; font:inherit; text-align:left; display:flex; flex-direction:column; gap:10px; min-width:0;
-  opacity:0; transform:translateY(8px); transition:opacity 0.45s ease, transform 0.45s ease; }
-.stop.show { opacity:1; transform:none; }
-.stop-pin { display:flex; align-items:center; gap:8px; font-size:11px; color:#888; letter-spacing:0.3px; text-transform:uppercase; position:relative; z-index:1; }
-.stop-pin i { width:11px; height:11px; border-radius:50%; background:#000; border:1.5px solid var(--accent); display:inline-block; }
-.stop:hover .stop-pin i, .stop:focus-visible .stop-pin i { background:var(--accent); }
-.stop-img { position:relative; overflow:hidden; aspect-ratio:4/3; background:#111; }
-.stop-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s ease; }
-.stop:hover .stop-img img { transform:scale(1.04); }
-.stop-name { font-size:13.5px; line-height:1.3; }
-.stop-why { font-size:12px; color:#888; line-height:1.45; }
-.stop-me { aspect-ratio:4/3; border:1px solid #222; padding:16px; display:flex; flex-direction:column; justify-content:space-between; gap:10px; }
-.stop-me .big { font-size:17px; line-height:1.3; text-wrap:balance; }
-.stop-me .small { font-size:12px; color:#888; }
-.round-divider { margin:28px 12px 0; padding-top:14px; border-top:1px solid #1c1c1c; font-size:11px; color:#555; letter-spacing:0.3px; text-transform:uppercase; }
+/* ── REDESIGN: HOVER PREVIEW ──
+   Hovering (or tabbing to) a tile swaps the sidebar CV for that project's facts,
+   so you can scan the work without opening anything. Desktop only. */
+.peek { display:none; }
+body.peeking .peek { display:block; animation: peekIn 0.25s ease both; }
+body.peeking .cv-info { display:none; }
+@keyframes peekIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+.peek-eyebrow { font-size:11px; color:var(--accent); letter-spacing:0.3px; text-transform:uppercase; margin-bottom:14px; }
+.peek-why { color:#c8c8c8; line-height:1.6; margin-bottom:18px; max-width:380px; }
+.peek-hint { font-size:12px; color:#666; }
 
 /* ── REDESIGN: PLACEHOLDER TILES (recent work goes here) ── */
 .grid-item.placeholder { cursor:default; }
@@ -285,28 +264,18 @@ a.stop { text-decoration:none; }
 .proj-meta dd { margin:0; color:#ddd; font-size:12.5px; line-height:1.45; }
 
 /* ── REDESIGN: INTRO SHORTCUT + CURSOR LABEL ── */
-.intro-hire { background:none; border:none; padding:0; font:inherit; font-size:11.5px; color:#777; letter-spacing:0.2px;
-  opacity:0; transition:opacity 0.7s ease, color 0.2s; }
-.intro-hire.show { opacity:1; } .intro-hire.hide { opacity:0; pointer-events:none; }
-.intro-hire:hover { color:#fff; }
 #cursor-label { position:fixed; pointer-events:none; z-index:10000; transform:translate(14px, 12px); font-size:11px; letter-spacing:0.2px;
   color:#000; background:var(--cursor-fill); padding:2px 7px; border-radius:999px; opacity:0; transition:opacity 0.15s ease; white-space:nowrap; }
 #cursor-label.on { opacity:1; }
 
 @media (prefers-reduced-motion: reduce) {
   .status-dot { animation:none; }
-  .stop, .grid-item, .cv-row { transition:none; }
+  .grid-item, .cv-row, .peek { transition:none; }
 }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .round-route { grid-template-columns:1fr; gap:22px; }
-  .round-route::before { left:5px; right:auto; top:6px; bottom:6px; height:auto; border-top:none; border-left:1.5px dashed #3a3a3a; }
-  .stop-img, .stop-me { margin-left:20px; }
-  .stop-name, .stop-why { margin-left:20px; }
   .pitch { font-size:19px; }
-  .sidebar .round { padding:4px 0 30px; }
-  .sidebar .round-divider { display:none; }
   #cursor-label { display:none; }
   html, body { overflow: auto; }
   *, *::before, *::after { cursor: auto !important; }
@@ -338,7 +307,6 @@ a.stop { text-decoration:none; }
     <button class="intro-btn" onclick="enterMode('play')">Play</button>
     <button class="intro-btn" onclick="enterMode('build')">Build</button>
   </div>
-  <button class="intro-hire" id="introHire" onclick="enterMode('work', true)">hiring? skip to the 2-minute version →</button>
 </div>
 <div id="cursor"></div>
 <div id="cursor-label"></div>
@@ -351,6 +319,16 @@ a.stop { text-decoration:none; }
       <button class="mode-btn active" id="btnWork" onclick="switchMode('work')">Work</button>
       <button class="mode-btn" id="btnPlay" onclick="switchMode('play')">Play</button>
       <button class="mode-btn" id="btnBuild" onclick="switchMode('build')">Build</button>
+    </div>
+
+    <!-- ── HOVER PREVIEW ── shows a project's facts while you hover its tile -->
+    <div class="peek" id="peek" aria-hidden="true">
+      <p class="peek-eyebrow">Preview</p>
+      <h2 class="proj-title" id="peekTitle"></h2>
+      <p class="proj-sub" id="peekSub"></p>
+      <p class="peek-why" id="peekWhy"></p>
+      <dl class="proj-meta" id="peekMeta"></dl>
+      <p class="peek-hint">Click to open the case study</p>
     </div>
 
     <!-- ── WORK SIDEBAR ── -->
@@ -382,10 +360,10 @@ a.stop { text-decoration:none; }
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Previously</div>
           <div class="cv-content">
-            <p class="role"><span class="todo">job title</span></p>
+            <p class="role">Junior Designer</p>
             <p>Woo Agency — Brunswick</p>
             <p class="sub">2022 — 2024</p>
-            <p class="role"><span class="todo">job title</span></p>
+            <p class="role">Graphic Designer</p>
             <p>Sky Foundry — Adelaide</p>
             <p class="sub">2021 — 2022</p>
             <p class="role">Freelance Designer</p>
@@ -530,14 +508,6 @@ a.stop { text-decoration:none; }
   </aside>
 
   <main class="right" id="right">
-    <section class="round" id="round" aria-labelledby="roundTitle">
-      <div class="round-head">
-        <p class="round-title" id="roundTitle">The 2-minute version<span>3 stops, in order</span></p>
-        <button class="round-shuffle" id="roundShuffle" type="button">↻ deal another round</button>
-      </div>
-      <div class="round-route" id="roundRoute"></div>
-      <p class="round-divider">Everything else</p>
-    </section>
     <div class="grid" id="grid"></div>
     <div class="proj-imgs" id="projImgs"></div>
   </main>
@@ -791,7 +761,7 @@ const PROJECTS = [
   {
     id:'pirate-life', thumb:'images/pirate-life-thumb.jpeg', aspect:'land', mode:'work',
     title:'Pirate Life Website', subtitle:'Brewery company in South Australia', label:'ecommerce web design',
-    why:'Ecommerce for a fast-growing craft brewery.', roundImg:'images/pirate-life-01.jpeg',
+    why:'Ecommerce for a fast-growing craft brewery.',
     meta:{ Role:'<span class="todo">your role</span>', Team:'<span class="todo">who you worked with</span>', Scope:'Online shop redesign, new merch range', Outcome:'Live at shop.piratelife.com.au' },
     desc:`<p>Pirate Life was growing fast and had a new merch range to sell, but the online shop felt like an afterthought next to the brand. The brief was one shop that felt like the beer.</p>
 <p>I went blocky and loud on purpose. Big product photography carries most of the page, a hand-drawn illustration sits in the footer, and emoji and icons do the small talk so the product copy can stay short.</p>
@@ -809,6 +779,7 @@ const PROJECTS = [
     id:'small-victories', thumb:'images/small-victories-thumb.webp', aspect:'land', mode:'work',
     title:'Small Victories Website', subtitle:'Winery in South Australia', label:'web design',
     why:'Type-led site for a wine brand chasing a younger crowd.',
+    meta:{ Role:'<span class="todo">your role</span>', Scope:'Website for a new wine brand', Audience:'Urban women, 20 to 40', Outcome:'Live at smallvictorieswine.com' },
     desc:`<p>Small Victories is an innovative boutique wine brand nestled in the Barossa Valley, South Australia. This brand distinctly appeals to the 20 to 40-year-old fashionable female demographic residing in urban centres. Originating from Elderton Wines, traditionally catering to an audience aged between 30 and 60, Small Victories marks a significant departure towards a more contemporary market focus.</p>
 <p>In alignment with its refreshed branding strategy and to captivate its targeted audience, there was a clear directive for a minimalist and sophisticated user interface (UI). This was to be achieved with a pronounced emphasis on typographic layout, drawing heavily on the aesthetic cues of their existing wine labels to guide the visual direction.</p>`,
     link:'https://smallvictorieswine.com', linkLabel:'smallvictorieswine.com ↗',
@@ -824,6 +795,7 @@ const PROJECTS = [
     id:'spellmans', thumb:'images/spellmans-thumb.jpg', aspect:'port', mode:'work',
     title:"Spellmans' Social", subtitle:'Cafe in South Australia', label:'branding',
     why:'Café identity, from monogram to glassware.',
+    meta:{ Role:'<span class="todo">your role</span>', Scope:'Brand identity, monogram, colour palette', Client:'Café in Adelaide', Outcome:'In use, @spellmans.social' },
     desc:`<p>Situated in the heart of Adelaide, Spellmans' Social is a café that prides itself on creating an atmosphere that feels both inviting and intimate. In their pursuit of a unique brand identity, they expressed a desire for a design that seamlessly marries the nostalgia of yesteryears with the crisp, clean lines of modernity. They envisioned a colour palette that draws inspiration from nature, with deep, rich emerald green as the centrepiece, complemented by the warmth of browns and the subtlety of beige tones. This choice aimed not only to welcome guests but also to envelop them in a sense of comfort and sophistication.</p>
 <p>The introduction of a monogram was a thoughtful nod to classic design principles, ensuring that the essence of Spellmans' Social could be distilled into a simple, yet elegant, symbol.</p>
 <p>The client's enthusiastic response to this idea was a testament to its alignment with their vision for a brand that speaks of quality, warmth, and a timeless appeal, making Spellmans' Social not just a cafe, but a destination.</p>`,
@@ -842,6 +814,7 @@ const PROJECTS = [
     id:'link', thumb:'images/link-thumb.jpeg', aspect:'port', mode:'work',
     title:'Link NFC Badge', subtitle:'Wearable Technology', label:'product design',
     why:'A wearable NFC badge, designed down to the clasp.',
+    meta:{ Role:'Product design', Type:'Concept', Scope:'Detachable NFC reader with a pin you can wear alone', Power:'No charging, wakes at the reader' },
     desc:`<p>The concept revolves around a badge equipped with an NFC (Near Field Communication) chip, designed for convenience and ease of use without the necessity for charging. Activation occurs exclusively upon interaction with a reader, facilitating a seamless experience. Users can effortlessly detach the main compartment for swiping and subsequently reattach it to the base.</p>
 <p>This device is customisable to suit the unique daily requirements of each user. The design ensures that the brooch component securely fits within the main compartment, minimizing the risk of misplacement. Furthermore, users have the flexibility to wear just the pin independently, offering versatility for days when the full functionality of the device is not needed.</p>`,
     link:'', linkLabel:'',
@@ -856,6 +829,8 @@ const PROJECTS = [
   {
     id:'more-dood', thumb:'images/more-dood-thumb.jpeg', aspect:'land', mode:'play',
     title:'LESS Festival Collage Activity', subtitle:'RMIT University', label:'collab gif collage tool',
+    why:'UI for a tool where festival-goers collage each other\'s GIFs.',
+    meta:{ Role:'UI design', Type:'RMIT studio brief', For:'LESS Festival of Collage, 2021', Scope:'Desktop-first UI, mobile concepts' },
     desc:`<p>In the concluding semester of my studio course, we were tasked with conceiving a potential contribution for the 2021 Less Festival. The mandate was that our proposals should centrally feature collage as an artistic technique, while also offering an engaging activity for attendees. In response to this brief, I developed a preliminary user interface (UI) design for a platform named 'More Dood.'</p>
 <p>This UI design is intended to enable users to craft collaged gifs by augmenting each other's mini-animations, thereby fostering a collaborative and creative expression in a casual and approachable art style.</p>
 <p>Although concepts were developed for mobile accessibility, the full richness and functionality of the UI are optimally experienced via desktop.</p>`,
@@ -873,6 +848,8 @@ const PROJECTS = [
   {
     id:'rufus', thumb:'images/rufus-thumb.jpeg', aspect:'land', mode:'play',
     title:'Rufus Du Sol Album Cover', subtitle:'Conceptual Project', label:'unsolicited album art (they never asked)',
+    why:'Unsolicited vinyl art for an album called Radiance.',
+    meta:{ Role:'Art direction + design', Type:'Self-initiated concept', Format:'Standard vinyl sleeve + packaging', Process:'Watercolour gradients, geometric focal points' },
     desc:`<p>Known for their albums 'Atlas' and 'Bloom'. The group sought a fresh album cover and packaging design for their upcoming album 'Radiance', to be featured on standard-sized vinyl.</p>
 <p>The initial design concepts explored various themes, drawing direct inspiration from the album title 'Radiance,' though it was deemed too literal. Further iterations aimed at achieving a balance between being engaging and reflecting the album's essence.</p>
 <p>Another concept evolved through experimentation with watercolour gradients for a calming visual effect, geometric shapes to create focal points, and a shift from angular to more harmonious designs that integrate well with the intended backdrop.</p>
@@ -911,19 +888,6 @@ const PROJECTS = [
 const BUILDING = [
   { name:'Rounds', note:'plan a night out with your crew. works on your phone.', id:'rounds', status:'live' },
 ];
-
-// ─── YOUR ROUND ───────────────────────────────────────────────────────────────
-// The "2-minute version" at the top of Work. Stop 1 deals from PRODUCT, stop 2
-// from CLIENT, stop 3 is always you. Shuffle deals a different pair.
-const ROUND = {
-  product: ['rounds', 'clearkind'],
-  client:  ['pirate-life', 'small-victories', 'spellmans', 'link'],
-  me: {
-    big:  'Mid-weight designer, open to digital roles.',
-    small:'BRX now. Woo Agency and Sky Foundry before that. RMIT Communication Design.',
-    email:'ebonyroseaugustin@gmail.com'
-  }
-};
 
 // ─── PLACEHOLDERS ─────────────────────────────────────────────────────────────
 // Dashed tiles in the Work grid marking where recent work should go. Delete an
@@ -1019,6 +983,10 @@ function renderGrid(mode, delay) {
     lbl.innerHTML = `<div class="item-title">${p.title}</div><div class="item-sub">${p.label||p.subtitle}</div>`;
     item.appendChild(lbl);
     item.addEventListener('click', () => openProject(p));
+    item.addEventListener('mouseenter', () => peek(p));
+    item.addEventListener('mouseleave', () => unpeek());
+    item.addEventListener('focus', () => peek(p));
+    item.addEventListener('blur', () => unpeek());
     // Keyboard: tiles are focusable and open with Enter or Space
     item.tabIndex = 0;
     item.setAttribute('role', 'button');
@@ -1038,66 +1006,31 @@ function renderGrid(mode, delay) {
     grid.appendChild(item);
     setTimeout(() => item.classList.add('show'), (delay||0) + (i + 6) * 60);
   });
-  renderRound(mode, delay);
 }
 
-// ─── YOUR ROUND ───────────────────────────────────────────────────────────────
-const roundEl    = document.getElementById('round');
-const roundRoute = document.getElementById('roundRoute');
-let roundPick = { product: 'rounds', client: 'pirate-life' };
-
-function openFromAnywhere(p) {
-  const target = (p.alsoIn || []).includes(currentMode) ? currentMode : p.mode;
-  if (target !== currentMode) applyMode(target, 0);
-  openProject(p);
+// ─── HOVER PREVIEW ────────────────────────────────────────────────────────────
+const peekEl = document.getElementById('peek');
+const canPeek = matchMedia('(hover: hover) and (min-width: 769px)');
+let peekTimer = null;
+function fillMeta(el, p) {
+  el.innerHTML = p.meta ? Object.entries(p.meta).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('') : '';
 }
-
-// On phones the sidebar stacks above the grid, which would bury the round under
-// the whole CV. Move it up to sit right under Status instead.
-const phoneMQ = matchMedia('(max-width: 768px)');
-function placeRound() {
-  const statusRow = document.querySelector('#cvInfo .cv-row');
-  if (phoneMQ.matches) statusRow.after(roundEl);
-  else document.getElementById('right').prepend(roundEl);
+function peek(p) {
+  if (!canPeek.matches || projImgs.classList.contains('on')) return;
+  clearTimeout(peekTimer);
+  document.getElementById('peekTitle').textContent = p.title;
+  document.getElementById('peekSub').textContent   = p.subtitle;
+  document.getElementById('peekWhy').textContent   = p.why || '';
+  fillMeta(document.getElementById('peekMeta'), p);
+  peekEl.style.animation = 'none'; peekEl.offsetHeight; peekEl.style.animation = '';
+  document.body.classList.add('peeking');
 }
-phoneMQ.addEventListener('change', placeRound);
-placeRound();
-
-function renderRound(mode, delay) {
-  roundEl.classList.toggle('off', mode !== 'work');
-  if (mode !== 'work') return;
-  roundRoute.innerHTML = '';
-  const stops = [PROJECTS.find(p => p.id === roundPick.product), PROJECTS.find(p => p.id === roundPick.client)];
-  stops.forEach((p, i) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'stop';
-    b.innerHTML = `<span class="stop-pin"><i></i>Stop ${i + 1} · ~40 sec</span>
-      <span class="stop-img"><img src="${p.roundImg || p.thumb}" alt=""></span>
-      <span class="stop-name">${p.title}</span><span class="stop-why">${p.why || p.label}</span>`;
-    b.addEventListener('click', () => openFromAnywhere(p));
-    bindFill(b, 'stop ' + (i + 1));
-    roundRoute.appendChild(b);
-  });
-  const me = document.createElement('a');
-  me.className = 'stop'; me.href = 'mailto:' + ROUND.me.email;
-  me.innerHTML = `<span class="stop-pin"><i></i>Stop 3 · ~30 sec</span>
-    <span class="stop-me"><span class="big">${ROUND.me.big}</span><span class="small">${ROUND.me.small}<br><br>${ROUND.me.email}</span></span>
-    <span class="stop-name">Me</span><span class="stop-why">The CV's on the left. Email's right here.</span>`;
-  bindFill(me, 'say hi');
-  roundRoute.appendChild(me);
-  [...roundRoute.children].forEach((el, i) => setTimeout(() => el.classList.add('show'), (delay || 0) + i * 90));
+function unpeek(now) {
+  clearTimeout(peekTimer);
+  // a short delay stops the CV flashing back while you move between tiles
+  if (now) document.body.classList.remove('peeking');
+  else peekTimer = setTimeout(() => document.body.classList.remove('peeking'), 140);
 }
-
-document.getElementById('roundShuffle').addEventListener('click', e => {
-  const pickOther = (list, cur) => { const o = list.filter(x => x !== cur); return o[Math.floor(Math.random() * o.length)]; };
-  // change at least one stop; usually both
-  const next = { product: Math.random() < 0.5 ? pickOther(ROUND.product, roundPick.product) : roundPick.product,
-                 client:  pickOther(ROUND.client, roundPick.client) };
-  roundPick = next;
-  const r = e.currentTarget.getBoundingClientRect();
-  [...roundRoute.children].forEach(el => el.classList.remove('show'));
-  particleBurst(r.left + r.width / 2, r.top + r.height / 2, 40, MODES[currentMode].accent, () => renderRound('work', 0));
-});
 
 let lastOpenedId = null;
 function openProject(p) {
@@ -1111,9 +1044,9 @@ function openProject(p) {
   const lnk = document.getElementById(pfx+'Link');
   lnk.href = p.link||'#'; lnk.textContent = p.linkLabel;
   lnk.style.display = p.link ? '' : 'none';
-  const meta = document.getElementById(pfx+'Meta');
-  meta.innerHTML = p.meta ? Object.entries(p.meta).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('') : '';
-  roundEl.classList.add('off');
+  fillMeta(document.getElementById(pfx+'Meta'), p);
+  unpeek(true);
+  document.title = p.title + ' — Ebony Rose';
   projImgs.innerHTML = '';
   p.images.forEach(img => {
     const w = document.createElement('div');
@@ -1151,7 +1084,7 @@ function openProject(p) {
   panel.querySelector('.back-btn')?.focus({ preventScroll: true });
   updateParallax();
   if (!(history.state && history.state.project === p.id)) {
-    history.pushState({ project: p.id, mode: currentMode }, '', '#' + p.id);
+    history.pushState({ project: p.id, mode: currentMode }, '', projectUrl(p.id));
   }
 }
 
@@ -1175,11 +1108,11 @@ window.addEventListener('scroll', () => {
 
 function closeProject() {
   const m = MODES[currentMode] || MODES.work;
+  document.title = 'Ebony Rose';
   m.cv.classList.remove('off');
   m.panel.classList.remove('on');
   document.getElementById('mode-toggle').classList.remove('off');
   grid.classList.remove('off'); projImgs.classList.remove('on');
-  roundEl.classList.toggle('off', currentMode !== 'work');
   right.removeAttribute('tabindex'); right.removeAttribute('role'); right.removeAttribute('aria-label');
   // Return focus to the tile that was opened, so keyboard users keep their place
   const tile = lastOpenedId && grid.querySelector(`.grid-item[data-id="${lastOpenedId}"]`);
@@ -1193,6 +1126,19 @@ document.addEventListener('keydown', e => {
     history.back();
   }
 });
+
+// ─── LINKS TO PROJECTS ───────────────────────────────────────────────────────
+// Every project has its own shareable link that opens straight on the project,
+// skipping the intro. On the live site it's a clean path (ebonyrose.xyz/rounds),
+// which vercel.json points at index.html. Anywhere else (local server, previews)
+// it's a hash (#rounds). Old #links still work on the live site.
+const CLEAN_URLS = /(^|\.)ebonyrose\.xyz$|\.vercel\.app$/.test(location.hostname);
+function projectUrl(id) { return CLEAN_URLS ? '/' + id : '#' + id; }
+function homeUrl()      { return CLEAN_URLS ? '/' : location.pathname + location.search; }
+function linkedProject() {
+  const ids = [location.pathname.replace(/^\/+|\/+$/g, ''), location.hash.slice(1)];
+  return ids.map(id => PROJECTS.find(p => p.id === id)).find(Boolean) || null;
+}
 
 // ─── BROWSER BACK/FORWARD ───────────────────────────────────────────────────
 window.addEventListener('popstate', (e) => {
@@ -1209,6 +1155,7 @@ window.addEventListener('popstate', (e) => {
 
 function applyMode(mode, delay) {
   currentMode = mode;
+  unpeek(true);
   Object.keys(MODES).forEach(k => {
     document.body.classList.toggle(k, k === mode && k !== 'work');
     document.getElementById(MODES[k].btn).classList.toggle('active', k === mode);
@@ -1240,14 +1187,11 @@ layoutEl.inert = true;
 
 setTimeout(() => introName.classList.add('show'), 300);
 setTimeout(() => introBtns.classList.add('show'), 900);
-const introHire = document.getElementById('introHire');
-setTimeout(() => introHire.classList.add('show'), 1300);
 
-function enterMode(mode, toRound) {
+
+function enterMode(mode) {
   // Lock buttons immediately
   introBtns.classList.add('hide');
-  introHire.classList.add('hide');
-  if (toRound) setTimeout(() => document.querySelector('.stop')?.focus({ preventScroll: true }), 900);
   introName.classList.add('hide');
 
   const m = MODES[mode] || MODES.work;
@@ -1424,7 +1368,20 @@ initSpotify();
 initSuggest();
 renderBuilding();
 
-renderGrid('work', 0);
+// ─── START ────────────────────────────────────────────────────────────────────
+const linked = linkedProject();
+if (linked) {
+  // Arrived on a project link: no intro, straight to the project. "← back" and
+  // the browser back button land on the home grid in that project's mode.
+  stopFlock();
+  intro.remove();
+  layoutEl.inert = false;
+  applyMode(linked.mode, 0);
+  history.replaceState({ mode: linked.mode }, '', homeUrl());
+  openProject(linked);
+} else {
+  renderGrid('work', 0);
+}
 </script>
 </body>
 </html>
