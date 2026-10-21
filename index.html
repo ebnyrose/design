@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ebony Rose</title>
-<meta name="description" content="Mid Weight Digital Designer in Melbourne × Naarm. UI, automation and AI tools in production. Open to mid-weight digital roles.">
+<meta name="description" content="Melbourne × Naarm. Designer who makes things for fun, not just for briefs. 5 years of UI, automation and AI tools in production. Open to mid-weight digital roles.">
 <!-- Link preview for the home page. Project pages get their own: see tools/make_share_pages.py -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ebony Rose">
@@ -16,1541 +16,718 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#000000">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; cursor:none !important; }
-
-html, body {
-  height: 100%;
-  background: #000000;
-  color: #fff;
-  font-family: 'Epilogue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 13.5px;
-  line-height: 1.55;
-  overflow: hidden;
+/* Dark index. Type: Epilogue only. One 12-column grid for everything.
+   Colour comes from the projects themselves; the page stays black and white. */
+:root{
+  --bg:#000; --ink:#F2F2F2; --mid:#8C8C8C; --faint:#1E1E1E; --rule:#3A3A3A; --live:#3DDC84;
+  --pad:clamp(16px,1.7vw,26px); --gap:clamp(10px,1.1vw,16px);
+  --font:'Epilogue','Helvetica Neue',Arial,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1); --wipe:cubic-bezier(.7,0,.2,1);
+  --cur:#fff;
+  color-scheme:dark;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+html{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--font);-webkit-font-smoothing:antialiased;overflow-x:clip;max-width:100vw}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+img{display:block;max-width:100%}
+::selection{background:var(--ink);color:var(--bg)}
+:focus-visible{outline:1.5px solid var(--ink);outline-offset:4px}
+[hidden]{display:none!important}
+.g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);padding-left:var(--pad);padding-right:var(--pad)}
+.m{color:var(--mid)}
+.ul{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .5s var(--ease)}
+.ul:hover,.ul:focus-visible{background-size:100% 1px}
 
-/* ── INTRO ── */
-#intro {
-  position: fixed; inset: 0;
-  background: #000000;
-  z-index: 1000;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 32px;
-  transition: opacity 0.9s ease;
+/* ── Cursor (from the current site: ring, fills on things you can press, small label, takes the project's colour) ── */
+@media (hover:hover) and (pointer:fine){ html.cc, html.cc *{cursor:none!important} }
+#cur{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border:1.5px solid var(--cur);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;
+  transition:width .2s ease,height .2s ease,margin .2s ease,background-color .25s ease,border-color .25s ease,opacity .2s ease}
+#cur.fill{width:16px;height:16px;margin:-8px 0 0 -8px;background:var(--cur)}
+#cur.down{width:12px;height:12px;margin:-6px 0 0 -6px}
+#curLabel{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;font-size:11px;line-height:1;letter-spacing:.01em;color:#000;background:var(--cur);padding:4px 8px 3px;border-radius:999px;white-space:nowrap;opacity:0;transition:opacity .15s ease,background-color .25s ease}
+#curLabel.on{opacity:1}
+
+/* ── Header ── */
+.top{padding-top:var(--pad);font-size:13.5px;line-height:1.45}
+.top p{grid-column:span 3}
+.top p:nth-child(1){grid-column:span 2}
+.top p:nth-child(3){grid-column:span 4}
+.top b{font-weight:600}
+.top .mn{display:none}
+.live{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--live);margin-right:8px;vertical-align:2px;animation:breathe 3s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.35}}
+
+/* ── Statement ── */
+.hero{position:relative;padding:15vh 0 14vh;overflow:hidden}
+#intro{position:fixed;inset:0;z-index:10000;background:#000;color:var(--ink);display:grid;place-items:center;font-family:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace}
+#intro pre{font-size:clamp(7px,2.2vw,12.5px);line-height:1;white-space:pre;letter-spacing:0}
+#intro .im{position:absolute;left:var(--pad);right:var(--pad);bottom:var(--pad);display:flex;justify-content:space-between;font-size:12px;color:var(--mid)}
+#introC{position:absolute;inset:0;width:100%;height:100%}
+.strip{display:none}
+.state{grid-column:1/span 6!important;font-size:clamp(26px,3.1vw,50px)!important}
+.cover{position:absolute;left:calc(var(--pad) + 6 * ((100% - 2 * var(--pad) + var(--gap)) / 12));right:var(--pad);top:clamp(56px,8vh,84px);z-index:1;margin:0}
+.cvstage{display:flex;align-items:center;justify-content:center;height:calc((50vw - var(--pad) - var(--gap) / 2) / 1.33)}
+.cvbtn{display:block;position:relative;flex:none;overflow:hidden;background:#0d0d0d;transition:width 1.1s cubic-bezier(.76,0,.18,1),height 1.1s cubic-bezier(.76,0,.18,1);width:0;height:0}
+.cvbtn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cvcap{display:flex;justify-content:space-between;gap:16px;padding:10px var(--pad) 0 0;font-size:12.5px;color:var(--mid);font-variant-numeric:tabular-nums}
+.cvcap b{font-weight:400;color:var(--ink)}
+.hero{min-height:calc(clamp(56px,8vh,84px) + (50vw - var(--pad) - var(--gap) / 2) / 1.33 + 48px)}
+.state{position:relative;z-index:1;grid-column:1/span 10;font-size:clamp(26px,3.5vw,56px);line-height:1.08;letter-spacing:-.03em;font-weight:400;text-wrap:balance}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.wi{display:inline-block}
+.state i{font-style:normal}
+
+/* ── Bar ── */
+.bar{position:relative;border-top:1px solid var(--ink);padding-top:12px;padding-bottom:12px;align-items:center;font-size:13.5px}
+.filters{grid-column:1/span 4;display:flex;gap:8px;flex-wrap:wrap}
+.views{grid-column:5/span 2;display:flex;gap:8px;justify-content:flex-end}
+.tog{color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:5px 13px 4px;line-height:1.3;transition:background-color .25s ease,color .25s ease,border-color .25s ease}
+.tog:hover{border-color:var(--ink)}
+.tog[aria-pressed="true"]{background:var(--ink);color:#000;border-color:var(--ink)}
+.filters .tog[aria-pressed="true"]{background:var(--mode,var(--ink));border-color:var(--mode,var(--ink))}
+.tog sup{font-size:9.5px;margin-left:2px;font-variant-numeric:tabular-nums}
+.lbl{color:var(--mid);font-size:12.5px}
+.l-cl{grid-column:7/span 2}.l-d{grid-column:9/span 2}.l-r{grid-column:11/span 2}
+
+/* ── List ── */
+.row{display:grid;width:100%;border-top:1px solid var(--faint);padding-top:14px;padding-bottom:12px;align-items:baseline;position:relative;isolation:isolate;font-size:13.5px;transition:color .3s ease}
+.row{color:var(--mid)}
+.row:hover,.row:focus-visible{color:#fff}
+.row:hover .rm,.row:focus-visible .rm{color:#fff}
+.row .t{grid-column:1/span 6;font-size:clamp(20px,2.05vw,32px);line-height:1.05;letter-spacing:-.025em;font-weight:500;transition:transform .55s var(--ease)}
+.row:hover .t,.row:focus-visible .t{transform:translateX(10px)}
+.row .cl{grid-column:7/span 2}.row .d{grid-column:9/span 2}.row .r{grid-column:11/span 2}
+.rm{color:inherit;transition:color .3s ease}
+.row.gone{display:none}
+.th{display:none}
+#list{border-bottom:1px solid var(--faint)}
+
+#float{position:fixed;left:0;top:0;pointer-events:none;z-index:60;opacity:0;will-change:transform,opacity}
+#float img{width:100%;height:100%;object-fit:cover}
+
+/* ── Explore (the game lives in world.js) ── */
+[data-view="list"] #world,[data-view="map"] #list{display:none}
+[data-view="map"] .filters,[data-view="map"] .lbl{visibility:hidden}
+
+/* ── Background / contact: ruled rows on the same grid as the list ── */
+.cv{padding-top:16vh;padding-bottom:12vh;font-size:13.5px}
+.cvh{padding-bottom:12px;color:var(--mid);font-size:13.5px;border-bottom:1px solid var(--ink)}
+.cvr{border-bottom:1px solid var(--faint);padding-top:14px;padding-bottom:14px;align-items:baseline;row-gap:8px}
+.cvr h3{grid-column:1/span 3;font-size:13.5px;font-weight:400;color:var(--mid)}
+.cvl{grid-column:4/-1;list-style:none;display:flex;flex-direction:column;gap:10px}
+.cvl li{display:grid;grid-template-columns:4fr 3fr 2fr;column-gap:var(--gap);align-items:baseline}
+.cvl li > :nth-child(n+2){color:var(--mid)}
+.cvl li > :last-child{text-align:right}
+.cvl.one li{grid-template-columns:1fr}
+.cvl.one li > *{color:var(--ink);text-align:left}
+.cv + .cv{padding-top:10vh}
+.cv.play{padding-bottom:0}
+.cvl li > a,.cvl li > span > a{justify-self:start;width:fit-content}
+.cvr h3{align-self:start}
+.cvl.two li{grid-template-columns:4fr 5fr}
+.cvl.two li > :last-child{text-align:left}
+.cvl p{margin:0}
+.cvl .sm{color:var(--mid)}
+.cvl iframe{border:0;border-radius:10px;width:min(100%,460px);height:152px;display:block;background:#111}
+.sug{display:flex;gap:8px;margin:10px 0 8px;max-width:460px}
+.sug input{flex:1;min-width:0;background:transparent;border:1px solid var(--rule);border-radius:999px;color:var(--ink);font:inherit;padding:6px 14px 5px;outline:none;transition:border-color .25s ease}
+.sug input:focus{border-color:#9B4DFF}
+.sug .tog:hover{border-color:#9B4DFF;color:#9B4DFF}
+#sugStatus:empty{display:none}
+#sugList .rec{color:var(--mid);font-size:12.5px;margin-top:4px}
+.copy{color:var(--ink)}
+#copyNote{color:var(--mid);margin-left:10px}
+footer.g{border-top:1px solid var(--faint);padding-top:14px;padding-bottom:22px;color:var(--mid);font-size:12.5px}
+footer p{grid-column:span 6}footer p:last-child{text-align:right}
+
+/* ── Project page ── */
+#home,#proj{transition:opacity .35s ease}
+.pnav{position:sticky;top:0;z-index:40;padding-top:14px;padding-bottom:14px;font-size:13.5px;align-items:baseline;background:linear-gradient(#000 60%,rgba(0,0,0,0))}
+.pnav .back-btn{grid-column:1/span 4;justify-self:start}
+.pnav .count{grid-column:7/span 2;color:var(--mid);font-variant-numeric:tabular-nums}
+.pnav .pn{grid-column:9/span 4;display:flex;gap:18px;justify-content:flex-end}
+.phead{padding-top:9vh;padding-bottom:26px;row-gap:20px;align-items:end}
+.ptitle:focus{outline:none}
+.ptitle{grid-column:1/-1;font-size:clamp(40px,7vw,116px);line-height:.95;letter-spacing:-.045em;font-weight:500}
+.psub{grid-column:1/span 6;font-size:clamp(16px,1.35vw,20px);line-height:1.35;letter-spacing:-.01em}
+.ptag{grid-column:9/span 4;display:flex;justify-content:space-between;gap:12px;color:var(--mid);font-size:13.5px}
+.ptag i{font-style:normal;display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pc);margin-right:8px;vertical-align:1px}
+.phero{padding:0 var(--pad)}
+.phero img{width:100%;height:auto}
+.pinfo{padding-top:clamp(48px,8vh,96px);padding-bottom:clamp(48px,8vh,96px);row-gap:36px}
+.facts{grid-column:1/span 4;display:grid;grid-template-columns:minmax(80px,auto) 1fr;gap:9px 18px;align-content:start;font-size:13.5px;border-top:1px solid var(--rule);padding-top:14px}
+.facts dt{color:var(--mid)}
+.plink{grid-column:1/span 4;align-self:start;font-size:13.5px;display:inline-flex;gap:8px;align-items:center;justify-self:start;color:var(--pc)}
+.pdesc{grid-column:6/span 6;grid-row:1/span 2;font-size:clamp(15px,1.12vw,17px);line-height:1.62;max-width:62ch;display:flex;flex-direction:column;gap:1em}
+.pimgs{display:flex;flex-direction:column;gap:var(--gap);padding:0 var(--pad)}
+.jrow{display:flex;gap:var(--gap);align-items:flex-start}
+.jrow figure{min-width:0;overflow:hidden;background:#0d0d0d}
+.jrow img{width:100%;height:auto}
+.rv{clip-path:inset(0 0 0 0)}
+.rv.pre{clip-path:inset(100% 0 0 0)}
+.rv.pre img{transform:scale(1.12)}
+.rv.go{transition:clip-path 1.1s var(--wipe)}
+.rv.go img{transition:transform 1.4s var(--ease)}
+.pnext{display:grid;margin-top:clamp(80px,14vh,160px);border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);padding-top:16px;padding-bottom:22px;position:relative;isolation:isolate;align-items:baseline;width:100%;transition:color .3s ease}
+.pnext{color:var(--mid)}
+.pnext:hover,.pnext:focus-visible{color:#fff}
+.pnext .k{grid-column:1/span 2;font-size:13.5px}
+.pnext .nt{grid-column:3/span 8;font-size:clamp(28px,4vw,64px);line-height:1;letter-spacing:-.035em;font-weight:500;transition:transform .55s var(--ease)}
+.pnext:hover .nt{transform:translateX(12px)}
+.pnext .nd{grid-column:11/span 2;text-align:right;font-size:13.5px}
+.pfoot{padding-top:16px;padding-bottom:22px;color:var(--mid);font-size:12.5px}
+.pfoot p{grid-column:span 6}.pfoot p:last-child{text-align:right}
+
+#fly{position:fixed;z-index:70;pointer-events:none;object-fit:cover}
+#burst{position:fixed;inset:0;pointer-events:none;z-index:80}
+
+@media (max-width:820px){
+  .top{row-gap:3px;padding-top:18px;font-size:13.5px}
+  .top p{grid-column:1/-1}
+  .top p:nth-child(1){grid-column:1/span 6;grid-row:1}
+  .top p:nth-child(4){grid-column:7/span 6;grid-row:1;text-align:right;margin:0}
+  .top p:nth-child(2){grid-row:2;color:var(--mid)}
+  .top p:nth-child(2) .m,#topMail{display:none}
+  .top p:nth-child(3){grid-column:1/-1;grid-row:3;color:var(--mid)}
+  .top .fl{display:none}.top .mn{display:inline}
+  .top p:nth-child(2) br{display:none}
+  .cover{display:none}
+  .hero{display:flex;flex-direction:column}
+  .hero > .g{order:1}
+  .strip{order:2;margin-top:30px!important}
+  .cvl.two li{grid-template-columns:1fr}
+  .cvl.two li > *{grid-column:1/-1!important}
+  .hero{min-height:0}
+  .strip{display:flex;gap:10px;margin-top:0;width:max-content;animation:slide 38s linear infinite;will-change:transform}
+  .strip img{height:min(46vw,190px);width:auto;flex:none}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  .hero{padding:44px 0 44px}
+  .state{grid-column:1/-1!important;font-size:clamp(22px,6.4vw,30px);margin-top:0;line-height:1.12}
+  .bar{row-gap:10px}.filters{grid-column:1/-1;gap:6px}.views{grid-column:1/-1;justify-content:flex-start;gap:6px}
+  .tog{padding:5px 12px 4px}
+  .lbl,.row .cl,.row .r,.row .d{display:none}
+  .row{padding-top:10px;padding-bottom:10px;align-items:center;color:var(--ink)}
+  .row .t{grid-column:1/span 8;font-size:clamp(20px,6vw,26px)}
+  .row .th{display:block;grid-column:9/span 4;justify-self:end;height:46px;width:auto;object-fit:cover}
+  .cv{padding-top:10vh}
+  .cvh{padding-bottom:10px}.cvr h3,.cvl{grid-column:1/-1}
+  .cvl li{grid-template-columns:1fr auto;row-gap:2px}.cvl li > :first-child{grid-column:1/-1}.cvl li > :nth-child(2){text-align:left}
+  .cvl.one li{grid-template-columns:1fr}
+  .pnav .count{display:none}.pnav .back-btn{grid-column:1/span 5}.pnav .pn{grid-column:6/span 7}
+  .phead{padding-top:6vh}
+  .psub,.ptag{grid-column:1/-1}.ptag{justify-content:flex-start;gap:20px}
+  .facts,.plink,.pdesc{grid-column:1/-1}.pdesc{grid-row:auto}
+  .jrow{flex-direction:column}.jrow figure{width:100%!important;flex:none!important}
+  .pnext .k{grid-column:1/-1}.pnext .nt{grid-column:1/-1;margin-top:6px}.pnext .nd{display:none}
 }
-#intro.fade-out { opacity: 0; pointer-events: none; }
-
-#intro-name {
-  font-size: 24px; font-weight: 400;
-  color: rgba(255,255,255,1);
-  letter-spacing: 0.2px; line-height: 40px;
-  opacity: 0; transition: opacity 0.7s ease;
-}
-#intro-name.show  { opacity: 1; }
-#intro-name.hide  { opacity: 0; }
-
-#intro-btns {
-  display: flex; gap: 24px;
-  opacity: 0; transition: opacity 0.7s ease;
-}
-#intro-btns.show { opacity: 1; }
-#intro-btns.hide { opacity: 0; pointer-events: none; }
-
-.intro-btn {
-  background: none; border: none; padding: 0;
-  font-family: inherit; font-size: 12px; font-weight: 400;
-  color: rgba(255,255,255,1); letter-spacing: 0.2px;
-  transition: opacity 0.2s;
-}
-.intro-btn:hover { opacity: 0.6; }
-
-/* ── MODE TOGGLE ── */
-#mode-toggle { display: flex; gap: 6px; margin-bottom: 40px; }
-/* Pills: outlined when idle, filled with the mode's accent when active */
-.mode-btn {
-  background: transparent; border: 1px solid #2a2a2a; border-radius: 999px; padding: 4px 14px 5px;
-  font-family: inherit; font-size: 12.5px; font-weight: 400; line-height: 1.4;
-  color: #777; letter-spacing: 0.2px;
-  transition: color 0.25s, background 0.25s, border-color 0.25s;
-}
-.mode-btn:not(.active):hover { border-color: #555; color: #ddd; }
-.mode-btn.active { background: var(--accent); border-color: var(--accent); color: #000; }
-#mode-toggle.off { display: none; }
-
-/* ── ACCENT THEMING ──
-   One accent per mode: Work is white, Play is purple, Build is the lime Rounds
-   itself runs on. Everything downstream reads these, so a fourth mode is just
-   another block here. */
-body       { --accent:#ffffff; --accent-soft:#ffffff; --accent-glow:rgba(255,255,255,0.07);
-             --cursor-line:rgba(255,255,255,0.8); --cursor-fill:rgba(255,255,255,1); }
-body.play  { --accent:#9B4DFF; --accent-soft:#c084ff; --accent-glow:rgba(155,77,255,0.15);
-             --cursor-line:rgba(155,77,255,0.85); --cursor-fill:rgba(155,77,255,1); }
-body.build { --accent:#D4FF3A; --accent-soft:#e8ff8a; --accent-glow:rgba(212,255,58,0.15);
-             --cursor-line:rgba(212,255,58,0.85); --cursor-fill:rgba(212,255,58,1); }
-
-/* ── CUSTOM CURSOR ── */
-#cursor {
-  position: fixed; width: 22px; height: 22px;
-  border: 1.5px solid var(--cursor-line); border-radius: 50%;
-  background: transparent; pointer-events: none; z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: background 0.25s ease, border-color 0.25s ease,
-              width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
-}
-#cursor.filled { background: var(--cursor-fill); width: 16px; height: 16px; }
-
-/* ── LAYOUT ── */
-.layout { display:flex; height:100vh; }
-
-/* ── SIDEBAR ── */
-.sidebar {
-  width: 460px; min-width: 460px; height: 100vh; overflow-y: auto;
-  padding: 22px 28px 48px 24px; scrollbar-width: none; flex-shrink: 0;
-}
-.sidebar::-webkit-scrollbar { display:none; }
-.site-name { font-size: 13.5px; font-weight: 400; margin-bottom: 16px; }
-
-.cv-row {
-  display:grid; grid-template-columns:104px 1fr; margin-bottom:22px;
-  opacity: 0; transform: translateY(5px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
-}
-.cv-row.show { opacity: 1; transform: translateY(0); }
-
-.cv-label { display:flex; align-items:flex-start; gap:8px; color:#777; font-size:12.5px; padding-top:1px; transition: color 0.25s ease; }
-.cv-row:hover .cv-label { color:#fff; }
-.cv-label .dot { font-size:14px; margin-top:-1px; flex-shrink:0; color: var(--accent); transition: opacity 0.25s ease; }
-.cv-content p { margin:0; }
-.cv-content .sub { color:#888; margin-bottom:10px; }
-.cv-content .sub:last-child { margin-bottom:0; }
-.cv-content a { color:var(--accent); text-decoration:none; transition: color 0.2s; }
-.cv-content a:hover { color:var(--accent-soft); text-decoration:underline; }
-
-/* ── PLAYING / SUGGEST ── */
-.spotify-embed { border-radius:8px; display:block; }
-
-.suggest-form { display:flex; gap:8px; margin-bottom:8px; }
-.suggest-form input {
-  flex:1; background:#0d0d0d; border:1px solid #2a2a2a; border-radius:4px;
-  color:#fff; font:inherit; font-size:12.5px; padding:7px 10px; outline:none;
-  transition: border-color 0.2s;
-}
-.suggest-form input:focus { border-color:#555; }
-body.play .suggest-form input:focus { border-color:#9B4DFF; }
-.suggest-form button {
-  background:none; border:1px solid #2a2a2a; border-radius:4px; color:#fff;
-  font:inherit; font-size:12.5px; padding:7px 14px; transition: border-color 0.2s, color 0.2s;
-}
-.suggest-form button:hover { border-color:#fff; }
-body.play .suggest-form button:hover { border-color:#9B4DFF; color:#9B4DFF; }
-#suggestStatus:empty, #copyNote:empty { display:none; }
-#suggestList {
-  display:flex; flex-direction:column; gap:4px;
-  max-height:88px; overflow-y:auto; scrollbar-width:none;
-  mask-image: linear-gradient(to bottom, #000 calc(100% - 16px), transparent 100%);
-}
-#suggestList::-webkit-scrollbar { display:none; }
-#suggestList .rec { font-size:11.5px; color:#888; }
-
-/* ── PROJECT DETAIL ── */
-.proj-panel { display:none; }
-.proj-panel.on { display:block; }
-.cv-info.off { display:none; }
-
-.back-btn {
-  background:none; border:none; color:#888; font:inherit; font-size:13.5px;
-  padding:0; margin-bottom:30px;
-  display:inline-flex; align-items:center; gap:5px; transition: color 0.2s;
-}
-.back-btn:hover { color:var(--accent); }
-.proj-title { font-size:21px; font-weight:400; line-height:1.25; margin-bottom:8px; }
-.proj-sub { color:#888; margin-bottom:22px; }
-.proj-desc { color:#c8c8c8; line-height:1.65; margin-bottom:22px; }
-.proj-desc p { margin-bottom:14px; }
-.proj-desc p:last-child { margin-bottom:0; }
-.proj-link { color:var(--accent); text-decoration:none; font-size:13.5px; transition: color 0.2s; }
-.proj-link:hover { color:var(--accent-soft); text-decoration:underline; }
-
-/* ── RIGHT PANEL ── */
-.right { flex:1; height:100vh; overflow-y:auto; scrollbar-width:none; min-width:0; }
-.right::-webkit-scrollbar { display:none; }
-
-/* ── UNIFIED GRID ── */
-.grid { columns:2; column-gap:12px; padding:12px 12px 80px; }
-.grid.off { display:none; }
-
-.grid-item {
-  break-inside:avoid; margin-bottom:16px; position:relative;
-  opacity: 0; transform: translateY(10px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
-}
-.grid-item.show { opacity: 1; transform: translateY(0); }
-
-.thumb-wrap { position:relative; overflow:hidden; }
-.thumb-wrap img { width:100%; display:block; transition: transform 0.4s ease; }
-.grid-item:hover .thumb-wrap img { transform: scale(1.03); }
-
-.item-overlay {
-  position:absolute; inset:0; pointer-events:none;
-  background: rgba(255,255,255,0); transition: background 0.35s ease;
-}
-.grid-item:hover .item-overlay { background: var(--accent-glow); }
-
-/* ── KEYBOARD FOCUS ──
-   Only shows for keyboard users (:focus-visible), never on mouse clicks.
-   Uses the current mode's accent so it matches Work / Play / Build. */
-:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
-.grid-item:focus-visible { outline-offset: 6px; }
-.grid-item:focus-visible .thumb-wrap img { transform: scale(1.03); }
-.grid-item:focus-visible .item-overlay { background: var(--accent-glow); }
-.right:focus-visible { outline-offset: -2px; }
-.suggest-form input:focus-visible { outline: none; } /* has its own border focus state */
-
-.item-label { padding: 9px 0 2px; }
-.item-title { font-size: 12px; font-weight: 400; color: #fff; letter-spacing: 0.2px; line-height: 1.4; }
-.item-sub   { font-size: 11px; color: #555; margin-top: 2px; }
-
-.proj-imgs { display:none; grid-template-columns:repeat(12,1fr); grid-auto-rows:auto; gap:4px; padding:4px 4px 80px; align-items:stretch; background:#000; }
-.proj-imgs.on { display:grid; }
-.proj-imgs .pi            { grid-column: span 6; overflow:hidden; align-self:start; }  /* default: half */
-.proj-imgs .pi.full       { grid-column: span 12; }
-.proj-imgs .pi.half       { grid-column: span 6; }
-.proj-imgs .pi.third      { grid-column: span 4; }
-.proj-imgs .pi.two-thirds { grid-column: span 8; }
-.proj-imgs .pi.quarter    { grid-column: span 3; }
-.proj-imgs .pi.row2       { grid-row: span 2; position:relative; overflow:hidden; min-height:0; align-self:stretch; }
-.proj-imgs .pi.row2 > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
-.proj-imgs .pi.fill       { position:relative; overflow:hidden; min-height:0; align-self:stretch; }
-.proj-imgs .pi.fill > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
-.proj-imgs .pi img { width:100%; display:block; vertical-align:top; }
-.proj-imgs .pi .ph { width:100%; display:block; background:#000; }
-
-.ph { width:100%; display:block; background:#1c1c1c; }
-
-/* ── SIDEBAR PER MODE ── */
-#playSidebar, #buildSidebar { display:none; }
-body.play  #workSidebar,  body.play  #buildSidebar { display:none; }
-body.play  #playSidebar  { display:block; }
-body.build #workSidebar,  body.build #playSidebar  { display:none; }
-body.build #buildSidebar { display:block; }
-
-/* ── BUILDING LIST ── */
-.building-item { margin-bottom:12px; }
-.building-item:last-child { margin-bottom:0; }
-.building-item .status { color:#555; font-size:11px; letter-spacing:0.3px; text-transform:uppercase; }
-.building-item button {
-  background:none; border:none; padding:0; font:inherit; color:var(--accent);
-  text-align:left; transition: color 0.2s;
-}
-.building-item button:hover { color:var(--accent-soft); text-decoration:underline; }
-
-/* ── REDESIGN: POSITIONING + STATUS ── */
-.pitch { font-size:21px; font-weight:400; line-height:1.3; letter-spacing:-0.1px; margin-bottom:22px; max-width:380px; text-wrap:balance; }
-/* Header: name on the left, availability on the right, like a presence dot */
-.side-head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:16px; }
-.side-head .site-name { margin:0; }
-.status { display:flex; align-items:center; gap:7px; font-size:12px; color:#999; white-space:nowrap; }
-.status-dot { width:6px; height:6px; border-radius:50%; background:#3ddc84; flex-shrink:0; align-self:center; animation: breathe 3s ease-in-out infinite; }
-@keyframes breathe { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
-/* Headline sits on its own, then a hairline before the CV starts */
-.cv-info .pitch { margin-bottom:26px; padding-bottom:26px; border-bottom:1px solid #1c1c1c; max-width:none; }
-/* Roles: title + years on one line, studio underneath */
-.job { margin-bottom:12px; }
-.job:last-child { margin-bottom:0; }
-.job .line { display:flex; justify-content:space-between; gap:12px; }
-.job .yr { color:#666; font-variant-numeric:tabular-nums; white-space:nowrap; font-size:12.5px; }
-.job .sub { margin-bottom:0; }
-.copy-btn { background:none; border:none; padding:0; font:inherit; color:var(--accent); transition:color 0.2s; }
-.copy-btn:hover { color:var(--accent-soft); text-decoration:underline; }
-.role { color:#fff; }
-.todo { color:#777; border:1px dashed #444; border-radius:3px; padding:0 5px; font-size:12px; white-space:nowrap; }
-
-/* ── REDESIGN: GRID / INDEX ── */
-.listing.off { display:none; }
-.listing-bar { display:flex; justify-content:flex-end; gap:14px; padding:14px 14px 0; }
-.view-btn { background:none; border:none; padding:0; font:inherit; font-size:12px; color:#555; letter-spacing:0.2px; transition:color 0.2s; }
-.view-btn.on { color:var(--accent); }
-.view-btn:not(.on):hover { color:#aaa; }
-.listing[data-view="grid"] .index, .listing[data-view="index"] .grid { display:none; }
-.grid { padding-top:10px; }
-.index { padding:22px 14px 80px; }
-.idx-row { display:grid; grid-template-columns:64px minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1.1fr) minmax(0,0.9fr); gap:16px; align-items:baseline;
-  width:100%; background:none; border:none; border-top:1px solid #1a1a1a; padding:13px 0; font:inherit; font-size:13px; color:#fff; text-align:left;
-  opacity:0; transform:translateY(6px); transition:opacity 0.4s ease, transform 0.4s ease, color 0.2s ease; }
-.idx-row.show { opacity:1; transform:none; }
-.idx-row > span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.idx-row .c { color:#888; transition:color 0.2s ease; }
-.idx-row .y { color:#666; font-variant-numeric:tabular-nums; }
-.idx-row:hover, .idx-row:focus-visible { color:var(--accent); }
-.idx-row:hover .c, .idx-row:focus-visible .c { color:#ccc; }
-.idx-head { color:#555; font-size:11px; letter-spacing:0.3px; text-transform:uppercase; border-top:none; padding:0 0 10px; opacity:1; transform:none; }
-.idx-head:hover { color:#555; }
-#idxThumb { position:fixed; width:200px; height:auto; pointer-events:none; z-index:400; opacity:0; transform:translate(24px,-50%) scale(0.96);
-  transition:opacity 0.18s ease, transform 0.18s ease; }
-#idxThumb.on { opacity:1; transform:translate(24px,-50%) scale(1); }
-
-/* ── REDESIGN: PLACEHOLDER TILES (recent work goes here) ── */
-.grid-item.placeholder { cursor:default; }
-.ph-tile { aspect-ratio:4/3; border:1px dashed #333; display:flex; flex-direction:column; justify-content:flex-end; padding:16px; gap:4px; color:#666; font-size:12px; }
-.ph-tile strong { color:#aaa; font-weight:400; font-size:13.5px; }
-
-/* ── REDESIGN: CASE STUDY FACTS ── */
-.proj-meta { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px 20px; padding:14px 0 16px; margin-bottom:22px; border-top:1px solid #1c1c1c; border-bottom:1px solid #1c1c1c; }
-.proj-meta:empty { display:none; }
-.proj-meta dt { font-size:11px; color:#666; letter-spacing:0.3px; text-transform:uppercase; margin-bottom:3px; }
-.proj-meta dd { margin:0; color:#ddd; font-size:12.5px; line-height:1.45; }
-
-/* ── REDESIGN: INTRO SHORTCUT + CURSOR LABEL ── */
-#cursor-label { position:fixed; pointer-events:none; z-index:10000; transform:translate(14px, 12px); font-size:11px; letter-spacing:0.2px;
-  color:#000; background:var(--cursor-fill); padding:2px 7px; border-radius:999px; opacity:0; transition:opacity 0.15s ease; white-space:nowrap; }
-#cursor-label.on { opacity:1; }
-
-@media (prefers-reduced-motion: reduce) {
-  .status-dot { animation:none; }
-  .grid-item, .cv-row { transition:none; }
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .pitch { font-size:19px; }
-  #cursor-label { display:none; }
-  #idxThumb { display:none; }
-  .idx-row { grid-template-columns:44px minmax(0,1fr) minmax(0,0.9fr); gap:12px; }
-  .idx-row .cl, .idx-row .r { display:none; }
-  html, body { overflow: auto; }
-  *, *::before, *::after { cursor: auto !important; }
-  #cursor { display: none; }
-  .layout { flex-direction: column; height: auto; min-height: 100vh; }
-  .sidebar { width: 100%; min-width: unset; height: auto; padding: 20px 20px 28px; border-bottom: 1px solid #222; }
-  .side-head { margin-bottom: 28px; }
-  .cv-row { grid-template-columns: 96px 1fr; margin-bottom: 20px; }
-  .side-head { flex-wrap:wrap; }
-  .right { height: auto; overflow-y: visible; }
-  .grid { columns: 1; }
-  .proj-title { font-size: 18px; }
-
-  /* Project image grid: collapse the 12-col layout to a single stacked column,
-     overriding the inline gc/gr placements set in JS. */
-  .proj-imgs { gap: 8px; padding: 8px 8px 60px; }
-  .proj-imgs .pi { grid-column: 1 / -1 !important; grid-row: auto !important; }
-  .proj-imgs .pi.row2,
-  .proj-imgs .pi.fill { aspect-ratio: 4 / 5; align-self: auto; }
-  .proj-imgs .pi img { transform: scale(1.12); transition: transform 0.05s linear; will-change: transform; }
+@media (prefers-reduced-motion:reduce){
+  .live{animation:none}
+  .strip{animation:none}
+  .row::before,.pnext::before,.row .t,.card.anim,.flip,.tilt,#home,#proj{transition:none}
+  .rv.pre{clip-path:none}.rv.pre img{transform:none}
 }
 </style>
 </head>
 <body>
+<div id="cur" aria-hidden="true"></div>
+<div id="curLabel" aria-hidden="true"></div>
+<div id="float" aria-hidden="true"><img alt=""></div>
+<canvas id="burst" aria-hidden="true"></canvas>
 
-<div id="intro">
-  <span id="intro-name">Ebony Rose</span>
-  <div id="intro-btns">
-    <button class="intro-btn" onclick="enterMode('work')">Work</button>
-    <button class="intro-btn" onclick="enterMode('play')">Play</button>
-    <button class="intro-btn" onclick="enterMode('build')">Build</button>
-  </div>
-</div>
-<div id="cursor"></div>
-<img id="idxThumb" alt="" aria-hidden="true">
-<div id="cursor-label"></div>
+<div id="intro" aria-hidden="true"><pre id="introAscii"></pre><div class="im"><span>// ebony rose, portfolio</span><span id="introPct">000%</span></div><canvas id="introC"></canvas></div>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="side-head">
-      <p class="site-name">Ebony Rose</p>
-      <p class="status"><span class="status-dot" aria-hidden="true"></span>Open to mid-weight digital roles</p>
+<div id="home">
+  <header class="g top">
+    <p><b>Ebony Rose</b></p>
+    <p>Mid Weight Digital Designer<br><span class="m">BRX, Prahran</span></p>
+    <p><span class="fl">Melbourne × Naarm. Designer who makes things for fun, not just for briefs.<br><span class="m">5 years of UI, automation and AI tools in production, with social, retail campaigns, motion, eDMs &amp; print picked up along the way.</span></span><span class="mn">Melbourne × Naarm<br><span class="m">Things for fun, not just briefs</span></span></p>
+    <p><span class="live"></span>Open to roles<br><a class="m ul" id="topMail" href="#"></a></p>
+  </header>
+
+  <section class="hero" id="hero" aria-label="Intro">
+    <figure class="cover" id="cover"><div class="cvstage"><button type="button" class="cvbtn" id="cvbtn" aria-label="Open project"></button></div></figure>
+    <div class="strip" id="strip" aria-hidden="true"></div>
+    <div class="g"><p class="state" id="state">Five years designing interfaces, campaigns and the odd thing nobody asked for. Designer who makes things for fun, not just for briefs.</p></div>
+  </section>
+
+  <main id="work" data-view="list">
+    <div class="g bar">
+      <div class="filters" role="group" aria-label="Filter projects" id="filters"></div>
+      <div class="views" role="group" aria-label="View">
+        <button type="button" class="tog" data-v="list" aria-pressed="true">List</button>
+        <button type="button" class="tog" data-v="map" aria-pressed="false">Explore</button>
+      </div>
+      <span class="lbl l-cl">Client</span><span class="lbl l-d">Discipline</span><span class="lbl l-r">Role</span>
     </div>
+    <div id="list"></div>
+    <div id="world" aria-label="Walk around Melbourne"></div>
 
-    <div id="mode-toggle">
-      <button class="mode-btn active" id="btnWork" onclick="switchMode('work')">Work</button>
-      <button class="mode-btn" id="btnPlay" onclick="switchMode('play')">Play</button>
-      <button class="mode-btn" id="btnBuild" onclick="switchMode('build')">Build</button>
-    </div>
-
-    <!-- ── WORK SIDEBAR ── -->
-    <div id="workSidebar">
-      <div class="cv-info" id="cvInfo">
-        <p class="pitch">Melbourne × Naarm. Designer who makes things for fun, not just for briefs.</p>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Experience</div>
-          <div class="cv-content">
-            <p>5 years of UI, automation and AI tools in production, with social, retail campaigns, motion, eDMs &amp; print picked up along the way.</p>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Currently</div>
-          <div class="cv-content">
-            <div class="job"><p class="line"><span>Mid Weight Digital Designer</span><span class="yr">2024–Now</span></p><p class="sub">BRX, Prahran</p></div>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Previously</div>
-          <div class="cv-content">
-            <div class="job"><p class="line"><span>Junior Designer</span><span class="yr">2022–24</span></p><p class="sub">Woo Agency, Brunswick</p></div>
-            <div class="job"><p class="line"><span>Graphic Designer</span><span class="yr">2021–22</span></p><p class="sub">Sky Foundry, Adelaide</p></div>
-            <div class="job"><p class="line"><span>Freelance Designer</span><span class="yr">2019–Now</span></p></div>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Education</div>
-          <div class="cv-content">
-            <div class="job"><p class="line"><span>Bachelor of Design</span><span class="yr">2019–21</span></p><p class="sub">Communication Design, RMIT University</p></div>
-            <div class="job"><p class="line"><span>High Achievers Award</span><span class="yr">2017</span></p><p class="sub">Visual Communication</p></div>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Software</div>
-          <div class="cv-content">
-            <p>Figma — every day</p>
-            <p>Adobe Creative Suite</p>
-            <p>HTML, CSS &amp; JS — enough to ship Rounds</p>
-            <p class="sub">p5.js — learning. very slowwwly.</p>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Links</div>
-          <div class="cv-content">
-            <p><a href="https://www.linkedin.com/in/ebonyrosedesign/" target="_blank">LinkedIn</a></p>
-            <p><a href="https://ebnyrose.github.io" target="_blank">ebnyrose.github.io</a></p>
-            <p><a href="mailto:ebonyroseaugustin@gmail.com">ebonyroseaugustin@gmail.com</a></p>
-            <p><button class="copy-btn" id="copyDetails" type="button">Copy my details</button></p>
-            <p class="sub" id="copyNote" aria-live="polite"></p>
-          </div>
-        </div>
-      </div>
-      <div class="proj-panel" id="projPanel">
-        <button class="back-btn" id="backBtn">← back</button>
-        <h2 class="proj-title" id="dTitle"></h2>
-        <p class="proj-sub" id="dSub"></p>
-        <dl class="proj-meta" id="dMeta"></dl>
-        <div class="proj-desc" id="dDesc"></div>
-        <a class="proj-link" id="dLink" href="#" target="_blank"></a>
-      </div>
-    </div>
-
-    <!-- ── PLAY SIDEBAR ── -->
-    <div id="playSidebar">
-      <div class="cv-info" id="playCvInfo">
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Hey</div>
-          <div class="cv-content">
-            <p>Melbourne × Naarm. Designer who makes things for fun, not just for briefs.</p>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Into</div>
-          <div class="cv-content">
-            <p>Film</p>
-            <p class="sub">my eyes are permanently square now</p>
-            <p>Music/gigs</p>
-            <p class="sub">RIP my bank account</p>
-            <p>RDR2</p>
-            <p class="sub">mostly just riding around</p>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Watching</div>
-          <div class="cv-content" id="watchingContent">
-            <p>—</p>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Playing</div>
-          <div class="cv-content">
-            <iframe class="spotify-embed" id="spotifyEmbed" src="" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify playlist"></iframe>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Suggest</div>
-          <div class="cv-content">
-            <p class="sub">got a rec for what i should watch or listen to?</p>
-            <form id="suggestForm" class="suggest-form">
-              <input type="text" id="suggestInput" placeholder="type it here..." maxlength="120" required>
-              <button type="submit">send</button>
-            </form>
-            <p class="sub" id="suggestStatus"></p>
-            <div id="suggestList"></div>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Find me</div>
-          <div class="cv-content">
-            <p><a href="https://www.linkedin.com/in/ebonyrosedesign/" target="_blank">LinkedIn</a></p>
-            <p><a href="https://ebnyrose.github.io" target="_blank">ebnyrose.github.io</a></p>
-            <p><a href="mailto:ebonyroseaugustin@gmail.com">ebonyroseaugustin@gmail.com</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="proj-panel" id="playProjPanel">
-        <button class="back-btn" id="playBackBtn">← back</button>
-        <h2 class="proj-title" id="pdTitle"></h2>
-        <p class="proj-sub" id="pdSub"></p>
-        <dl class="proj-meta" id="pdMeta"></dl>
-        <div class="proj-desc" id="pdDesc"></div>
-        <a class="proj-link" id="pdLink" href="#" target="_blank"></a>
-      </div>
-    </div>
-
-    <!-- ── BUILD SIDEBAR ── -->
-    <div id="buildSidebar">
-      <div class="cv-info" id="buildCvInfo">
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Making</div>
-          <div class="cv-content">
-            <p>Things I wanted to exist, so I made them. Designed and built, start to finish.</p>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Building</div>
-          <div class="cv-content" id="buildingList"></div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Find me</div>
-          <div class="cv-content">
-            <p><a href="https://www.linkedin.com/in/ebonyrosedesign/" target="_blank">LinkedIn</a></p>
-            <p><a href="https://ebnyrose.github.io" target="_blank">ebnyrose.github.io</a></p>
-            <p><a href="mailto:ebonyroseaugustin@gmail.com">ebonyroseaugustin@gmail.com</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="proj-panel" id="buildProjPanel">
-        <button class="back-btn" id="buildBackBtn">← back</button>
-        <h2 class="proj-title" id="bdTitle"></h2>
-        <p class="proj-sub" id="bdSub"></p>
-        <dl class="proj-meta" id="bdMeta"></dl>
-        <div class="proj-desc" id="bdDesc"></div>
-        <a class="proj-link" id="bdLink" href="#" target="_blank"></a>
-      </div>
-    </div>
-
-  </aside>
-
-  <main class="right" id="right">
-    <div class="listing" id="listing" data-view="grid">
-      <div class="listing-bar" role="group" aria-label="View">
-        <button type="button" class="view-btn on" data-view="grid" aria-pressed="true">Grid</button>
-        <button type="button" class="view-btn" data-view="index" aria-pressed="false">Index</button>
-      </div>
-      <div class="grid" id="grid"></div>
-      <div class="index" id="index" role="list"></div>
-    </div>
-    <div class="proj-imgs" id="projImgs"></div>
+    <section class="cv play" id="playSec" aria-labelledby="playh" hidden>
+      <h2 class="g cvh" id="playh" style="display:block;font-weight:400">Off the clock</h2>
+      <div class="g cvr"><h3>Hey</h3><ul class="cvl one"><li><span>Melbourne × Naarm. Designer who makes things for fun, not just for briefs.</span></li></ul></div>
+      <div class="g cvr"><h3>Into</h3><ul class="cvl two">
+        <li><span>Film</span><span>my eyes are permanently square now</span></li>
+        <li><span>Music / gigs</span><span>RIP my bank account</span></li>
+        <li><span>RDR2</span><span>mostly just riding around</span></li></ul></div>
+      <div class="g cvr"><h3>Watching</h3><ul class="cvl two" id="watching"><li><span>Hacks</span><span>why did it have to end</span></li></ul></div>
+      <div class="g cvr"><h3>Playing</h3><div class="cvl"><p>my playlist, on repeat</p><p class="sm" style="margin-top:6px"><a class="ul" href="https://open.spotify.com/playlist/0EG90swSbEAmwCbCSSAccm" target="_blank" rel="noopener">open on spotify ↗</a></p></div></div>
+      <div class="g cvr"><h3>Suggest</h3><div class="cvl"><p class="sm">got a rec for what i should watch or listen to?</p>
+        <form class="sug" id="sug"><input id="sugIn" type="text" maxlength="120" placeholder="type it here..." required aria-label="Your recommendation"><button type="submit" class="tog">send</button></form>
+        <p class="sm" id="sugStatus" aria-live="polite"></p><div id="sugList"></div></div></div>
+    </section>
+    <section class="cv" aria-labelledby="cvh">
+      <h2 class="g cvh" id="cvh" style="display:block;font-weight:400">Background</h2>
+      <div class="g cvr"><h3>Current</h3><ul class="cvl" id="jobsNow"></ul></div>
+      <div class="g cvr"><h3>Past</h3><ul class="cvl" id="jobsPast"></ul></div>
+      <div class="g cvr"><h3>Education</h3><ul class="cvl">
+        <li><span>Bachelor of Design</span><span>RMIT, Communication Design</span><span>2019–21</span></li>
+        <li><span>High Achievers Award</span><span>Visual Communication</span><span>2017</span></li></ul></div>
+      <div class="g cvr"><h3>Tools</h3><ul class="cvl two">
+        <li><span>Figma</span><span>every day</span></li>
+        <li><span>Adobe Creative Suite</span><span></span></li>
+        <li><span>HTML, CSS &amp; JS</span><span>enough to ship Rounds</span></li>
+        <li><span>p5.js</span><span>learning. very slowwwly.</span></li></ul></div>
+      <div class="g cvr"><h3>Contact</h3><ul class="cvl one">
+        <li><a class="ul" id="cvMail" href="#"></a></li>
+        <li><a class="ul" id="cvLi" href="#" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+        <li><a class="ul" href="https://ebnyrose.github.io" target="_blank" rel="noopener">ebnyrose.github.io ↗</a></li>
+        <li><span><button type="button" class="copy ul" id="copyBtn">Copy my details</button><span id="copyNote" aria-live="polite"></span></span></li></ul></div>
+    </section>
   </main>
+  <footer class="g"><p>© Ebony Rose</p><p>Melbourne × Naarm</p></footer>
 </div>
 
+<div id="proj" hidden></div>
+
+<script src="site-data.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
-// ─── INTRO FLOCK ──────────────────────────────────────────────────────────────
-// Ambient dots that repel from cursor on the intro screen.
-// When Play is clicked: dots turn purple and flock to form "play."
-// When Work is clicked: dots simply fade out.
-(function () {
-  const C = document.createElement('canvas');
-  C.style.cssText = 'position:fixed;inset:0;z-index:1001;pointer-events:none;transition:opacity 0.85s ease;';
-  document.body.appendChild(C);
-  const ctx = C.getContext('2d');
-  let W, H, raf;
-  let mx = -9999, my = -9999;
-  let phase = 'ambient'; // ambient | forming | holding | scattering | done
+(() => {
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const byId = id => WORK.find(p => p.id === id);
+const ratio = im => im[1] / im[2];
 
-  function resize() { C.width = W = innerWidth; C.height = H = innerHeight; }
-  resize();
-  addEventListener('resize', resize);
-  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+/* ── Smooth scroll ─────────────────────────────────────────────────────── */
+let lenis = null;
+if (!reduce && window.Lenis) { lenis = new Lenis({ duration: 1.15, smoothWheel: true }); }
+const scrollTo = (y, now) => lenis ? lenis.scrollTo(y, { immediate: !!now, force: true }) : window.scrollTo(0, y);
 
-  // ── Dot pool ────────────────────────────────────────────────────────────────
-  const N = 80;
-  const REPEL_R = 140, SEP_R = 22, MAX_SPD = 2.2;
-  const PURPLE = '#9B4DFF', WHITE = '#ffffff';
+/* ── Content ───────────────────────────────────────────────────────────── */
+$('#topMail').textContent = ME.email; $('#topMail').href = 'mailto:' + ME.email;
+$('#cvMail').textContent = ME.email + ' ↗'; $('#cvMail').href = 'mailto:' + ME.email;
+$('#cvLi').href = ME.linkedin;
+const jobLi = j => `<li><span>${esc(j.t)}</span><span>${esc(j.at)}</span><span>${esc(j.y)}</span></li>`;
+$('#jobsNow').innerHTML = ME.jobs.filter(j => /now/i.test(j.y)).map(jobLi).join('');
+$('#jobsPast').innerHTML = ME.jobs.filter(j => !/now/i.test(j.y)).map(jobLi).join('');
 
-  const dots = Array.from({ length: N }, () => ({
-    x: Math.random() * innerWidth,
-    y: Math.random() * innerHeight,
-    vx: (Math.random() - 0.5) * 1.4,
-    vy: (Math.random() - 0.5) * 1.4,
-    sz: Math.random() < 0.25 ? 2 : 1.5,
-    a: Math.random() * 0.35 + 0.15,
-    color: WHITE,
-    tx: 0, ty: 0,    // flock targets (set when forming)
-    svx: 0, svy: 0,  // scatter velocity
-  }));
+/* ── Cursor ────────────────────────────────────────────────────────────── */
+const cur = $('#cur'), curLabel = $('#curLabel'), root = document.documentElement;
+let mx = -100, my = -100, pmx = 0, pmy = 0, cursorColor = null;
+if (fine) root.classList.add('cc');
+addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; if (fine) cur.style.opacity = 1; }, { passive: true });
+document.addEventListener('pointerleave', () => { cur.style.opacity = 0; curLabel.classList.remove('on'); });
+addEventListener('pointerdown', () => cur.classList.add('down'));
+addEventListener('pointerup', () => cur.classList.remove('down'));
+let modeColor = null;
+function setCursorColor(c) { cursorColor = c; root.style.setProperty('--cur', c || modeColor || '#fff'); }
+document.addEventListener('pointerover', e => {
+  const t = e.target.closest('[data-cur], a, button');
+  cur.classList.toggle('fill', !!t);
+  const label = t && t.dataset.cur;
+  curLabel.textContent = label || ''; curLabel.classList.toggle('on', !!label);
+  const tint = e.target.closest('[data-tint]');
+  setCursorColor(tint ? tint.dataset.tint : null);
+});
 
-  // ── Pixel-sample text ───────────────────────────────────────────────────────
-  function sampleText(text, fontSize, cx, cy, n) {
-    const off = document.createElement('canvas');
-    off.width = W; off.height = H;
-    const c = off.getContext('2d');
-    c.font = `400 ${fontSize}px Epilogue, Helvetica, Arial, sans-serif`;
-    c.fillStyle = '#fff';
-    c.textAlign = 'center';
-    c.textBaseline = 'middle';
-    c.fillText(text, cx, cy);
-    const px = c.getImageData(0, 0, W, H).data;
-    const pts = [];
-    for (let y = 0; y < H; y += 4)
-      for (let x = 0; x < W; x += 4)
-        if (px[(y * W + x) * 4 + 3] > 60) pts.push([x, y]);
-    // shuffle
-    for (let i = pts.length - 1; i > 0; i--) {
-      const j = 0 | (Math.random() * (i + 1));
-      [pts[i], pts[j]] = [pts[j], pts[i]];
-    }
-    return pts.slice(0, n);
-  }
-
-  // ── Callbacks ───────────────────────────────────────────────────────────────
-  let _onFormed = null, _onScattered = null;
-
-  // ── Main loop ───────────────────────────────────────────────────────────────
-  function tick() {
-    ctx.clearRect(0, 0, W, H);
-    let formedCount = 0, scatteredCount = 0;
-
-    for (const d of dots) {
-
-      if (phase === 'ambient') {
-        // Cursor repulsion
-        const dx = d.x - mx, dy = d.y - my;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < REPEL_R && dist > 0.5) {
-          const f = ((REPEL_R - dist) / REPEL_R) * 3.2;
-          d.vx += (dx/dist)*f; d.vy += (dy/dist)*f;
-        }
-        // Dot separation
-        for (const o of dots) {
-          if (o === d) continue;
-          const sx = d.x - o.x, sy = d.y - o.y;
-          const sd = Math.sqrt(sx*sx + sy*sy);
-          if (sd < SEP_R && sd > 0.5) { d.vx += (sx/sd)*0.18; d.vy += (sy/sd)*0.18; }
-        }
-        // Speed cap + damping
-        const spd = Math.sqrt(d.vx*d.vx + d.vy*d.vy);
-        if (spd > MAX_SPD) { d.vx = d.vx/spd*MAX_SPD; d.vy = d.vy/spd*MAX_SPD; }
-        d.vx *= 0.97; d.vy *= 0.97;
-        if (Math.abs(d.vx) < 0.15) d.vx += (Math.random()-0.5)*0.12;
-        if (Math.abs(d.vy) < 0.15) d.vy += (Math.random()-0.5)*0.12;
-        d.x += d.vx; d.y += d.vy;
-        // Wrap
-        if (d.x < -4) d.x = W+4; if (d.x > W+4) d.x = -4;
-        if (d.y < -4) d.y = H+4; if (d.y > H+4) d.y = -4;
-
-      } else if (phase === 'forming') {
-        // Spring toward text target — smooth ease-in, no jitter
-        const dx = d.tx - d.x, dy = d.ty - d.y;
-        d.vx += dx * 0.10;
-        d.vy += dy * 0.10;
-        d.vx *= 0.80; d.vy *= 0.80;
-        d.x += d.vx; d.y += d.vy;
-        d.a = Math.min(0.9, d.a + 0.04);
-        if (Math.sqrt(dx*dx + dy*dy) < 3) formedCount++;
-
-      } else if (phase === 'scattering') {
-        d.a = Math.max(0, d.a - 0.026);
-        d.x += d.svx; d.y += d.svy;
-        d.svx *= 0.94; d.svy *= 0.94;
-        if (d.a <= 0.01) scatteredCount++;
-      }
-
-      // Draw
-      if (d.a > 0.01) {
-        ctx.globalAlpha = d.a;
-        ctx.fillStyle = d.color;
-        ctx.fillRect(d.x|0, d.y|0, d.sz, d.sz);
+/* ── Loading screen: ASCII torus, then it breaks into pixels and the site appears ── */
+function makeTorus(pre, W, H) {
+  const ramp = ' .,-~:;=!*#$@', R1 = 1, R2 = 2, K2 = 5, K1 = W * K2 * 3 / (8 * (R1 + R2));
+  return function draw(a, b) {
+    const out = new Array(W * H).fill(' '), zb = new Array(W * H).fill(0);
+    const cA = Math.cos(a), sA = Math.sin(a), cB = Math.cos(b), sB = Math.sin(b);
+    for (let th = 0; th < 6.283; th += 0.07) {
+      const cT = Math.cos(th), sT = Math.sin(th);
+      for (let ph = 0; ph < 6.283; ph += 0.02) {
+        const cP = Math.cos(ph), sP = Math.sin(ph), cx = R2 + R1 * cT, cy = R1 * sT;
+        const x = cx * (cB * cP + sA * sB * sP) - cy * cA * sB;
+        const y = cx * (sB * cP - sA * cB * sP) + cy * cA * cB;
+        const z = K2 + cA * cx * sP + cy * sA, oz = 1 / z;
+        const xp = (W / 2 + K1 * oz * x) | 0, yp = (H / 2 - K1 * oz * y * .5) | 0, o = xp + W * yp;
+        const L = cP * cT * sB - cA * cT * sP - sA * sT + cB * (cA * sT - cT * sA * sP);
+        if (yp >= 0 && yp < H && xp >= 0 && xp < W && L > 0 && oz > zb[o]) { zb[o] = oz; out[o] = ramp[Math.min(ramp.length - 1, (L * 8) | 0)]; }
       }
     }
-    ctx.globalAlpha = 1;
-
-    // Phase transitions
-    if (phase === 'forming' && formedCount >= N * 0.9) {
-      phase = 'holding';
-      if (_onFormed) { _onFormed(); _onFormed = null; }
-    }
-    if (phase === 'scattering' && scatteredCount >= N) {
-      phase = 'done';
-      C.style.opacity = '0';
-      if (_onScattered) { _onScattered(); _onScattered = null; }
-      setTimeout(() => C.remove(), 900);
-      return;
-    }
-
-    raf = requestAnimationFrame(tick);
-  }
-  tick();
-
-  // ── Public API ───────────────────────────────────────────────────────────────
-
-  // Simple stop (Work entry)
-  window.stopFlock = function () {
-    cancelAnimationFrame(raf);
-    C.style.opacity = '0';
-    setTimeout(() => C.remove(), 900);
+    let t = ''; for (let r = 0; r < H; r++) t += out.slice(r * W, r * W + W).join('') + '\n';
+    pre.textContent = t;
   };
-
-  // Play / Build entry: dots take the mode's colour → flock to form the word →
-  // scatter → callback. Word and colour come from MODES.
-  window.wordFlock = function (word, color, onComplete) {
-    dots.forEach(d => { d.color = color || PURPLE; });
-
-    // Sample after font loads
-    document.fonts.ready.then(() => {
-      const pts = sampleText(word || 'play.', 92, W / 2, H / 2, N);
-      dots.forEach((d, i) => {
-        const pt = pts[i % pts.length];
-        d.tx = pt[0]; d.ty = pt[1];
-      });
-      phase = 'forming';
-
-      // After forming: hold 650ms then scatter
-      _onFormed = () => {
-        setTimeout(() => {
-          dots.forEach(d => {
-            const ang = Math.random() * Math.PI * 2;
-            const spd = Math.random() * 15 + 5;
-            d.svx = Math.cos(ang) * spd;
-            d.svy = Math.sin(ang) * spd;
-          });
-          phase = 'scattering';
-          _onScattered = onComplete;
-        }, 650);
-      };
-    });
-  };
-})();
-
-// ─── BURST CANVAS (mode-switch transitions) ───────────────────────────────────
-(function () {
-  const C = document.createElement('canvas');
-  C.style.cssText = 'position:fixed;inset:0;z-index:500;pointer-events:none;';
-  document.body.appendChild(C);
-  const ctx = C.getContext('2d');
-  let W, H, raf, dots = [], onDone = null;
-  function resize() { C.width = W = innerWidth; C.height = H = innerHeight; }
-  resize(); addEventListener('resize', resize);
-
-  function loop() {
-    ctx.clearRect(0, 0, W, H);
-    let alive = false;
-    for (const d of dots) {
-      d.a = Math.max(0, d.a - 0.038);
-      d.x += d.vx; d.y += d.vy;
-      d.vx *= 0.9; d.vy *= 0.9;
-      if (d.a > 0.01) {
-        ctx.globalAlpha = d.a;
-        ctx.fillStyle = d.col;
-        ctx.fillRect(d.x|0, d.y|0, d.sz, d.sz);
-        alive = true;
-      }
-    }
-    ctx.globalAlpha = 1;
-    if (!alive) { dots = []; if (onDone) { onDone(); onDone = null; } return; }
-    raf = requestAnimationFrame(loop);
-  }
-
-  window.particleBurst = function (cx, cy, count, color, cb) {
-    onDone = cb || null;
-    dots = [];
-    for (let i = 0; i < count; i++) {
-      const a = Math.random() * Math.PI * 2;
-      const s = Math.random() * 18 + 5;
-      dots.push({
-        x: cx + (Math.random()-0.5)*12, y: cy + (Math.random()-0.5)*12,
-        vx: Math.cos(a)*s, vy: Math.sin(a)*s,
-        a: 0.7 + Math.random()*0.3,
-        sz: Math.random() < 0.3 ? 2.5 : 1.5,
-        col: color || '#ffffff',
-      });
-    }
-    cancelAnimationFrame(raf);
-    loop();
-  };
-})();
-
-// ─── LANDING PARTICLES (opening a project) ───────────────────────────────────
-// Dots leave the tile you clicked and settle onto the case study's first image,
-// in the project's colour. Skipped for reduced motion.
-(function () {
-  const C = document.createElement('canvas');
-  C.style.cssText = 'position:fixed;inset:0;z-index:500;pointer-events:none;';
-  document.body.appendChild(C);
-  const ctx = C.getContext('2d');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  let W, H, raf, dots = [], col = '#fff';
-  function resize() { C.width = W = innerWidth; C.height = H = innerHeight; }
-  resize(); addEventListener('resize', resize);
-
-  function loop() {
-    ctx.clearRect(0, 0, W, H);
-    let alive = false;
-    for (const d of dots) {
-      d.t++;
-      if (d.t > d.wait) { d.vx += (d.tx - d.x) * 0.022; d.vy += (d.ty - d.y) * 0.022; }
-      d.vx *= 0.84; d.vy *= 0.84;
-      d.x += d.vx; d.y += d.vy;
-      if (Math.hypot(d.tx - d.x, d.ty - d.y) < 8 || d.t > 55) d.a -= 0.045;
-      if (d.a > 0.01) {
-        alive = true;
-        ctx.globalAlpha = d.a; ctx.fillStyle = col;
-        ctx.fillRect(d.x | 0, d.y | 0, d.sz, d.sz);
-      }
-    }
-    ctx.globalAlpha = 1;
-    if (alive) raf = requestAnimationFrame(loop); else dots = [];
-  }
-
-  window.particleLand = function (from, to, color, n) {
-    if (reduce.matches || !from || !to) return;
-    const top = Math.max(0, to.top), bottom = Math.min(H, to.bottom);
-    if (bottom - top < 20) return; // first image isn't on screen
-    col = color || '#fff';
-    dots = Array.from({ length: n || 70 }, () => ({
-      x: from.left + Math.random() * from.width,
-      y: from.top + Math.random() * from.height,
-      tx: to.left + Math.random() * to.width,
-      ty: top + Math.random() * (bottom - top),
-      vx: (Math.random() - 0.5) * 16, vy: (Math.random() - 0.5) * 16,
-      a: 0.95, sz: Math.random() < 0.3 ? 2.5 : 1.5, t: 0, wait: Math.random() * 8,
+}
+const introDone = new Promise(resolve => {
+  const intro = $('#intro');
+  let seen = false; try { seen = sessionStorage.getItem('er-intro') === '1'; } catch (e) {}
+  if (reduce || seen || /^#.+/.test(location.hash)) { intro.remove(); resolve(); return; }
+  try { sessionStorage.setItem('er-intro', '1'); } catch (e) {}
+  const pre = $('#introAscii'), pct = $('#introPct'), cv = $('#introC'), ctx = cv.getContext('2d');
+  const W = 56, H = 27, draw = makeTorus(pre, W, H);
+  root.style.overflow = 'hidden';
+  const t0 = performance.now(), LOAD = 2000;
+  let A = 1.2, B = .4, tA = 0, tB = 0, last = t0;
+  (function spin(now) {
+    const dt = Math.min(50, now - last) / 1000; last = now;
+    const p = clamp((now - t0) / LOAD, 0, 1), e = 1 - Math.pow(1 - p, 3);
+    pct.textContent = String(Math.round(e * 100)).padStart(3, '0') + '%';
+    tA = lerp(tA, fine ? (my / innerHeight - .5) * 2.2 : 0, .06); tB = lerp(tB, fine ? (mx / innerWidth - .5) * 2.6 : 0, .06);
+    A += dt * (.7 + e * 1.6); B += dt * (.45 + e * 1.1);
+    draw(A + tA, B + tB);
+    if (p < 1) requestAnimationFrame(spin); else breakUp(A + tA, B + tB);
+  })(t0);
+  function breakUp(a, b) {
+    draw(a, b);
+    const d = devicePixelRatio || 1; cv.width = innerWidth * d; cv.height = innerHeight * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+    const r = pre.getBoundingClientRect(), cw = r.width / W, lh = r.height / H, ox = r.left + r.width / 2, oy = r.top + r.height / 2;
+    const rows = pre.textContent.split('\n'), parts = [];
+    rows.forEach((line, ri) => [...line].forEach((ch, ci) => {
+      if (ch === ' ') return;
+      const x = r.left + ci * cw + cw / 2, y = r.top + ri * lh + lh / 2, ang = Math.atan2(y - oy, x - ox) + (Math.random() - .5) * .9;
+      const sp = 1.5 + Math.random() * 9 * (.4 + Math.hypot(x - ox, y - oy) / (r.width / 2));
+      parts.push({ x, y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, s: ch === '@' || ch === '$' ? 3 : 2 });
     }));
-    cancelAnimationFrame(raf); loop();
+    const cell = Math.ceil(Math.max(innerWidth / 36, 28)), cols = Math.ceil(innerWidth / cell), rws = Math.ceil(innerHeight / cell);
+    const maxD = Math.hypot(innerWidth / 2, innerHeight / 2), cells = [];
+    for (let j = 0; j < rws; j++) for (let i = 0; i < cols; i++) {
+      const dd = Math.hypot(i * cell + cell / 2 - innerWidth / 2, j * cell + cell / 2 - innerHeight / 2) / maxD;
+      cells.push({ x: i * cell, y: j * cell, t: dd * .5 + Math.random() * .4 });
+    }
+    pre.style.visibility = 'hidden'; $('.im', intro).style.visibility = 'hidden'; intro.style.background = 'transparent';
+    const D = 1300, s0 = performance.now(); let resolved = false;
+    (function step(now) {
+      const e = (now - s0) / D;
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      ctx.fillStyle = '#000';
+      for (const c of cells) if (e < c.t) ctx.fillRect(c.x, c.y, cell + 1, cell + 1);
+      ctx.fillStyle = '#F2F2F2';
+      for (const q of parts) { q.x += q.vx; q.y += q.vy; q.vx *= .965; q.vy *= .965; ctx.globalAlpha = Math.max(0, 1 - e * 1.15); ctx.fillRect(q.x | 0, q.y | 0, q.s, q.s); }
+      ctx.globalAlpha = 1;
+      if (!resolved && e > .4) { resolved = true; root.style.overflow = ''; resolve(); }
+      if (e < 1.05) requestAnimationFrame(step); else intro.remove();
+    })(s0);
+  }
+});
+
+/* ── Statement: split into words + letters, load reveal ────────────────── */
+function split(el, letters) {
+  const text = el.textContent.trim();
+  el.setAttribute('aria-label', text);
+  el.innerHTML = text.split(/\s+/).map(w => `<span class="w" aria-hidden="true"><span class="wi">${letters ? [...w].map(c => `<i>${esc(c)}</i>`).join('') : esc(w)}</span></span>`).join(' ');
+}
+function reveal(el, delay = 0) {
+  if (reduce) return;
+  let top = null, line = -1;
+  $$('.wi', el).forEach(w => {
+    const t = w.parentElement.offsetTop;
+    if (t !== top) { top = t; line++; }
+    w.animate([{ transform: 'translateY(108%)' }, { transform: 'none' }], { duration: 1000, delay: delay + line * 85, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
+  });
+}
+const state = $('#state'), hero = $('#hero');
+split(state, true);
+const letters = $$('i', state).map(el => ({ el, x: 0, y: 0, k: 0 }));
+function measure() { letters.forEach(l => { const b = l.el.getBoundingClientRect(); l.x = b.left + b.width / 2 + scrollX; l.y = b.top + b.height / 2 + scrollY; }); }
+Promise.all([document.fonts.ready, introDone]).then(() => { reveal(state, 120); setTimeout(measure, 1400); startCover(); });
+addEventListener('resize', measure);
+
+const strip = $('#strip');
+strip.innerHTML = [...WORK, ...WORK].map(p => `<img src="${p.thumb[0]}" alt="" width="${p.thumb[1]}" height="${p.thumb[2]}" style="aspect-ratio:${p.thumb[1]}/${p.thumb[2]}">`).join('');
+
+/* ── Cover panel: bleeds off the right edge, cycles through the covers ── */
+const covers = WORK.filter(p => !/\.gif$/.test(p.imgs[0][0]) && p.imgs[0][1] / p.imgs[0][2] >= 1.25).map(p => Object.assign({}, p, { cv: p.imgs[0] }));
+let ci = -1, coverTimer = null, coverPaused = false;
+$('#cover').addEventListener('pointerenter', () => coverPaused = true); $('#cover').addEventListener('pointerleave', () => coverPaused = false);
+function coverBox(r) {
+  const W = $('.cvstage').clientWidth, maxH = W / 1.33, h = Math.min(maxH, W / r);
+  return [Math.min(W, h * r), h];
+}
+function alignCover() {
+  const cv = $('#cover'), st = $('.state'), hero = $('.hero'), stage = $('.cvstage'); if (!cv || !st || !hero || innerWidth <= 820) return;
+  const sr = st.getBoundingClientRect(), hr = hero.getBoundingClientRect();
+  cv.style.top = Math.max(24, (sr.top + sr.height / 2 - hr.top) - stage.offsetHeight / 2) + 'px';
+}
+addEventListener('resize', alignCover); if (document.fonts) document.fonts.ready.then(alignCover); setTimeout(alignCover, 300); setTimeout(alignCover, 2500); { let n = 0; const iv = setInterval(() => { alignCover(); if (++n > 16) clearInterval(iv); }, 500); }
+function showCover() {
+  const btn = $('#cvbtn'); if (!btn || innerWidth <= 820) return;
+  alignCover();
+  ci = (ci + 1) % covers.length;
+  const p = covers[ci], r = ratio(p.cv), [w, h] = coverBox(r);
+  const img = new Image(); img.src = p.cv[0]; img.alt = '';
+  const go = () => {
+    btn.dataset.id = p.id;
+    btn.style.width = w + 'px'; btn.style.height = h + 'px';
+    btn.appendChild(img);
+    if (!reduce) { img.animate([{ clipPath: 'inset(100% 0 0 0)', transform: 'scale(1.18)' }, { clipPath: 'inset(0 0 0 0)', transform: 'scale(1)' }], { duration: 1300, easing: 'cubic-bezier(.76,0,.18,1)' }); }
+    setTimeout(() => { while (btn.children.length > 1) btn.firstChild.remove(); }, 1400);
   };
+  if (img.complete) go(); else img.onload = go;
+}
+function startCover() {
+  if (reduce || !$('#cvbtn')) { showCover(); return; }
+  showCover(); coverTimer = setInterval(() => { if (!coverPaused && !document.hidden && !home.hidden && scrollY < innerHeight) showCover(); }, 4800);
+}
+$('#cvbtn').addEventListener('click', () => { const id = $('#cvbtn').dataset.id; if (id) openProject(id, $('#cvbtn img:last-child') ? $('#cvbtn').getBoundingClientRect() : null, true, byId(id).imgs[0][0]); });
+addEventListener('resize', () => { if (ci >= 0) { const [w, h] = coverBox(ratio(covers[ci].cv)); $('#cvbtn').style.width = w + 'px'; $('#cvbtn').style.height = h + 'px'; } });
+
+/* ── Filters + list ────────────────────────────────────────────────────── */
+let filter = 'all';
+const shows = p => filter === 'all' || p.mode === filter;
+const fl = $('#filters');
+fl.innerHTML = [['all', 'All'], ['work', 'Work'], ['play', 'Play'], ['build', 'Build']].map(([k, l]) =>
+  `<button type="button" class="tog" data-k="${k}" aria-pressed="${k === 'all'}">${l}<sup>${k === 'all' ? WORK.length : WORK.filter(p => p.mode === k).length}</sup></button>`).join('');
+const list = $('#list');
+list.innerHTML = WORK.map(p => `<button type="button" class="row g" data-id="${p.id}">
+  <span class="t">${esc(p.title)}</span><img class="th" src="${p.thumb[0]}" alt="" loading="lazy" style="aspect-ratio:${p.thumb[1]}/${p.thumb[2]}"><span class="cl rm">${esc(p.client)}</span><span class="d rm">${esc(p.discipline)}</span><span class="r rm">${esc(p.role)}</span></button>`).join('');
+const rows = $$('.row', list);
+fl.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || b.dataset.k === filter) return;
+  filter = b.dataset.k;
+  $$('button', fl).forEach(x => x.setAttribute('aria-pressed', x === b));
+  const MODE = { all: null, work: null, play: '#9B4DFF', build: '#D4FF3A' };
+  const ps = $('#playSec'), wasHidden = ps.hidden; ps.hidden = filter !== 'play';
+  if (!ps.hidden && wasHidden && !reduce) ps.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 800, delay: 250, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
+  modeColor = MODE[filter]; root.style.setProperty('--mode', modeColor || '#F2F2F2'); setCursorColor(null);
+  const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, modeColor || '#fff');
+  let i = 0;
+  rows.forEach(row => {
+    const on = shows(byId(row.dataset.id)); row.classList.toggle('gone', !on);
+    if (on && !reduce) row.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 650, delay: i++ * 45, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
+  });
+});
+list.addEventListener('click', e => { const row = e.target.closest('.row'); if (row) openProject(row.dataset.id, floatShown ? $('#float').getBoundingClientRect() : null); });
+
+/* Floating preview: real ratio, lags behind the cursor, tilts with speed */
+const fbox = $('#float'), fimg = $('img', fbox);
+let floatOn = false, floatShown = false, fx = 0, fy = 0, fs = 0, fw = 0, fh = 0, fr = 0;
+function showFloat(p) {
+  if (!fine) return;
+  const r = ratio(p.thumb); fw = r >= 1 ? 300 : 230; fh = fw / r;
+  if (fimg.getAttribute('src') !== p.thumb[0]) fimg.src = p.thumb[0];
+  fbox.style.width = fw + 'px'; fbox.style.height = fh + 'px';
+  if (!floatOn) { fx = mx; fy = my; }
+  floatOn = true;
+}
+const hideFloat = () => { floatOn = false; };
+rows.forEach(row => {
+  row.addEventListener('pointerenter', () => showFloat(byId(row.dataset.id)));
+  row.addEventListener('pointerleave', hideFloat);
+});
+
+/* ── One loop for cursor, preview and statement weight ─────────────────── */
+(function frame() {
+  cur.style.transform = `translate3d(${mx}px,${my}px,0)`;
+  curLabel.style.transform = `translate3d(${mx + 14}px,${my + 13}px,0)`;
+  // preview
+  fx = lerp(fx, mx, .13); fy = lerp(fy, my, .13);
+  fs = lerp(fs, floatOn ? 1 : 0, floatOn ? .14 : .2);
+  fr = lerp(fr, reduce ? 0 : clamp((mx - fx) * .05, -8, 8), .1);
+  floatShown = fs > .5;
+  fbox.style.opacity = Math.min(1, fs * 1.4);
+  fbox.style.transform = `translate3d(${fx + 46}px,${fy - fh / 2}px,0) scale(${.86 + fs * .14}) rotate(${fr}deg)`;
+  // statement letters thicken near the cursor
+  if (!reduce && fine && innerWidth > 820) {
+    const R = Math.max(150, innerWidth * .14), px = mx + scrollX, py = my + scrollY;
+    for (const l of letters) {
+      const t = Math.max(0, 1 - Math.hypot(l.x - px, l.y - py) / R);
+      const k = lerp(l.k, t * t * (3 - 2 * t), .12);
+      if (Math.abs(k - l.k) > .0005) { l.el.style.webkitTextStroke = (k * .05).toFixed(4) + 'em currentColor'; l.k = k; }
+    }
+  }
+  pmx = mx; pmy = my;
+  requestAnimationFrame(frame);
+})();
+if (lenis) (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+
+/* ── Particle burst (from the current site's mode switch) ──────────────── */
+const bc = $('#burst'), bx = bc.getContext('2d');
+let bdots = [], brun = false;
+function sizeBurst() { const d = devicePixelRatio || 1; bc.width = innerWidth * d; bc.height = innerHeight * d; bx.setTransform(d, 0, 0, d, 0, 0); }
+sizeBurst(); addEventListener('resize', sizeBurst);
+function burst(x, y, color) {
+  if (reduce) return;
+  for (let i = 0; i < 46; i++) { const a = Math.random() * Math.PI * 2, s = Math.random() * 9 + 3; bdots.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, a: .9, sz: Math.random() < .3 ? 2.5 : 1.5, c: color || '#fff' }); }
+  if (!brun) { brun = true; (function tick() {
+    bx.clearRect(0, 0, innerWidth, innerHeight);
+    bdots = bdots.filter(d => (d.a -= .03) > 0);
+    for (const d of bdots) { d.x += d.vx; d.y += d.vy; d.vx *= .9; d.vy *= .9; bx.globalAlpha = d.a; bx.fillStyle = d.c; bx.fillRect(d.x, d.y, d.sz, d.sz); }
+    bx.globalAlpha = 1;
+    if (bdots.length) requestAnimationFrame(tick); else brun = false;
+  })(); }
+}
+
+/* ── List / Explore switch ────────────────────────────────────────────────── */
+const work = $('#work');
+let view = 'list';
+function setView(v, save) {
+  view = v; work.dataset.view = v;
+  $$('.views .tog').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === v));
+  hideFloat();
+  if (v === 'map') { if (window.WORLD) WORLD.enter(); setTimeout(() => scrollTo(work.getBoundingClientRect().top + scrollY, false), 40); }
+  else if (window.WORLD) WORLD.leave();
+  if (save && v === 'list') try { localStorage.setItem('er-view', v); } catch (e) {}
+}
+$('.views').addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.dataset.v !== view) setView(b.dataset.v, true); });
+
+/* ── Suggest a rec (posts to your Google Form, same as the current site) ── */
+(function () {
+  const F = 'https://docs.google.com/forms/d/e/1FAIpQLSc3ZhTDmqhz0EqbRdNrCVl0202E89HFy7ii8ZmJbnyOnyN2YQ/formResponse', FIELD = 'entry.1680850579';
+  const CSV = 'https://docs.google.com/spreadsheets/d/1Niug1ghGqK5xcrv5NEgjm_F8ZnDN0fT6iShTJ0OOuIU/gviz/tq?gid=1859173230&tqx=out:csv';
+  const form = $('#sug'), input = $('#sugIn'), status = $('#sugStatus'), list = $('#sugList');
+  form.addEventListener('submit', e => {
+    e.preventDefault(); const val = input.value.trim(); if (!val) return;
+    const data = new URLSearchParams(); data.append(FIELD, val);
+    fetch(F, { method: 'POST', mode: 'no-cors', body: data }).then(() => {
+      status.textContent = 'thanks! added ✓';
+      const r = document.createElement('p'); r.className = 'rec'; r.textContent = val; list.prepend(r); input.value = '';
+      setTimeout(() => status.textContent = '', 3000);
+    }).catch(() => { status.textContent = "hmm, didn't go through — try again?"; });
+  });
+  fetch(CSV + '&cb=' + Date.now()).then(r => r.text()).then(csv => {
+    csv.trim().split('\n').slice(1, 9).reverse().forEach(row => {
+      const c = row.split(','); const v = (c[1] || c[0] || '').replace(/^"|"$/g, '').trim(); if (!v) return;
+      const r = document.createElement('p'); r.className = 'rec'; r.textContent = v; list.appendChild(r);
+    });
+  }).catch(() => {});
 })();
 
-// ─── PROJECTS ─────────────────────────────────────────────────────────────────
-const PROJECTS = [
-  {
-    id:'rounds', color:'#D4FF3A', year:'', client:'Self-initiated', discipline:'Product design + build',
-    thumb:'images/rounds-thumb.jpg', aspect:'133%', mode:'build', alsoIn:['work'],
-    title:'Rounds', subtitle:'Side project · live on the web and iOS', label:'designed it, then built it',
-    why:'Designed and built an app end to end. Live on web and iOS.',
-    meta:{ Role:'Product design + build', Team:'Just me', Platforms:'Web app, installable PWA, iOS', Status:'Live, with real-time crew voting' },
-    desc:`<p>Rounds plans a day or night out with your crew. You open it and there is already a plan waiting — three stops, times that work, the walk between them — and if you don't like it, one tap gives you another. Share it with a crew and everyone sees each other's votes as they change.</p>
-<p>It started because deciding where to go takes longer than going. That made the design problem the opposite of a blank canvas: the app has to have an opinion first and let you argue with it second, so nearly every screen opens on a decision already made rather than an empty state asking what you want.</p>
-<p>I designed it and then built it — the interface, the Melbourne venue list, a map that works out the walking route on the phone itself, and the server behind the live voting. It runs in a browser, installs on a phone like an app, and there is an iOS build.</p>`,
-    link:'https://rounds.ebonyaugustin2000.workers.dev', linkLabel:'open Rounds ↗',
-    images:[
-      {src:'images/rounds-hero.jpg',    aspect:'75%',  span:'full'},
-      {src:'images/rounds-plan.jpg',    aspect:'125%', span:'half'},
-      {src:'images/rounds-places.jpg',  aspect:'125%', span:'half'},
-      {src:'images/rounds-icon.jpg',    aspect:'125%', span:'half'},
-      {src:'images/rounds-shuffle.gif', aspect:'125%', span:'half'},
-    ]
-  },
-  {
-    id:'pirate-life', color:'#5fd3d6', year:'', client:'Pirate Life Brewing', discipline:'Ecommerce web design',
-    thumb:'images/pirate-life-thumb.jpeg', aspect:'land', mode:'work',
-    title:'Pirate Life Website', subtitle:'Brewery company in South Australia', label:'ecommerce web design',
-    why:'Ecommerce for a fast-growing craft brewery.',
-    meta:{ Role:'Designer', Scope:'Online shop redesign, new merch range', Outcome:'Live at shop.piratelife.com.au' },
-    desc:`<p>Pirate Life was growing fast and had a new merch range to sell, but the online shop felt like an afterthought next to the brand. The brief was one shop that felt like the beer.</p>
-<p>I went blocky and loud on purpose. Big product photography carries most of the page, a hand-drawn illustration sits in the footer, and emoji and icons do the small talk so the product copy can stay short.</p>
-<p><span class="todo">One line on what changed after launch, if you know it.</span></p>`,
-    link:'https://shop.piratelife.com.au', linkLabel:'shop.piratelife.com.au ↗',
-    images:[
-      {src:'images/pirate-life-01.jpeg', aspect:'65%',  span:'full'},
-      {src:'images/pirate-life-02.jpeg', gc:'1/span 4', gr:'2', fill:true},
-      {src:'images/pirate-life-03.jpeg', aspect:'85%',  gc:'5/span 8', gr:'2', cover:true},
-      {src:'images/pirate-life-04.jpeg', gc:'1/span 3', gr:'3', fill:true},
-      {src:'images/pirate-life-05.jpeg', aspect:'71%',  gc:'4/span 9', gr:'3', cover:true},
-    ]
-  },
-  {
-    id:'small-victories', color:'#4f86ff', year:'', client:'Small Victories Wine', discipline:'Web design',
-    thumb:'images/small-victories-thumb.webp', aspect:'land', mode:'work',
-    title:'Small Victories Website', subtitle:'Winery in South Australia', label:'web design',
-    why:'Type-led site for a wine brand chasing a younger crowd.',
-    meta:{ Role:'Designer', Scope:'Website for a new wine brand', Audience:'Urban women, 20 to 40', Outcome:'Live at smallvictorieswine.com' },
-    desc:`<p>Small Victories is an innovative boutique wine brand nestled in the Barossa Valley, South Australia. This brand distinctly appeals to the 20 to 40-year-old fashionable female demographic residing in urban centres. Originating from Elderton Wines, traditionally catering to an audience aged between 30 and 60, Small Victories marks a significant departure towards a more contemporary market focus.</p>
-<p>In alignment with its refreshed branding strategy and to captivate its targeted audience, there was a clear directive for a minimalist and sophisticated user interface (UI). This was to be achieved with a pronounced emphasis on typographic layout, drawing heavily on the aesthetic cues of their existing wine labels to guide the visual direction.</p>`,
-    link:'https://smallvictorieswine.com', linkLabel:'smallvictorieswine.com ↗',
-    images:[
-      {src:'images/small-victories-01.jpeg', aspect:'65%',  span:'full'},
-      {src:'images/small-victories-02.jpeg', gc:'1/span 4', gr:'2', fill:true},
-      {src:'images/small-victories-03.jpeg', aspect:'85%',  gc:'5/span 8', gr:'2', cover:true},
-      {src:'images/small-victories-04.jpeg', gc:'1/span 3', gr:'3', fill:true},
-      {src:'images/small-victories-05.jpeg', aspect:'71%',  gc:'4/span 9', gr:'3', cover:true},
-    ]
-  },
-  {
-    id:'spellmans', color:'#2fb070', year:'', client:'Spellmans\' Social', discipline:'Branding',
-    thumb:'images/spellmans-thumb.jpg', aspect:'port', mode:'work',
-    title:"Spellmans' Social", subtitle:'Cafe in South Australia', label:'branding',
-    why:'Café identity, from monogram to glassware.',
-    meta:{ Role:'Designer', Scope:'Brand identity, monogram, colour palette', Client:'Café in Adelaide', Outcome:'In use, @spellmans.social' },
-    desc:`<p>Situated in the heart of Adelaide, Spellmans' Social is a café that prides itself on creating an atmosphere that feels both inviting and intimate. In their pursuit of a unique brand identity, they expressed a desire for a design that seamlessly marries the nostalgia of yesteryears with the crisp, clean lines of modernity. They envisioned a colour palette that draws inspiration from nature, with deep, rich emerald green as the centrepiece, complemented by the warmth of browns and the subtlety of beige tones. This choice aimed not only to welcome guests but also to envelop them in a sense of comfort and sophistication.</p>
-<p>The introduction of a monogram was a thoughtful nod to classic design principles, ensuring that the essence of Spellmans' Social could be distilled into a simple, yet elegant, symbol.</p>
-<p>The client's enthusiastic response to this idea was a testament to its alignment with their vision for a brand that speaks of quality, warmth, and a timeless appeal, making Spellmans' Social not just a cafe, but a destination.</p>`,
-    link:'https://www.instagram.com/spellmans.social', linkLabel:'@spellmans.social ↗',
-    images:[
-      {src:'images/spellmans-01.jpg',  aspect:'65%',  span:'full'},
-      {src:'images/spellmans-02.jpeg', gc:'1/span 4', gr:'2', fill:true},
-      {src:'images/spellmans-03.jpeg', aspect:'85%',  gc:'5/span 8', gr:'2', cover:true},
-      {src:'images/spellmans-04.jpeg', gc:'1/span 4', gr:'3/span 2', rowspan:2},
-      {src:'images/spellmans-05.jpeg', gc:'5/span 3', gr:'3/span 2', rowspan:2},
-      {src:'images/spellmans-06.jpeg', aspect:'71%',  gc:'8/span 5', gr:'3'},
-      {src:'images/spellmans-07.jpeg', aspect:'71%',  gc:'8/span 5', gr:'4'},
-    ]
-  },
-  {
-    id:'link', color:'#c9c9cc', year:'', client:'Concept', discipline:'Product design',
-    thumb:'images/link-thumb.jpeg', aspect:'port', mode:'work',
-    title:'Link NFC Badge', subtitle:'Wearable Technology', label:'product design',
-    why:'A wearable NFC badge, designed down to the clasp.',
-    meta:{ Role:'Product design', Type:'Concept', Scope:'Detachable NFC reader with a pin you can wear alone', Power:'No charging, wakes at the reader' },
-    desc:`<p>The concept revolves around a badge equipped with an NFC (Near Field Communication) chip, designed for convenience and ease of use without the necessity for charging. Activation occurs exclusively upon interaction with a reader, facilitating a seamless experience. Users can effortlessly detach the main compartment for swiping and subsequently reattach it to the base.</p>
-<p>This device is customisable to suit the unique daily requirements of each user. The design ensures that the brooch component securely fits within the main compartment, minimizing the risk of misplacement. Furthermore, users have the flexibility to wear just the pin independently, offering versatility for days when the full functionality of the device is not needed.</p>`,
-    link:'', linkLabel:'',
-    images:[
-      {src:'images/link-01.jpg',  aspect:'65%',  span:'full'},
-      {src:'images/link-02.jpeg', gc:'1/span 3', gr:'2', fill:true},
-      {src:'images/link-03.jpeg', aspect:'71%',  gc:'4/span 9', gr:'2', cover:true},
-      {src:'images/link-04.jpeg', gc:'1/span 4', gr:'3', fill:true},
-      {src:'images/link-05.jpeg', aspect:'85%',  gc:'5/span 8', gr:'3', cover:true},
-    ]
-  },
-  {
-    id:'more-dood', color:'#f4755d', year:'2021', client:'RMIT × LESS Festival', discipline:'UI design',
-    thumb:'images/more-dood-thumb.jpeg', aspect:'land', mode:'play',
-    title:'LESS Festival Collage Activity', subtitle:'RMIT University', label:'collab gif collage tool',
-    why:'UI for a tool where festival-goers collage each other\'s GIFs.',
-    meta:{ Role:'UI design', Type:'RMIT studio brief', For:'LESS Festival of Collage, 2021', Scope:'Desktop-first UI, mobile concepts' },
-    desc:`<p>In the concluding semester of my studio course, we were tasked with conceiving a potential contribution for the 2021 Less Festival. The mandate was that our proposals should centrally feature collage as an artistic technique, while also offering an engaging activity for attendees. In response to this brief, I developed a preliminary user interface (UI) design for a platform named 'More Dood.'</p>
-<p>This UI design is intended to enable users to craft collaged gifs by augmenting each other's mini-animations, thereby fostering a collaborative and creative expression in a casual and approachable art style.</p>
-<p>Although concepts were developed for mobile accessibility, the full richness and functionality of the UI are optimally experienced via desktop.</p>`,
-    link:'https://lessfestivalofcollage.com/less-festival-2021', linkLabel:'lessfestivalofcollage.com/less-festival-2021 ↗',
-    images:[
-      {src:'images/more-dood-01.jpeg', aspect:'65%',  span:'full'},
-      {src:'images/more-dood-02.jpeg', aspect:'143%', gc:'1/span 4', gr:'2/span 2', rowspan:2},
-      {src:'images/more-dood-03.jpeg', aspect:'216%', gc:'5/span 4', gr:'2/span 2', rowspan:2},
-      {src:'images/more-dood-04.gif',  aspect:'70%',  gc:'9/span 4', gr:'2'},
-      {src:'images/more-dood-05.gif',  aspect:'70%',  gc:'9/span 4', gr:'3'},
-      {src:'images/more-dood-06.jpeg', aspect:'45%',  span:'full'},
-      {src:'images/more-dood-07.jpeg', aspect:'25%',  span:'full'},
-    ]
-  },
-  {
-    id:'rufus', color:'#29b3e8', year:'', client:'Self-initiated', discipline:'Album art',
-    thumb:'images/rufus-thumb.jpeg', aspect:'land', mode:'play',
-    title:'Rufus Du Sol Album Cover', subtitle:'Conceptual Project', label:'unsolicited album art (they never asked)',
-    why:'Unsolicited vinyl art for an album called Radiance.',
-    meta:{ Role:'Art direction + design', Type:'Self-initiated concept', Format:'Standard vinyl sleeve + packaging', Process:'Watercolour gradients, geometric focal points' },
-    desc:`<p>Known for their albums 'Atlas' and 'Bloom'. The group sought a fresh album cover and packaging design for their upcoming album 'Radiance', to be featured on standard-sized vinyl.</p>
-<p>The initial design concepts explored various themes, drawing direct inspiration from the album title 'Radiance,' though it was deemed too literal. Further iterations aimed at achieving a balance between being engaging and reflecting the album's essence.</p>
-<p>Another concept evolved through experimentation with watercolour gradients for a calming visual effect, geometric shapes to create focal points, and a shift from angular to more harmonious designs that integrate well with the intended backdrop.</p>
-<p>The final design aims to mirror the expansive and immersive quality of RÜFÜS's music, as described in their album creation process and thematic content.</p>`,
-    link:'', linkLabel:'',
-    images:[
-      {src:'images/rufus-01.jpeg', aspect:'65%',  span:'full'},
-      {src:'images/rufus-02.jpeg', gc:'1/span 4', gr:'2', fill:true},
-      {src:'images/rufus-03.jpeg', aspect:'85%',  gc:'5/span 8', gr:'2', cover:true},
-      {src:'images/rufus-04.jpeg', gc:'1/span 3', gr:'3', fill:true},
-      {src:'images/rufus-05.jpeg', aspect:'71%',  gc:'4/span 9', gr:'3', cover:true},
-    ]
-  },
-  {
-    id:'clearkind', color:'#b49cff', year:'', client:'Concept', discipline:'App UX + UI',
-    thumb:'images/clearkind-thumb.jpeg', aspect:'port', mode:'play',
-    title:'clearkind.', subtitle:'Health & Lifestyle App · Conceptual Project', label:'mental health app concept',
-    why:'App concept with a clickable Figma prototype.',
-    meta:{ Role:'UX + UI, solo', Type:'Concept app', Tools:'Figma (prototype linked)', Focus:'Planning with mental health support built in' },
-    desc:`<p>I developed an application tailored for young individuals struggling with organisation and daily management, with a strong emphasis on mental health support. This app incorporates specialised features such as break reminders, visualisers, calming timers, and music integration to aid stress management.</p>
-<p>Additionally, it includes notifications for physical activity and hydration, along with access to mental health professionals and techniques for anxiety and breathing management. Colour psychology is strategically utilised to enhance user engagement, employing red for energy, green for motivation, and blue for calm, particularly in sections dedicated to mental health.</p>
-<p>The application not only assists users in completing tasks but also promotes a balanced approach to time management, addressing the underlying issues of fatigue and demotivation. There is also potential to extend this application into a web-based platform for both Mac and Windows, further increasing its accessibility and utility.</p>`,
-    link:'https://www.figma.com/proto/98MvqmccjLyviiaBpDkQuj/clearkind-UI-Wireframes?node-id=2-92&p=f&viewport=724%2C555%2C0.16&t=XTiaeKyQISFD9TkL-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2%3A92&show-proto-sidebar=1&page-id=0%3A1', linkLabel:'Figma Prototype ↗',
-    images:[
-      {src:'images/clearkind-01.jpg',  aspect:'land', span:'full'},
-      {src:'images/clearkind-02.jpeg', aspect:'land', span:'full'},
-      {src:'images/clearkind-03.jpeg', aspect:'port', gc:'1/span 4', gr:'3/span 2', rowspan:2},
-      {src:'images/clearkind-04.jpeg', aspect:'land', gc:'5/span 8', gr:'3'},
-      {src:'images/clearkind-05.jpeg', aspect:'25%',  gc:'5/span 8', gr:'4'},
-    ]
-  },
-];
-
-// ─── BUILDING ─────────────────────────────────────────────────────────────────
-// The "○ Building" list in the Build sidebar. `id` points at a PROJECTS entry and
-// opens it in place; use `href` instead for something with no project page yet.
-const BUILDING = [
-  { name:'Rounds', note:'plan a night out with your crew. works on your phone.', id:'rounds', status:'live' },
-];
-
-// ─── PLACEHOLDERS ─────────────────────────────────────────────────────────────
-// Dashed tiles in the Work grid marking where recent work should go. Delete an
-// entry once its real project is in PROJECTS.
-const PLACEHOLDERS = [
-  { title:'BRX — 2024 to now', note:'2–3 recent projects go here. Password-protect if the client needs it.' },
-  { title:'Woo Agency — 2022 to 2024', note:'Your strongest Woo project. Even one does a lot.' },
-];
-
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
-// Edit these to update the Playing embed and Suggest box without touching anything else.
-const CONFIG = {
-  // From your Spotify playlist's share link: open.spotify.com/playlist/THIS_BIT
-  spotifyPlaylistId: '0EG90swSbEAmwCbCSSAccm',
-  // Google Form "formResponse" endpoint + entry ID for the text field.
-  // Leave blank to hide the suggest box. See setup notes for how to get these.
-  suggestFormAction: 'https://docs.google.com/forms/d/e/1FAIpQLSc3ZhTDmqhz0EqbRdNrCVl0202E89HFy7ii8ZmJbnyOnyN2YQ/formResponse',
-  suggestFormField: 'entry.1680850579',
-  // Published-to-web CSV link for the Sheet that Form feeds into (optional —
-  // shows recent suggestions on the site). Leave blank to skip the visible list.
-  suggestSheetCsv: 'https://docs.google.com/spreadsheets/d/1Niug1ghGqK5xcrv5NEgjm_F8ZnDN0fT6iShTJ0OOuIU/gviz/tq?gid=1859173230&tqx=out:csv'
-};
-
-// ─── DOM REFS ─────────────────────────────────────────────────────────────────
-const ratios        = { land:'66%', port:'133%', sq:'100%' };
-const grid          = document.getElementById('grid');
-const listing       = document.getElementById('listing');
-const indexEl       = document.getElementById('index');
-const projImgs      = document.getElementById('projImgs');
-const cvInfo        = document.getElementById('cvInfo');
-const playCvInfo    = document.getElementById('playCvInfo');
-const projPanel     = document.getElementById('projPanel');
-const playProjPanel = document.getElementById('playProjPanel');
-const backBtn       = document.getElementById('backBtn');
-const playBackBtn   = document.getElementById('playBackBtn');
-const buildCvInfo    = document.getElementById('buildCvInfo');
-const buildProjPanel = document.getElementById('buildProjPanel');
-const buildBackBtn   = document.getElementById('buildBackBtn');
-const right         = document.getElementById('right');
-const cur           = document.getElementById('cursor');
-
-// ─── MODES ────────────────────────────────────────────────────────────────────
-// Everything that used to be a work/play ternary lives here. To add a mode:
-// one entry below, one button in #intro-btns and #mode-toggle, one sidebar in
-// the markup, and one `body.<mode>` accent block in the CSS.
-const MODES = {
-  work:  { btn:'btnWork',  cv:cvInfo,      panel:projPanel,      prefix:'d',  accent:'#ffffff', word:null },
-  play:  { btn:'btnPlay',  cv:playCvInfo,  panel:playProjPanel,  prefix:'pd', accent:'#9B4DFF', word:'play.' },
-  build: { btn:'btnBuild', cv:buildCvInfo, panel:buildProjPanel, prefix:'bd', accent:'#D4FF3A', word:'build.' },
-};
-
-let currentMode = 'work';
-
-function makeThumb(src, aspect, alt, cover) {
-  // aspect can be a key ('land','port','sq') or a raw % string e.g. '25%'
-  const pb = /^\d/.test(aspect) ? aspect : (ratios[aspect] || '66%');
-  const div = document.createElement('div');
-  div.style.cssText = 'display:block;line-height:0;font-size:0;';
-  if (cover) {
-    div.style.cssText += `position:relative;padding-bottom:${pb};overflow:hidden;`;
-    const img = new Image();
-    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;';
-    img.src = src; img.alt = alt;
-    div.appendChild(img);
-  } else {
-    div.innerHTML = `<div class="ph" style="padding-bottom:${pb}"></div>`;
-    const img = new Image();
-    img.onload = () => { div.innerHTML=''; div.appendChild(img); };
-    img.src = src; img.alt = alt;
-    img.style.cssText = 'width:100%;display:block;vertical-align:top;';
-  }
-  return div;
-}
-
-function staggerRows(cvEl, delay) {
-  if (!cvEl) return;
-  [...cvEl.querySelectorAll('.cv-row')].forEach((r, i) => {
-    r.classList.remove('show');
-    setTimeout(() => r.classList.add('show'), delay + i * 80);
-  });
-}
-
-function renderGrid(mode, delay) {
-  grid.innerHTML = '';
-  const inMode = p => p.mode === mode || (p.alsoIn || []).includes(mode);
-  PROJECTS.filter(inMode).forEach((p, i) => {
-    const item = document.createElement('div');
-    item.className = 'grid-item';
-    const wrap = document.createElement('div');
-    wrap.className = 'thumb-wrap';
-    wrap.appendChild(makeThumb(p.thumb, p.aspect, p.title, p.thumbCover));
-    const ov = document.createElement('div'); ov.className = 'item-overlay';
-    wrap.appendChild(ov); item.appendChild(wrap);
-    const lbl = document.createElement('div'); lbl.className = 'item-label';
-    lbl.innerHTML = `<div class="item-title">${p.title}</div><div class="item-sub">${p.label||p.subtitle}</div>`;
-    item.appendChild(lbl);
-    item.addEventListener('click', () => openWithFlourish(p, wrap));
-    // Keyboard: tiles are focusable and open with Enter or Space
-    item.tabIndex = 0;
-    item.setAttribute('role', 'button');
-    item.dataset.id = p.id;
-    item.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWithFlourish(p, wrap); }
-    });
-    hoverTint(item, p);
-    bindFill(item, 'view');
-    grid.appendChild(item);
-    setTimeout(() => item.classList.add('show'), (delay||0) + i * 60);
-  });
-  if (mode === 'work') PLACEHOLDERS.forEach((ph, i) => {
-    const item = document.createElement('div');
-    item.className = 'grid-item placeholder';
-    item.innerHTML = `<div class="ph-tile"><strong>${ph.title}</strong>${ph.note}</div>
-      <div class="item-label"><div class="item-title">Placeholder</div><div class="item-sub">recent work</div></div>`;
-    grid.appendChild(item);
-    setTimeout(() => item.classList.add('show'), (delay||0) + (i + 6) * 60);
-  });
-  renderIndex(mode, delay);
-}
-
-// ─── PROJECT COLOUR ───────────────────────────────────────────────────────────
-// Each project has a `color`. Hovering its tile (or index row) tints the cursor
-// and accent; opening it keeps the tint for the whole case study.
-const TINT_VARS = ['--accent', '--accent-soft', '--accent-glow', '--cursor-line', '--cursor-fill'];
-let openTint = null;
-function rgb(hex) { const h = hex.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); }
-function tint(color) {
-  const st = document.body.style;
-  if (!color) { TINT_VARS.forEach(v => st.removeProperty(v)); return; }
-  const [r, g, b] = rgb(color);
-  const soft = [r, g, b].map(c => Math.round(c + (255 - c) * 0.35));
-  st.setProperty('--accent', color);
-  st.setProperty('--accent-soft', `rgb(${soft.join(',')})`);
-  st.setProperty('--accent-glow', `rgba(${r},${g},${b},0.16)`);
-  st.setProperty('--cursor-line', `rgba(${r},${g},${b},0.85)`);
-  st.setProperty('--cursor-fill', color);
-}
-const canHover = matchMedia('(hover: hover)');
-function hoverTint(el, p) {
-  // Mouse hover on desktop, and keyboard focus. Not taps on phones, and not the
-  // focus that returns to a tile when you come back from a case study.
-  el.addEventListener('mouseenter', () => { if (canHover.matches) tint(p.color); });
-  el.addEventListener('mouseleave', () => tint(openTint));
-  el.addEventListener('focus', () => { if (el.matches(':focus-visible')) tint(p.color); });
-  el.addEventListener('blur', () => tint(openTint));
-}
-
-// Open with particles: they leave the tile you clicked and land on the first image.
-function openWithFlourish(p, fromEl) {
-  const from = fromEl && fromEl.getBoundingClientRect();
-  openProject(p);
-  requestAnimationFrame(() => {
-    const first = projImgs.querySelector('.pi');
-    if (from && first) particleLand(from, first.getBoundingClientRect(), p.color || MODES[currentMode].accent);
-  });
-}
-
-// ─── INDEX VIEW ───────────────────────────────────────────────────────────────
-// The text version of the grid: one row per project. Hovering a row shows its
-// thumbnail beside the cursor.
-const idxThumb = document.getElementById('idxThumb');
-function renderIndex(mode, delay) {
-  const inMode = p => p.mode === mode || (p.alsoIn || []).includes(mode);
-  indexEl.innerHTML = `<div class="idx-row idx-head" role="presentation"><span>Year</span><span>Project</span><span class="cl">Client</span><span class="d">Discipline</span><span class="r">Role</span></div>`;
-  PROJECTS.filter(inMode).forEach((p, i) => {
-    const row = document.createElement('button');
-    row.type = 'button'; row.className = 'idx-row'; row.dataset.id = p.id; row.setAttribute('role', 'listitem');
-    const role = p.role || (p.meta && p.meta.Role) || '';
-    row.innerHTML = `<span class="y">${p.year || '<span class="todo">year</span>'}</span><span>${p.title}</span>` +
-      `<span class="c cl">${p.client || ''}</span><span class="c d">${p.discipline || p.label || ''}</span><span class="c r">${role}</span>`;
-    row.addEventListener('click', () => { hideThumb(); openWithFlourish(p, row); });
-    row.addEventListener('mouseenter', () => { idxThumb.src = p.thumb; idxThumb.classList.add('on'); });
-    row.addEventListener('mouseleave', hideThumb);
-    hoverTint(row, p);
-    bindFill(row, 'view');
-    indexEl.appendChild(row);
-    setTimeout(() => row.classList.add('show'), (delay || 0) + i * 40);
-  });
-}
-function hideThumb() { idxThumb.classList.remove('on'); }
-document.addEventListener('mousemove', e => { idxThumb.style.left = e.clientX + 'px'; idxThumb.style.top = e.clientY + 'px'; });
-
-function setView(view) {
-  listing.dataset.view = view;
-  listing.querySelectorAll('.view-btn').forEach(b => {
-    const on = b.dataset.view === view;
-    b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
-  });
-  try { localStorage.setItem('view', view); } catch (e) {}
-}
-
-let lastOpenedId = null;
-function openProject(p) {
-  const m     = MODES[currentMode] || MODES.work;
-  const panel = m.panel;
-  const cv    = m.cv;
-  const pfx   = m.prefix;
-  document.getElementById(pfx+'Title').textContent = p.title;
-  document.getElementById(pfx+'Sub').textContent   = p.subtitle;
-  document.getElementById(pfx+'Desc').innerHTML    = p.desc;
-  const lnk = document.getElementById(pfx+'Link');
-  lnk.href = p.link||'#'; lnk.textContent = p.linkLabel;
-  lnk.style.display = p.link ? '' : 'none';
-  const meta = p.meta || {};
-  document.getElementById(pfx+'Meta').innerHTML = Object.entries(meta).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
-  document.title = p.title + ' — Ebony Rose';
-  openTint = p.color || null; tint(openTint);
-  projImgs.innerHTML = '';
-  p.images.forEach(img => {
-    const w = document.createElement('div');
-    let cls = 'pi' + (img.span ? ' ' + img.span : '');
-    if (img.rowspan === 2) cls += ' row2';
-    if (img.fill) cls += ' fill';
-    w.className = cls;
-    if (img.gc) w.style.gridColumn = img.gc;
-    if (img.gr) w.style.gridRow = img.gr;
-    if (img.rowspan === 2 || img.fill) {
-      // Stretch to fill the cell (row height set by sibling) — no aspect-ratio placeholder
-      const i = new Image();
-      i.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-      i.src = img.src; i.alt = p.title;
-      w.appendChild(i);
-    } else {
-      w.appendChild(makeThumb(img.src, img.aspect, p.title, img.cover));
-    }
-    projImgs.appendChild(w);
-  });
-  cv.classList.add('off'); panel.classList.add('on');
-  document.getElementById('mode-toggle').classList.add('off');
-  listing.classList.add('off'); projImgs.classList.add('on');
-  right.scrollTo(0,0);
-  window.scrollTo(0,0);
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-  projImgs.querySelectorAll('.pi').forEach(el => bindFill(el));
-  // Keyboard: the image column can take focus so arrow keys scroll it,
-  // and focus moves to "← back" so the next keypress is somewhere useful.
-  right.tabIndex = 0;
-  right.setAttribute('role', 'region');
-  right.setAttribute('aria-label', p.title + ' images');
-  lastOpenedId = p.id;
-  panel.querySelector('.back-btn')?.focus({ preventScroll: true });
-  updateParallax();
-  if (!(history.state && history.state.project === p.id)) {
-    history.pushState({ project: p.id, mode: currentMode }, '', projectUrl(p.id));
-  }
-}
-
-// ─── MOBILE PARALLAX ─────────────────────────────────────────────────────
-let parallaxTicking = false;
-function updateParallax() {
-  parallaxTicking = false;
-  if (window.innerWidth > 768 || !projImgs.classList.contains('on')) return;
-  const vh = window.innerHeight;
-  projImgs.querySelectorAll('.pi img').forEach(img => {
-    const rect = img.parentElement.getBoundingClientRect();
-    const center = rect.top + rect.height / 2;
-    const offset = (center - vh / 2) / vh;
-    const move = Math.max(-14, Math.min(14, offset * 22));
-    img.style.transform = `translateY(${move}px) scale(1.12)`;
-  });
-}
-window.addEventListener('scroll', () => {
-  if (!parallaxTicking) { requestAnimationFrame(updateParallax); parallaxTicking = true; }
-}, { passive: true });
-
-function closeProject() {
-  const m = MODES[currentMode] || MODES.work;
-  document.title = 'Ebony Rose';
-  openTint = null; tint(null);
-  m.cv.classList.remove('off');
-  m.panel.classList.remove('on');
-  document.getElementById('mode-toggle').classList.remove('off');
-  listing.classList.remove('off'); projImgs.classList.remove('on');
-  right.removeAttribute('tabindex'); right.removeAttribute('role'); right.removeAttribute('aria-label');
-  // Return focus to the tile that was opened, so keyboard users keep their place
-  const tile = lastOpenedId && listing.querySelector(
-    listing.dataset.view === 'index' ? `.idx-row[data-id="${lastOpenedId}"]` : `.grid-item[data-id="${lastOpenedId}"]`);
-  if (tile) tile.focus();
-}
-[backBtn, playBackBtn, buildBackBtn].forEach(b => b.addEventListener('click', () => history.back()));
-
-// Escape closes an open project
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && projImgs.classList.contains('on') && history.state && history.state.project) {
-    history.back();
-  }
+/* ── Copy my details ───────────────────────────────────────────────────── */
+const DETAILS = ['Ebony Rose', 'Mid Weight Digital Designer, Melbourne', 'Open to roles', ME.email, 'ebonyrose.xyz · linkedin.com/in/ebonyrosedesign'].join('\n');
+$('#copyBtn').addEventListener('click', () => {
+  const note = $('#copyNote');
+  const done = ok => { note.textContent = ok ? ' Copied' : ' Select the email above instead'; setTimeout(() => note.textContent = '', 2400); };
+  if (navigator.clipboard) navigator.clipboard.writeText(DETAILS).then(() => done(true), () => done(false)); else done(false);
 });
 
-// ─── LINKS TO PROJECTS ───────────────────────────────────────────────────────
-// Every project has its own shareable link that opens straight on the project,
-// skipping the intro. On the live site it's a clean path (ebonyrose.xyz/rounds).
-// vercel.json serves that path from share/rounds.html, a tiny page that carries
-// the link preview (title, image) and then hands over to /#rounds. Anywhere else
-// (local server, previews) the link is a hash (#rounds).
-const CLEAN_URLS = /(^|\.)ebonyrose\.xyz$|\.vercel\.app$/.test(location.hostname);
-function projectUrl(id) { return CLEAN_URLS ? '/' + id : '#' + id; }
-function homeUrl()      { return CLEAN_URLS ? '/' : location.pathname + location.search; }
-function linkedProject() {
-  const ids = [location.pathname.replace(/^\/+|\/+$/g, ''), location.hash.slice(1)];
-  return ids.map(id => PROJECTS.find(p => p.id === id)).find(Boolean) || null;
+/* ── Project pages ─────────────────────────────────────────────────────── */
+const home = $('#home'), proj = $('#proj');
+let homeScroll = 0, current = null;
+function justify(imgs) {
+  // Rows whose images share a height, so nothing is cropped
+  const rowsOut = []; let row = [], sum = 0;
+  imgs.forEach(im => { row.push(im); sum += ratio(im); if (sum >= 1.75) { rowsOut.push(row); row = []; sum = 0; } });
+  if (row.length) { if (sum < 1.1 && rowsOut.length) rowsOut[rowsOut.length - 1].push(...row); else rowsOut.push(row); }
+  return rowsOut.map(r => {
+    const total = r.reduce((s, im) => s + ratio(im), 0);
+    return `<div class="jrow">${r.map(im => `<figure class="rv pre" style="flex:${ratio(im).toFixed(4)} 1 0"><img src="${im[0]}" alt="" width="${im[1]}" height="${im[2]}" loading="lazy"></figure>`).join('')}</div>`;
+  }).join('');
 }
-
-// ─── BROWSER BACK/FORWARD ───────────────────────────────────────────────────
-window.addEventListener('popstate', (e) => {
-  const state = e.state;
-  if (state && state.project) {
-    if (state.mode !== currentMode) switchMode(state.mode);
-    const list = PROJECTS.filter(pr => pr.mode === state.mode || (pr.alsoIn || []).includes(state.mode));
-    const proj = list.find(pr => pr.id === state.project);
-    if (proj) openProject(proj);
-  } else {
-    closeProject();
-  }
-});
-
-function applyMode(mode, delay) {
-  currentMode = mode;
-  openTint = null; tint(null);
-  Object.keys(MODES).forEach(k => {
-    document.body.classList.toggle(k, k === mode && k !== 'work');
-    document.getElementById(MODES[k].btn).classList.toggle('active', k === mode);
-    MODES[k].cv.classList.remove('off');
-    MODES[k].panel.classList.remove('on');
-  });
-  document.getElementById('mode-toggle').classList.remove('off');
-  listing.classList.remove('off'); projImgs.classList.remove('on');
-  renderGrid(mode, delay||0);
-  staggerRows(MODES[mode].cv, delay||0);
+function renderProject(p) {
+  const i = WORK.indexOf(p), n = WORK.length, next = WORK[(i + 1) % n], prev = WORK[(i - 1 + n) % n];
+  const facts = Object.assign({}, p.meta.Client ? {} : { Client: p.client }, p.meta, { Discipline: p.discipline });
+  proj.style.setProperty('--pc', p.color);
+  proj.innerHTML = `
+  <nav class="g pnav" aria-label="Project">
+    <button type="button" class="back-btn ul" data-go="home">← All work</button>
+    <span class="count">${String(i + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}</span>
+    <span class="pn"><button type="button" class="ul" data-go="${prev.id}">Previous</button><button type="button" class="ul" data-go="${next.id}">Next</button></span>
+  </nav>
+  <header class="g phead">
+    <h1 class="ptitle" id="ptitle">${esc(p.title)}</h1>
+    <p class="psub">${esc(p.subtitle)}</p>
+    <p class="ptag"><span><i></i>${esc(p.discipline)}</span><span>${esc(p.client)}</span></p>
+  </header>
+  <figure class="phero"><img id="pheroImg" src="${p.imgs[0][0]}" alt="${esc(p.title)}" width="${p.imgs[0][1]}" height="${p.imgs[0][2]}"></figure>
+  <section class="g pinfo">
+    <dl class="facts">${Object.entries(facts).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
+    ${p.link ? `<a class="plink ul" href="${esc(p.link)}" target="_blank" rel="noopener" data-cur="open">${esc(p.linkLabel)} ↗</a>` : ''}
+    <div class="pdesc">${p.desc.map(t => `<p>${esc(t)}</p>`).join('')}</div>
+  </section>
+  <section class="pimgs" aria-label="${esc(p.title)} images">${justify(p.imgs.slice(1))}</section>
+  <button type="button" class="pnext g" data-go="${next.id}" data-cur="next">
+    <span class="k">Next project</span><span class="nt">${esc(next.title)}</span><span class="nd">${esc(next.discipline)}</span>
+  </button>
+  <footer class="g pfoot"><p>© Ebony Rose</p><p><a class="ul" href="mailto:${ME.email}">${esc(ME.email)}</a></p></footer>`;
+  split($('#ptitle'), false);
+  const nb = $('.pnext', proj);
+  nb.addEventListener('pointerenter', () => showFloat(next)); nb.addEventListener('pointerleave', hideFloat);
+  watchReveals();
 }
-
-function switchMode(mode) {
-  if (mode === currentMode) return;
-  const m = MODES[mode] || MODES.work;
-  const r = document.getElementById(m.btn).getBoundingClientRect();
-  [...listing.querySelectorAll('.grid-item, .idx-row:not(.idx-head)')].forEach(el => el.classList.remove('show'));
-  particleBurst(r.left + r.width/2, r.top + r.height/2, 55, m.accent, () => applyMode(mode, 80));
+let io = null;
+function watchReveals() {
+  if (io) io.disconnect();
+  const figs = $$('.rv', proj);
+  if (reduce || !('IntersectionObserver' in window)) { figs.forEach(f => f.classList.remove('pre')); return; }
+  io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting && e.boundingClientRect.top < 0) { e.target.classList.remove('pre'); io.unobserve(e.target); } else if (e.isIntersecting) { const f = e.target; f.classList.add('go'); requestAnimationFrame(() => f.classList.remove('pre')); io.unobserve(f); } }), { rootMargin: '0px 0px -8% 0px' });
+  figs.forEach(f => io.observe(f));
 }
-
-// ─── INTRO ────────────────────────────────────────────────────────────────────
-const intro     = document.getElementById('intro');
-const introName = document.getElementById('intro-name');
-const introBtns = document.getElementById('intro-btns');
-
-// While the intro is up, the page behind it can't be tabbed into
-const layoutEl = document.querySelector('.layout');
-layoutEl.inert = true;
-
-setTimeout(() => introName.classList.add('show'), 300);
-setTimeout(() => introBtns.classList.add('show'), 900);
-
-
-function enterMode(mode) {
-  // Lock buttons immediately
-  introBtns.classList.add('hide');
-  introName.classList.add('hide');
-
-  const m = MODES[mode] || MODES.work;
-
-  // Hand keyboard focus from the intro to the page
-  const hadFocus = intro.contains(document.activeElement);
-  layoutEl.inert = false;
-  if (hadFocus) document.getElementById(m.btn).focus({ preventScroll: true });
-
-  if (m.word) {
-    // ── Play / Build: dots take the mode's colour, flock to form its word, reveal
-    wordFlock(m.word, m.accent, () => {
-      // flock canvas removes itself; page is now visible
-    });
-    // Fade intro background out while dots are holding the word
-    setTimeout(() => intro.classList.add('fade-out'), 1300);
-    setTimeout(() => intro.remove(), 2200);
-    // Stagger content in after intro is gone
-    applyMode(mode, 1900);
-
-  } else {
-    // ── Work: clean stop, simple fade
-    stopFlock();
-    intro.classList.add('fade-out');
-    setTimeout(() => intro.remove(), 950);
-    applyMode('work', 500);
-  }
+function fly(fromRect, src, toEl) {
+  // Shared-element move: the picture you clicked travels into place as the project's hero
+  if (reduce || !fromRect || !toEl) return;
+  const to = toEl.getBoundingClientRect();
+  const f = new Image(); f.id = 'fly'; f.src = src; document.body.appendChild(f);
+  toEl.style.visibility = 'hidden';
+  const k = (r) => ({ left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' });
+  f.animate([k(fromRect), k(to)], { duration: 950, easing: 'cubic-bezier(.7,0,.2,1)', fill: 'forwards' }).onfinish = () => { toEl.style.visibility = ''; f.remove(); };
 }
-
-// Auto-dismiss to Work after 5s (was 8s: recruiters arriving from LinkedIn shouldn't wait)
-setTimeout(() => { if (document.getElementById('intro')) enterMode('work'); }, 5000);
-
-// ─── CURSOR ──────────────────────────────────────────────────────────────────
-document.addEventListener('mousemove', e => {
-  cur.style.left = e.clientX + 'px';
-  cur.style.top  = e.clientY + 'px';
-});
-document.addEventListener('mouseleave', () => cur.style.opacity = '0');
-document.addEventListener('mouseenter', () => cur.style.opacity = '1');
-
-const curLabel = document.getElementById('cursor-label');
-document.addEventListener('mousemove', e => { curLabel.style.left = e.clientX + 'px'; curLabel.style.top = e.clientY + 'px'; });
-function bindFill(el, label) {
-  el.addEventListener('mouseenter', () => {
-    cur.classList.add('filled');
-    if (label) { curLabel.textContent = label; curLabel.classList.add('on'); }
-  });
-  el.addEventListener('mouseleave', () => { cur.classList.remove('filled'); curLabel.classList.remove('on'); });
-}
-document.querySelectorAll('a, button').forEach(bindFill);
-
-document.querySelectorAll('.cv-row').forEach(row => {
-  const dot = row.querySelector('.dot');
-  if (!dot) return;
-  row.addEventListener('mouseenter', () => {
-    dot.style.opacity='0';
-    setTimeout(()=>{ dot.textContent='●'; dot.style.opacity='1'; }, 130);
-  });
-  row.addEventListener('mouseleave', () => {
-    dot.style.opacity='0';
-    setTimeout(()=>{ dot.textContent='○'; dot.style.opacity='1'; }, 130);
-  });
-});
-
-// ─── WATCHING / PLAYING / SUGGEST ──────────────────────────────────────────────
-function initWatching() {
-  fetch('data.json?cb=' + Date.now()).then(r => r.json()).then(d => {
-    const el = document.getElementById('watchingContent');
-    if (d && d.watching) {
-      el.innerHTML = `<p>${d.watching.title}</p>` +
-        (d.watching.note ? `<p class="sub">${d.watching.note}</p>` : '');
-    }
-  }).catch(() => {});
-}
-
-function initSpotify() {
-  const frame = document.getElementById('spotifyEmbed');
-  if (CONFIG.spotifyPlaylistId && CONFIG.spotifyPlaylistId !== 'YOUR_PLAYLIST_ID') {
-    frame.src = `https://open.spotify.com/embed/playlist/${CONFIG.spotifyPlaylistId}?utm_source=generator&theme=0`;
-  } else {
-    frame.parentElement.innerHTML = '<p class="sub">spotify playlist coming soon</p>';
-  }
-}
-
-function initSuggest() {
-  const form   = document.getElementById('suggestForm');
-  const input  = document.getElementById('suggestInput');
-  const status = document.getElementById('suggestStatus');
-  const list   = document.getElementById('suggestList');
-
-  if (!CONFIG.suggestFormAction) {
-    form.style.display = 'none';
-    status.textContent = 'suggestions coming soon';
-    return;
-  }
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const val = input.value.trim();
-    if (!val) return;
-    const data = new URLSearchParams();
-    data.append(CONFIG.suggestFormField, val);
-    fetch(CONFIG.suggestFormAction, { method: 'POST', mode: 'no-cors', body: data })
-      .then(() => {
-        status.textContent = 'thanks! added ✓';
-        const rec = document.createElement('p');
-        rec.className = 'rec';
-        rec.textContent = val;
-        list.prepend(rec);
-        input.value = '';
-        setTimeout(() => { status.textContent = ''; }, 3000);
-      })
-      .catch(() => { status.textContent = "hmm, didn't go through — try again?"; });
-  });
-
-  if (CONFIG.suggestSheetCsv) {
-    const csvUrl = CONFIG.suggestSheetCsv + (CONFIG.suggestSheetCsv.includes('?') ? '&' : '?') + 'cb=' + Date.now();
-    fetch(csvUrl).then(r => r.text()).then(csv => {
-      const rows = csv.trim().split('\n').slice(1, 9); // skip header, latest few
-      rows.reverse().forEach(row => {
-        const cols = row.split(',');
-        const val = (cols[1] || cols[0] || '').replace(/^"|"$/g, '').trim();
-        if (!val) return;
-        const rec = document.createElement('p');
-        rec.className = 'rec';
-        rec.textContent = val;
-        list.appendChild(rec);
-      });
-    }).catch(() => {});
-  }
-}
-
-// ─── COPY MY DETAILS ──────────────────────────────────────────────────────────
-// A short summary for recruiters to paste into their system or a message.
-const DETAILS = [
-  'Ebony Rose',
-  'Mid Weight Digital Designer, Melbourne',
-  'Open to mid-weight digital roles',
-  'ebonyroseaugustin@gmail.com',
-  'ebonyrose.xyz · linkedin.com/in/ebonyrosedesign',
-].join('\n');
-function initCopyDetails() {
-  const btn = document.getElementById('copyDetails');
-  const note = document.getElementById('copyNote');
-  if (!btn) return;
-  const done = ok => {
-    note.textContent = ok ? 'Copied. Paste it anywhere.' : "Couldn't copy. The details are above.";
-    setTimeout(() => { note.textContent = ''; }, 2600);
+function openProject(id, fromRect, push = true, srcOverride) {
+  const p = byId(id); if (!p) return;
+  if (!current) homeScroll = scrollY;
+  current = p; hideFloat(); floatOn = false; fs = 0;
+  const fromSrc = fromRect ? (fromRect.width ? (srcOverride || p.thumb[0]) : null) : null;
+  const go = () => {
+    home.hidden = true; proj.hidden = false; proj.style.opacity = 1;
+    renderProject(p); scrollTo(0, true);
+    document.title = p.title + ' — Ebony Rose';
+    reveal($('#ptitle'), 120);
+    requestAnimationFrame(() => fly(fromRect, fromSrc, $('#pheroImg')));
+    const h = $('#ptitle'); h.tabIndex = -1; h.focus({ preventScroll: true });
   };
-  const fallback = () => {
-    const ta = document.createElement('textarea');
-    ta.value = DETAILS; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0;';
-    document.body.appendChild(ta); ta.select();
-    let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
-    ta.remove(); done(ok);
-  };
-  btn.addEventListener('click', () => {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(DETAILS).then(() => done(true), fallback);
-    } else fallback();
-  });
+  if (push && location.hash !== '#' + id) try { history.pushState({ id }, '', '#' + id); } catch (e) {}
+  if (reduce || proj.hidden === false) { go(); return; }
+  home.style.opacity = 0; setTimeout(() => { go(); home.style.opacity = 1; }, fromRect ? 220 : 320);
 }
-
-// ─── BUILDING LIST ────────────────────────────────────────────────────────────
-function renderBuilding() {
-  const el = document.getElementById('buildingList');
-  if (!el) return;
-  el.innerHTML = '';
-  BUILDING.forEach(b => {
-    const wrap = document.createElement('div');
-    wrap.className = 'building-item';
-
-    const head = document.createElement('p');
-    if (b.id) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = b.name;
-      btn.addEventListener('click', () => {
-        const p = PROJECTS.find(pr => pr.id === b.id);
-        if (!p) return;
-        if (p.mode !== currentMode) applyMode(p.mode, 0);
-        openProject(p);
-      });
-      bindFill(btn);
-      head.appendChild(btn);
-    } else if (b.href) {
-      const a = document.createElement('a');
-      a.href = b.href; a.target = '_blank'; a.rel = 'noopener';
-      a.textContent = b.name;
-      bindFill(a);
-      head.appendChild(a);
-    } else {
-      head.textContent = b.name;
-    }
-    wrap.appendChild(head);
-
-    if (b.note)   { const n = document.createElement('p'); n.className = 'sub';    n.textContent = b.note;   wrap.appendChild(n); }
-    if (b.status) { const s = document.createElement('p'); s.className = 'status'; s.textContent = b.status; wrap.appendChild(s); }
-    el.appendChild(wrap);
-  });
+function closeProject(push = true) {
+  if (!current) return;
+  const id = current.id; current = null;
+  proj.style.opacity = 0;
+  setTimeout(() => {
+    proj.hidden = true; proj.innerHTML = ''; home.hidden = false; home.style.opacity = 0;
+    document.title = 'Ebony Rose';
+    scrollTo(homeScroll, true);
+    requestAnimationFrame(() => { home.style.opacity = 1; const r = $(`.row[data-id="${id}"]`); if (r && view === 'list') r.focus({ preventScroll: true }); });
+    proj.style.opacity = 1;
+  }, reduce ? 0 : 300);
+  if (push) try { history.pushState({}, '', location.pathname + location.search); } catch (e) {}
 }
-
-initWatching();
-initCopyDetails();
-initSpotify();
-listing.querySelectorAll('.view-btn').forEach(b => { b.addEventListener('click', () => setView(b.dataset.view)); bindFill(b); });
-try { const v = localStorage.getItem('view'); if (v === 'index' || v === 'grid') setView(v); } catch (e) {}
-initSuggest();
-renderBuilding();
-
-// ─── START ────────────────────────────────────────────────────────────────────
-const linked = linkedProject();
-if (linked) {
-  // Arrived on a project link: no intro, straight to the project. "← back" and
-  // the browser back button land on the home grid in that project's mode.
-  stopFlock();
-  intro.remove();
-  layoutEl.inert = false;
-  applyMode(linked.mode, 0);
-  history.replaceState({ mode: linked.mode }, '', homeUrl());
-  openProject(linked);
-} else {
-  renderGrid('work', 0);
-}
+proj.addEventListener('click', e => {
+  const b = e.target.closest('[data-go]'); if (!b) return;
+  if (b.dataset.go === 'home') closeProject();
+  else { const r = b.classList.contains('pnext') && floatShown ? fbox.getBoundingClientRect() : null; openProject(b.dataset.go, r); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && current) closeProject(); });
+addEventListener('popstate', () => { const p = byId(location.hash.slice(1)); if (p) openProject(p.id, null, false); else closeProject(false); });
+const start = byId(location.hash.slice(1));
+if (start) { home.hidden = true; openProject(start.id, null, false); }
+window.__site = {
+  openProject, setView, burst, reduce,
+  view: () => view,
+  visible: () => view === 'map' && !current && !document.hidden && !home.hidden,
+  toList: (f, sel) => { if (f && filter !== f) $(`#filters [data-k="${f}"]`).click(); setView('list', true); setTimeout(() => { const el = $(sel); if (el) scrollTo(el.getBoundingClientRect().top + scrollY - 20, false); }, 300); }
+};
+if (window.WORLD && view === 'map') WORLD.enter();
+})();
 </script>
+<script src="world.js"></script>
 </body>
 </html>
