@@ -27,7 +27,6 @@ images/      project thumbnails and case study images
 - **Type:** Epilogue, from Google Fonts.
 - **Motion:** a canvas particle field for the intro and mode switches.
 - **Project links:** every project has its own link that opens straight on the project and skips the intro. On the live site it's a clean path, e.g. `ebonyrose.xyz/pirate-life`; locally and in previews it's a hash, e.g. `localhost:8000/#pirate-life`. Old `#` links still work. Browser back/forward works, and the tab title changes to the project's name.
-- **Hover preview:** on desktop, hovering or tabbing to a tile swaps the sidebar for that project's facts.
 - **Live bits:** a Spotify embed, plus a suggestion box that posts to a Google Form.
 
 ### Keyboard
@@ -56,7 +55,6 @@ All content lives in a few arrays near the bottom of `index.html`.
   label: 'web design',              // shown under the grid thumbnail
   thumb: 'images/my-project-thumb.jpg',
   aspect: 'land',                   // thumbnail shape: 'land' | 'port' | 'sq' | a % like '125%'
-  why: 'One line on why this project matters.',   // shown in the hover preview
   meta: { Role: 'Designer', Scope: '…', Outcome: '…' },  // facts above the case study; any labels you like
   desc: `<p>Case study copy.</p>`,
   link: 'https://…', linkLabel: 'site.com ↗',

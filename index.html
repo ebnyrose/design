@@ -234,23 +234,14 @@ body.build #buildSidebar { display:block; }
 /* ── REDESIGN: POSITIONING + STATUS ── */
 .pitch { font-size:21px; font-weight:400; line-height:1.3; letter-spacing:-0.1px; margin-bottom:22px; max-width:380px; text-wrap:balance; }
 .pitch em { font-style:normal; color:var(--accent); }
-body:not(.play):not(.build) .pitch em { color:#D4FF3A; } /* in Work, nod to Build's lime: the "I build it" bit */
-.status-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#3ddc84; margin-right:7px; vertical-align:1px;
-  box-shadow:0 0 0 0 rgba(61,220,132,0.6); animation: pulse 2.4s ease-out infinite; }
-@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(61,220,132,0.55)} 70%{box-shadow:0 0 0 7px rgba(61,220,132,0)} 100%{box-shadow:0 0 0 0 rgba(61,220,132,0)} }
+/* Status: one quiet line under the headline. The dot breathes slowly, no ring. */
+.status { display:flex; align-items:center; flex-wrap:wrap; gap:0 8px; font-size:12.5px; color:#bbb; margin:-8px 0 34px; }
+.status-dot { width:6px; height:6px; border-radius:50%; background:#3ddc84; flex-shrink:0; animation: breathe 3s ease-in-out infinite; }
+@keyframes breathe { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+.status a { color:#666; text-decoration:none; margin-left:6px; transition:color 0.2s; }
+.status a:hover { color:var(--accent); }
 .role { color:#fff; }
 .todo { color:#777; border:1px dashed #444; border-radius:3px; padding:0 5px; font-size:12px; white-space:nowrap; }
-
-/* ── REDESIGN: HOVER PREVIEW ──
-   Hovering (or tabbing to) a tile swaps the sidebar CV for that project's facts,
-   so you can scan the work without opening anything. Desktop only. */
-.peek { display:none; }
-body.peeking .peek { display:block; animation: peekIn 0.25s ease both; }
-body.peeking .cv-info { display:none; }
-@keyframes peekIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
-.peek-eyebrow { font-size:11px; color:var(--accent); letter-spacing:0.3px; text-transform:uppercase; margin-bottom:14px; }
-.peek-why { color:#c8c8c8; line-height:1.6; margin-bottom:18px; max-width:380px; }
-.peek-hint { font-size:12px; color:#666; }
 
 /* ── REDESIGN: PLACEHOLDER TILES (recent work goes here) ── */
 .grid-item.placeholder { cursor:default; }
@@ -270,7 +261,7 @@ body.peeking .cv-info { display:none; }
 
 @media (prefers-reduced-motion: reduce) {
   .status-dot { animation:none; }
-  .grid-item, .cv-row, .peek { transition:none; }
+  .grid-item, .cv-row { transition:none; }
 }
 
 /* ── RESPONSIVE ── */
@@ -321,38 +312,21 @@ body.peeking .cv-info { display:none; }
       <button class="mode-btn" id="btnBuild" onclick="switchMode('build')">Build</button>
     </div>
 
-    <!-- ── HOVER PREVIEW ── shows a project's facts while you hover its tile -->
-    <div class="peek" id="peek" aria-hidden="true">
-      <p class="peek-eyebrow">Preview</p>
-      <h2 class="proj-title" id="peekTitle"></h2>
-      <p class="proj-sub" id="peekSub"></p>
-      <p class="peek-why" id="peekWhy"></p>
-      <dl class="proj-meta" id="peekMeta"></dl>
-      <p class="peek-hint">Click to open the case study</p>
-    </div>
-
     <!-- ── WORK SIDEBAR ── -->
     <div id="workSidebar">
       <div class="cv-info" id="cvInfo">
-        <p class="pitch">Digital designer in Naarm. I design it in Figma, and sometimes <em>I build it too.</em></p>
+        <p class="pitch">Melbourne × Naarm. Designer who makes things for fun, not just for briefs.</p>
+        <p class="status"><span class="status-dot" aria-hidden="true"></span>Open to mid-weight digital roles<a href="mailto:ebonyroseaugustin@gmail.com">say hi →</a></p>
         <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>Status</div>
+          <div class="cv-label"><span class="dot">○</span>Experience</div>
           <div class="cv-content">
-            <p><span class="status-dot"></span>Open to mid-weight digital roles</p>
-            <p class="sub">Melbourne · <a href="mailto:ebonyroseaugustin@gmail.com">say hi</a></p>
-          </div>
-        </div>
-        <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>What I do</div>
-          <div class="cv-content">
-            <p>Websites, ecommerce and app UI, from first Figma frame to launch.</p>
-            <p class="sub">Five years across studios and agencies, so also campaigns, social, motion, eDMs and print when the brief needs it.</p>
+            <p>Experience in UI, automation processes, AI, social media, retail campaigns, motion graphics, eDMs &amp; print.</p>
           </div>
         </div>
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Currently</div>
           <div class="cv-content">
-            <p class="role">Mid-weight Designer</p>
+            <p class="role">Mid Weight Digital Designer</p>
             <p>BRX — Prahran</p>
             <p class="sub">2024 — Now</p>
           </div>
@@ -762,7 +736,7 @@ const PROJECTS = [
     id:'pirate-life', thumb:'images/pirate-life-thumb.jpeg', aspect:'land', mode:'work',
     title:'Pirate Life Website', subtitle:'Brewery company in South Australia', label:'ecommerce web design',
     why:'Ecommerce for a fast-growing craft brewery.',
-    meta:{ Role:'<span class="todo">your role</span>', Team:'<span class="todo">who you worked with</span>', Scope:'Online shop redesign, new merch range', Outcome:'Live at shop.piratelife.com.au' },
+    meta:{ Role:'Designer', Scope:'Online shop redesign, new merch range', Outcome:'Live at shop.piratelife.com.au' },
     desc:`<p>Pirate Life was growing fast and had a new merch range to sell, but the online shop felt like an afterthought next to the brand. The brief was one shop that felt like the beer.</p>
 <p>I went blocky and loud on purpose. Big product photography carries most of the page, a hand-drawn illustration sits in the footer, and emoji and icons do the small talk so the product copy can stay short.</p>
 <p><span class="todo">One line on what changed after launch, if you know it.</span></p>`,
@@ -779,7 +753,7 @@ const PROJECTS = [
     id:'small-victories', thumb:'images/small-victories-thumb.webp', aspect:'land', mode:'work',
     title:'Small Victories Website', subtitle:'Winery in South Australia', label:'web design',
     why:'Type-led site for a wine brand chasing a younger crowd.',
-    meta:{ Role:'<span class="todo">your role</span>', Scope:'Website for a new wine brand', Audience:'Urban women, 20 to 40', Outcome:'Live at smallvictorieswine.com' },
+    meta:{ Role:'Designer', Scope:'Website for a new wine brand', Audience:'Urban women, 20 to 40', Outcome:'Live at smallvictorieswine.com' },
     desc:`<p>Small Victories is an innovative boutique wine brand nestled in the Barossa Valley, South Australia. This brand distinctly appeals to the 20 to 40-year-old fashionable female demographic residing in urban centres. Originating from Elderton Wines, traditionally catering to an audience aged between 30 and 60, Small Victories marks a significant departure towards a more contemporary market focus.</p>
 <p>In alignment with its refreshed branding strategy and to captivate its targeted audience, there was a clear directive for a minimalist and sophisticated user interface (UI). This was to be achieved with a pronounced emphasis on typographic layout, drawing heavily on the aesthetic cues of their existing wine labels to guide the visual direction.</p>`,
     link:'https://smallvictorieswine.com', linkLabel:'smallvictorieswine.com ↗',
@@ -795,7 +769,7 @@ const PROJECTS = [
     id:'spellmans', thumb:'images/spellmans-thumb.jpg', aspect:'port', mode:'work',
     title:"Spellmans' Social", subtitle:'Cafe in South Australia', label:'branding',
     why:'Café identity, from monogram to glassware.',
-    meta:{ Role:'<span class="todo">your role</span>', Scope:'Brand identity, monogram, colour palette', Client:'Café in Adelaide', Outcome:'In use, @spellmans.social' },
+    meta:{ Role:'Designer', Scope:'Brand identity, monogram, colour palette', Client:'Café in Adelaide', Outcome:'In use, @spellmans.social' },
     desc:`<p>Situated in the heart of Adelaide, Spellmans' Social is a café that prides itself on creating an atmosphere that feels both inviting and intimate. In their pursuit of a unique brand identity, they expressed a desire for a design that seamlessly marries the nostalgia of yesteryears with the crisp, clean lines of modernity. They envisioned a colour palette that draws inspiration from nature, with deep, rich emerald green as the centrepiece, complemented by the warmth of browns and the subtlety of beige tones. This choice aimed not only to welcome guests but also to envelop them in a sense of comfort and sophistication.</p>
 <p>The introduction of a monogram was a thoughtful nod to classic design principles, ensuring that the essence of Spellmans' Social could be distilled into a simple, yet elegant, symbol.</p>
 <p>The client's enthusiastic response to this idea was a testament to its alignment with their vision for a brand that speaks of quality, warmth, and a timeless appeal, making Spellmans' Social not just a cafe, but a destination.</p>`,
@@ -983,10 +957,6 @@ function renderGrid(mode, delay) {
     lbl.innerHTML = `<div class="item-title">${p.title}</div><div class="item-sub">${p.label||p.subtitle}</div>`;
     item.appendChild(lbl);
     item.addEventListener('click', () => openProject(p));
-    item.addEventListener('mouseenter', () => peek(p));
-    item.addEventListener('mouseleave', () => unpeek());
-    item.addEventListener('focus', () => peek(p));
-    item.addEventListener('blur', () => unpeek());
     // Keyboard: tiles are focusable and open with Enter or Space
     item.tabIndex = 0;
     item.setAttribute('role', 'button');
@@ -1008,30 +978,6 @@ function renderGrid(mode, delay) {
   });
 }
 
-// ─── HOVER PREVIEW ────────────────────────────────────────────────────────────
-const peekEl = document.getElementById('peek');
-const canPeek = matchMedia('(hover: hover) and (min-width: 769px)');
-let peekTimer = null;
-function fillMeta(el, p) {
-  el.innerHTML = p.meta ? Object.entries(p.meta).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('') : '';
-}
-function peek(p) {
-  if (!canPeek.matches || projImgs.classList.contains('on')) return;
-  clearTimeout(peekTimer);
-  document.getElementById('peekTitle').textContent = p.title;
-  document.getElementById('peekSub').textContent   = p.subtitle;
-  document.getElementById('peekWhy').textContent   = p.why || '';
-  fillMeta(document.getElementById('peekMeta'), p);
-  peekEl.style.animation = 'none'; peekEl.offsetHeight; peekEl.style.animation = '';
-  document.body.classList.add('peeking');
-}
-function unpeek(now) {
-  clearTimeout(peekTimer);
-  // a short delay stops the CV flashing back while you move between tiles
-  if (now) document.body.classList.remove('peeking');
-  else peekTimer = setTimeout(() => document.body.classList.remove('peeking'), 140);
-}
-
 let lastOpenedId = null;
 function openProject(p) {
   const m     = MODES[currentMode] || MODES.work;
@@ -1044,8 +990,8 @@ function openProject(p) {
   const lnk = document.getElementById(pfx+'Link');
   lnk.href = p.link||'#'; lnk.textContent = p.linkLabel;
   lnk.style.display = p.link ? '' : 'none';
-  fillMeta(document.getElementById(pfx+'Meta'), p);
-  unpeek(true);
+  const meta = p.meta || {};
+  document.getElementById(pfx+'Meta').innerHTML = Object.entries(meta).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
   document.title = p.title + ' — Ebony Rose';
   projImgs.innerHTML = '';
   p.images.forEach(img => {
@@ -1155,7 +1101,6 @@ window.addEventListener('popstate', (e) => {
 
 function applyMode(mode, delay) {
   currentMode = mode;
-  unpeek(true);
   Object.keys(MODES).forEach(k => {
     document.body.classList.toggle(k, k === mode && k !== 'work');
     document.getElementById(MODES[k].btn).classList.toggle('active', k === mode);
