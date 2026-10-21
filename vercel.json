@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/:project", "destination": "/index.html" }
+    { "source": "/:project", "destination": "/share/:project.html" }
   ]
 }

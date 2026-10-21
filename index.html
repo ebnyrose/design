@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ebony Rose</title>
+<meta name="description" content="Mid Weight Digital Designer in Melbourne × Naarm. UI, automation and AI tools in production. Open to mid-weight digital roles.">
+<!-- Link preview for the home page. Project pages get their own: see tools/make_share_pages.py -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ebony Rose">
+<meta property="og:title" content="Ebony Rose — Mid Weight Digital Designer">
+<meta property="og:description" content="Melbourne × Naarm. Designer who makes things for fun, not just for briefs.">
+<meta property="og:url" content="https://www.ebonyrose.xyz/">
+<meta property="og:image" content="https://www.ebonyrose.xyz/share/og/home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
@@ -56,7 +68,7 @@ html, body {
 .intro-btn:hover { opacity: 0.6; }
 
 /* ── MODE TOGGLE ── */
-#mode-toggle { display: flex; gap: 16px; margin-bottom: 48px; }
+#mode-toggle { display: flex; gap: 16px; margin-bottom: 40px; }
 .mode-btn {
   background: none; border: none; padding: 0;
   font-family: inherit; font-size: 13.5px; font-weight: 400;
@@ -93,19 +105,20 @@ body.build { --accent:#D4FF3A; --accent-soft:#e8ff8a; --accent-glow:rgba(212,255
 /* ── SIDEBAR ── */
 .sidebar {
   width: 460px; min-width: 460px; height: 100vh; overflow-y: auto;
-  padding: 22px 32px 48px 24px; scrollbar-width: none; flex-shrink: 0;
+  padding: 22px 28px 48px 24px; scrollbar-width: none; flex-shrink: 0;
 }
 .sidebar::-webkit-scrollbar { display:none; }
 .site-name { font-size: 13.5px; font-weight: 400; margin-bottom: 16px; }
 
 .cv-row {
-  display:grid; grid-template-columns:130px 1fr; margin-bottom:26px;
+  display:grid; grid-template-columns:104px 1fr; margin-bottom:22px;
   opacity: 0; transform: translateY(5px);
   transition: opacity 0.45s ease, transform 0.45s ease;
 }
 .cv-row.show { opacity: 1; transform: translateY(0); }
 
-.cv-label { display:flex; align-items:flex-start; gap:8px; color:#fff; }
+.cv-label { display:flex; align-items:flex-start; gap:8px; color:#777; font-size:12.5px; padding-top:1px; transition: color 0.25s ease; }
+.cv-row:hover .cv-label { color:#fff; }
 .cv-label .dot { font-size:14px; margin-top:-1px; flex-shrink:0; color: var(--accent); transition: opacity 0.25s ease; }
 .cv-content p { margin:0; }
 .cv-content .sub { color:#888; margin-bottom:10px; }
@@ -130,7 +143,7 @@ body.play .suggest-form input:focus { border-color:#9B4DFF; }
 }
 .suggest-form button:hover { border-color:#fff; }
 body.play .suggest-form button:hover { border-color:#9B4DFF; color:#9B4DFF; }
-#suggestStatus:empty { display:none; }
+#suggestStatus:empty, #copyNote:empty { display:none; }
 #suggestList {
   display:flex; flex-direction:column; gap:4px;
   max-height:88px; overflow-y:auto; scrollbar-width:none;
@@ -233,15 +246,48 @@ body.build #buildSidebar { display:block; }
 
 /* ── REDESIGN: POSITIONING + STATUS ── */
 .pitch { font-size:21px; font-weight:400; line-height:1.3; letter-spacing:-0.1px; margin-bottom:22px; max-width:380px; text-wrap:balance; }
-.pitch em { font-style:normal; color:var(--accent); }
-/* Status: one quiet line under the headline. The dot breathes slowly, no ring. */
-.status { display:flex; align-items:center; flex-wrap:wrap; gap:0 8px; font-size:12.5px; color:#bbb; margin:-8px 0 34px; }
-.status-dot { width:6px; height:6px; border-radius:50%; background:#3ddc84; flex-shrink:0; animation: breathe 3s ease-in-out infinite; }
+/* Header: name on the left, availability on the right, like a presence dot */
+.side-head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:16px; }
+.side-head .site-name { margin:0; }
+.status { display:flex; align-items:center; gap:7px; font-size:12px; color:#999; white-space:nowrap; }
+.status-dot { width:6px; height:6px; border-radius:50%; background:#3ddc84; flex-shrink:0; align-self:center; animation: breathe 3s ease-in-out infinite; }
 @keyframes breathe { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
-.status a { color:#666; text-decoration:none; margin-left:6px; transition:color 0.2s; }
-.status a:hover { color:var(--accent); }
+/* Headline sits on its own, then a hairline before the CV starts */
+.cv-info .pitch { margin-bottom:26px; padding-bottom:26px; border-bottom:1px solid #1c1c1c; max-width:none; }
+/* Roles: title + years on one line, studio underneath */
+.job { margin-bottom:12px; }
+.job:last-child { margin-bottom:0; }
+.job .line { display:flex; justify-content:space-between; gap:12px; }
+.job .yr { color:#666; font-variant-numeric:tabular-nums; white-space:nowrap; font-size:12.5px; }
+.job .sub { margin-bottom:0; }
+.copy-btn { background:none; border:none; padding:0; font:inherit; color:var(--accent); transition:color 0.2s; }
+.copy-btn:hover { color:var(--accent-soft); text-decoration:underline; }
 .role { color:#fff; }
 .todo { color:#777; border:1px dashed #444; border-radius:3px; padding:0 5px; font-size:12px; white-space:nowrap; }
+
+/* ── REDESIGN: GRID / INDEX ── */
+.listing.off { display:none; }
+.listing-bar { display:flex; justify-content:flex-end; gap:14px; padding:14px 14px 0; }
+.view-btn { background:none; border:none; padding:0; font:inherit; font-size:12px; color:#555; letter-spacing:0.2px; transition:color 0.2s; }
+.view-btn.on { color:var(--accent); }
+.view-btn:not(.on):hover { color:#aaa; }
+.listing[data-view="grid"] .index, .listing[data-view="index"] .grid { display:none; }
+.grid { padding-top:10px; }
+.index { padding:22px 14px 80px; }
+.idx-row { display:grid; grid-template-columns:64px minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1.1fr) minmax(0,0.9fr); gap:16px; align-items:baseline;
+  width:100%; background:none; border:none; border-top:1px solid #1a1a1a; padding:13px 0; font:inherit; font-size:13px; color:#fff; text-align:left;
+  opacity:0; transform:translateY(6px); transition:opacity 0.4s ease, transform 0.4s ease, color 0.2s ease; }
+.idx-row.show { opacity:1; transform:none; }
+.idx-row > span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.idx-row .c { color:#888; transition:color 0.2s ease; }
+.idx-row .y { color:#666; font-variant-numeric:tabular-nums; }
+.idx-row:hover, .idx-row:focus-visible { color:var(--accent); }
+.idx-row:hover .c, .idx-row:focus-visible .c { color:#ccc; }
+.idx-head { color:#555; font-size:11px; letter-spacing:0.3px; text-transform:uppercase; border-top:none; padding:0 0 10px; opacity:1; transform:none; }
+.idx-head:hover { color:#555; }
+#idxThumb { position:fixed; width:200px; height:auto; pointer-events:none; z-index:400; opacity:0; transform:translate(24px,-50%) scale(0.96);
+  transition:opacity 0.18s ease, transform 0.18s ease; }
+#idxThumb.on { opacity:1; transform:translate(24px,-50%) scale(1); }
 
 /* ── REDESIGN: PLACEHOLDER TILES (recent work goes here) ── */
 .grid-item.placeholder { cursor:default; }
@@ -268,13 +314,17 @@ body.build #buildSidebar { display:block; }
 @media (max-width: 768px) {
   .pitch { font-size:19px; }
   #cursor-label { display:none; }
+  #idxThumb { display:none; }
+  .idx-row { grid-template-columns:44px minmax(0,1fr) minmax(0,0.9fr); gap:12px; }
+  .idx-row .cl, .idx-row .r { display:none; }
   html, body { overflow: auto; }
   *, *::before, *::after { cursor: auto !important; }
   #cursor { display: none; }
   .layout { flex-direction: column; height: auto; min-height: 100vh; }
   .sidebar { width: 100%; min-width: unset; height: auto; padding: 20px 20px 28px; border-bottom: 1px solid #222; }
-  .site-name { margin-bottom: 28px; }
-  .cv-row { grid-template-columns: 110px 1fr; margin-bottom: 20px; }
+  .side-head { margin-bottom: 28px; }
+  .cv-row { grid-template-columns: 96px 1fr; margin-bottom: 20px; }
+  .side-head { flex-wrap:wrap; }
   .right { height: auto; overflow-y: visible; }
   .grid { columns: 1; }
   .proj-title { font-size: 18px; }
@@ -300,11 +350,15 @@ body.build #buildSidebar { display:block; }
   </div>
 </div>
 <div id="cursor"></div>
+<img id="idxThumb" alt="" aria-hidden="true">
 <div id="cursor-label"></div>
 
 <div class="layout">
   <aside class="sidebar">
-    <p class="site-name">Ebony Rose</p>
+    <div class="side-head">
+      <p class="site-name">Ebony Rose</p>
+      <p class="status"><span class="status-dot" aria-hidden="true"></span>Open to mid-weight digital roles</p>
+    </div>
 
     <div id="mode-toggle">
       <button class="mode-btn active" id="btnWork" onclick="switchMode('work')">Work</button>
@@ -316,7 +370,6 @@ body.build #buildSidebar { display:block; }
     <div id="workSidebar">
       <div class="cv-info" id="cvInfo">
         <p class="pitch">Melbourne × Naarm. Designer who makes things for fun, not just for briefs.</p>
-        <p class="status"><span class="status-dot" aria-hidden="true"></span>Open to mid-weight digital roles<a href="mailto:ebonyroseaugustin@gmail.com">say hi →</a></p>
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Experience</div>
           <div class="cv-content">
@@ -326,31 +379,22 @@ body.build #buildSidebar { display:block; }
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Currently</div>
           <div class="cv-content">
-            <p class="role">Mid Weight Digital Designer</p>
-            <p>BRX — Prahran</p>
-            <p class="sub">2024 — Now</p>
+            <div class="job"><p class="line"><span>Mid Weight Digital Designer</span><span class="yr">2024–Now</span></p><p class="sub">BRX, Prahran</p></div>
           </div>
         </div>
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Previously</div>
           <div class="cv-content">
-            <p class="role">Junior Designer</p>
-            <p>Woo Agency — Brunswick</p>
-            <p class="sub">2022 — 2024</p>
-            <p class="role">Graphic Designer</p>
-            <p>Sky Foundry — Adelaide</p>
-            <p class="sub">2021 — 2022</p>
-            <p class="role">Freelance Designer</p>
-            <p class="sub">2019 — Now</p>
+            <div class="job"><p class="line"><span>Junior Designer</span><span class="yr">2022–24</span></p><p class="sub">Woo Agency, Brunswick</p></div>
+            <div class="job"><p class="line"><span>Graphic Designer</span><span class="yr">2021–22</span></p><p class="sub">Sky Foundry, Adelaide</p></div>
+            <div class="job"><p class="line"><span>Freelance Designer</span><span class="yr">2019–Now</span></p></div>
           </div>
         </div>
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Education</div>
           <div class="cv-content">
-            <p>Bachelor of Design<br>(Communication Design)</p>
-            <p class="sub">2019 — 2021 (RMIT University)</p>
-            <p>High Achievers Award<br>(Visual Communication)</p>
-            <p class="sub">2017</p>
+            <div class="job"><p class="line"><span>Bachelor of Design</span><span class="yr">2019–21</span></p><p class="sub">Communication Design, RMIT University</p></div>
+            <div class="job"><p class="line"><span>High Achievers Award</span><span class="yr">2017</span></p><p class="sub">Visual Communication</p></div>
           </div>
         </div>
         <div class="cv-row">
@@ -368,12 +412,13 @@ body.build #buildSidebar { display:block; }
             <p><a href="https://www.linkedin.com/in/ebonyrosedesign/" target="_blank">LinkedIn</a></p>
             <p><a href="https://ebnyrose.github.io" target="_blank">ebnyrose.github.io</a></p>
             <p><a href="mailto:ebonyroseaugustin@gmail.com">ebonyroseaugustin@gmail.com</a></p>
+            <p><button class="copy-btn" id="copyDetails" type="button">Copy my details</button></p>
+            <p class="sub" id="copyNote" aria-live="polite"></p>
           </div>
         </div>
       </div>
       <div class="proj-panel" id="projPanel">
         <button class="back-btn" id="backBtn">← back</button>
-        <p class="site-name">Ebony Rose</p>
         <h2 class="proj-title" id="dTitle"></h2>
         <p class="proj-sub" id="dSub"></p>
         <dl class="proj-meta" id="dMeta"></dl>
@@ -437,7 +482,6 @@ body.build #buildSidebar { display:block; }
       </div>
       <div class="proj-panel" id="playProjPanel">
         <button class="back-btn" id="playBackBtn">← back</button>
-        <p class="site-name">Ebony Rose</p>
         <h2 class="proj-title" id="pdTitle"></h2>
         <p class="proj-sub" id="pdSub"></p>
         <dl class="proj-meta" id="pdMeta"></dl>
@@ -470,7 +514,6 @@ body.build #buildSidebar { display:block; }
       </div>
       <div class="proj-panel" id="buildProjPanel">
         <button class="back-btn" id="buildBackBtn">← back</button>
-        <p class="site-name">Ebony Rose</p>
         <h2 class="proj-title" id="bdTitle"></h2>
         <p class="proj-sub" id="bdSub"></p>
         <dl class="proj-meta" id="bdMeta"></dl>
@@ -482,7 +525,14 @@ body.build #buildSidebar { display:block; }
   </aside>
 
   <main class="right" id="right">
-    <div class="grid" id="grid"></div>
+    <div class="listing" id="listing" data-view="grid">
+      <div class="listing-bar" role="group" aria-label="View">
+        <button type="button" class="view-btn on" data-view="grid" aria-pressed="true">Grid</button>
+        <button type="button" class="view-btn" data-view="index" aria-pressed="false">Index</button>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="index" id="index" role="list"></div>
+    </div>
     <div class="proj-imgs" id="projImgs"></div>
   </main>
 </div>
@@ -713,10 +763,60 @@ body.build #buildSidebar { display:block; }
   };
 })();
 
+// ─── LANDING PARTICLES (opening a project) ───────────────────────────────────
+// Dots leave the tile you clicked and settle onto the case study's first image,
+// in the project's colour. Skipped for reduced motion.
+(function () {
+  const C = document.createElement('canvas');
+  C.style.cssText = 'position:fixed;inset:0;z-index:500;pointer-events:none;';
+  document.body.appendChild(C);
+  const ctx = C.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  let W, H, raf, dots = [], col = '#fff';
+  function resize() { C.width = W = innerWidth; C.height = H = innerHeight; }
+  resize(); addEventListener('resize', resize);
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+    let alive = false;
+    for (const d of dots) {
+      d.t++;
+      if (d.t > d.wait) { d.vx += (d.tx - d.x) * 0.022; d.vy += (d.ty - d.y) * 0.022; }
+      d.vx *= 0.84; d.vy *= 0.84;
+      d.x += d.vx; d.y += d.vy;
+      if (Math.hypot(d.tx - d.x, d.ty - d.y) < 8 || d.t > 55) d.a -= 0.045;
+      if (d.a > 0.01) {
+        alive = true;
+        ctx.globalAlpha = d.a; ctx.fillStyle = col;
+        ctx.fillRect(d.x | 0, d.y | 0, d.sz, d.sz);
+      }
+    }
+    ctx.globalAlpha = 1;
+    if (alive) raf = requestAnimationFrame(loop); else dots = [];
+  }
+
+  window.particleLand = function (from, to, color, n) {
+    if (reduce.matches || !from || !to) return;
+    const top = Math.max(0, to.top), bottom = Math.min(H, to.bottom);
+    if (bottom - top < 20) return; // first image isn't on screen
+    col = color || '#fff';
+    dots = Array.from({ length: n || 70 }, () => ({
+      x: from.left + Math.random() * from.width,
+      y: from.top + Math.random() * from.height,
+      tx: to.left + Math.random() * to.width,
+      ty: top + Math.random() * (bottom - top),
+      vx: (Math.random() - 0.5) * 16, vy: (Math.random() - 0.5) * 16,
+      a: 0.95, sz: Math.random() < 0.3 ? 2.5 : 1.5, t: 0, wait: Math.random() * 8,
+    }));
+    cancelAnimationFrame(raf); loop();
+  };
+})();
+
 // ─── PROJECTS ─────────────────────────────────────────────────────────────────
 const PROJECTS = [
   {
-    id:'rounds', thumb:'images/rounds-thumb.jpg', aspect:'133%', mode:'build', alsoIn:['work'],
+    id:'rounds', color:'#D4FF3A', year:'', client:'Self-initiated', discipline:'Product design + build',
+    thumb:'images/rounds-thumb.jpg', aspect:'133%', mode:'build', alsoIn:['work'],
     title:'Rounds', subtitle:'Side project · live on the web and iOS', label:'designed it, then built it',
     why:'Designed and built an app end to end. Live on web and iOS.',
     meta:{ Role:'Product design + build', Team:'Just me', Platforms:'Web app, installable PWA, iOS', Status:'Live, with real-time crew voting' },
@@ -733,7 +833,8 @@ const PROJECTS = [
     ]
   },
   {
-    id:'pirate-life', thumb:'images/pirate-life-thumb.jpeg', aspect:'land', mode:'work',
+    id:'pirate-life', color:'#5fd3d6', year:'', client:'Pirate Life Brewing', discipline:'Ecommerce web design',
+    thumb:'images/pirate-life-thumb.jpeg', aspect:'land', mode:'work',
     title:'Pirate Life Website', subtitle:'Brewery company in South Australia', label:'ecommerce web design',
     why:'Ecommerce for a fast-growing craft brewery.',
     meta:{ Role:'Designer', Scope:'Online shop redesign, new merch range', Outcome:'Live at shop.piratelife.com.au' },
@@ -750,7 +851,8 @@ const PROJECTS = [
     ]
   },
   {
-    id:'small-victories', thumb:'images/small-victories-thumb.webp', aspect:'land', mode:'work',
+    id:'small-victories', color:'#4f86ff', year:'', client:'Small Victories Wine', discipline:'Web design',
+    thumb:'images/small-victories-thumb.webp', aspect:'land', mode:'work',
     title:'Small Victories Website', subtitle:'Winery in South Australia', label:'web design',
     why:'Type-led site for a wine brand chasing a younger crowd.',
     meta:{ Role:'Designer', Scope:'Website for a new wine brand', Audience:'Urban women, 20 to 40', Outcome:'Live at smallvictorieswine.com' },
@@ -766,7 +868,8 @@ const PROJECTS = [
     ]
   },
   {
-    id:'spellmans', thumb:'images/spellmans-thumb.jpg', aspect:'port', mode:'work',
+    id:'spellmans', color:'#2fb070', year:'', client:'Spellmans\' Social', discipline:'Branding',
+    thumb:'images/spellmans-thumb.jpg', aspect:'port', mode:'work',
     title:"Spellmans' Social", subtitle:'Cafe in South Australia', label:'branding',
     why:'Café identity, from monogram to glassware.',
     meta:{ Role:'Designer', Scope:'Brand identity, monogram, colour palette', Client:'Café in Adelaide', Outcome:'In use, @spellmans.social' },
@@ -785,7 +888,8 @@ const PROJECTS = [
     ]
   },
   {
-    id:'link', thumb:'images/link-thumb.jpeg', aspect:'port', mode:'work',
+    id:'link', color:'#c9c9cc', year:'', client:'Concept', discipline:'Product design',
+    thumb:'images/link-thumb.jpeg', aspect:'port', mode:'work',
     title:'Link NFC Badge', subtitle:'Wearable Technology', label:'product design',
     why:'A wearable NFC badge, designed down to the clasp.',
     meta:{ Role:'Product design', Type:'Concept', Scope:'Detachable NFC reader with a pin you can wear alone', Power:'No charging, wakes at the reader' },
@@ -801,7 +905,8 @@ const PROJECTS = [
     ]
   },
   {
-    id:'more-dood', thumb:'images/more-dood-thumb.jpeg', aspect:'land', mode:'play',
+    id:'more-dood', color:'#f4755d', year:'2021', client:'RMIT × LESS Festival', discipline:'UI design',
+    thumb:'images/more-dood-thumb.jpeg', aspect:'land', mode:'play',
     title:'LESS Festival Collage Activity', subtitle:'RMIT University', label:'collab gif collage tool',
     why:'UI for a tool where festival-goers collage each other\'s GIFs.',
     meta:{ Role:'UI design', Type:'RMIT studio brief', For:'LESS Festival of Collage, 2021', Scope:'Desktop-first UI, mobile concepts' },
@@ -820,7 +925,8 @@ const PROJECTS = [
     ]
   },
   {
-    id:'rufus', thumb:'images/rufus-thumb.jpeg', aspect:'land', mode:'play',
+    id:'rufus', color:'#29b3e8', year:'', client:'Self-initiated', discipline:'Album art',
+    thumb:'images/rufus-thumb.jpeg', aspect:'land', mode:'play',
     title:'Rufus Du Sol Album Cover', subtitle:'Conceptual Project', label:'unsolicited album art (they never asked)',
     why:'Unsolicited vinyl art for an album called Radiance.',
     meta:{ Role:'Art direction + design', Type:'Self-initiated concept', Format:'Standard vinyl sleeve + packaging', Process:'Watercolour gradients, geometric focal points' },
@@ -838,7 +944,8 @@ const PROJECTS = [
     ]
   },
   {
-    id:'clearkind', thumb:'images/clearkind-thumb.jpeg', aspect:'port', mode:'play',
+    id:'clearkind', color:'#b49cff', year:'', client:'Concept', discipline:'App UX + UI',
+    thumb:'images/clearkind-thumb.jpeg', aspect:'port', mode:'play',
     title:'clearkind.', subtitle:'Health & Lifestyle App · Conceptual Project', label:'mental health app concept',
     why:'App concept with a clickable Figma prototype.',
     meta:{ Role:'UX + UI, solo', Type:'Concept app', Tools:'Figma (prototype linked)', Focus:'Planning with mental health support built in' },
@@ -888,6 +995,8 @@ const CONFIG = {
 // ─── DOM REFS ─────────────────────────────────────────────────────────────────
 const ratios        = { land:'66%', port:'133%', sq:'100%' };
 const grid          = document.getElementById('grid');
+const listing       = document.getElementById('listing');
+const indexEl       = document.getElementById('index');
 const projImgs      = document.getElementById('projImgs');
 const cvInfo        = document.getElementById('cvInfo');
 const playCvInfo    = document.getElementById('playCvInfo');
@@ -956,14 +1065,15 @@ function renderGrid(mode, delay) {
     const lbl = document.createElement('div'); lbl.className = 'item-label';
     lbl.innerHTML = `<div class="item-title">${p.title}</div><div class="item-sub">${p.label||p.subtitle}</div>`;
     item.appendChild(lbl);
-    item.addEventListener('click', () => openProject(p));
+    item.addEventListener('click', () => openWithFlourish(p, wrap));
     // Keyboard: tiles are focusable and open with Enter or Space
     item.tabIndex = 0;
     item.setAttribute('role', 'button');
     item.dataset.id = p.id;
     item.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProject(p); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWithFlourish(p, wrap); }
     });
+    hoverTint(item, p);
     bindFill(item, 'view');
     grid.appendChild(item);
     setTimeout(() => item.classList.add('show'), (delay||0) + i * 60);
@@ -976,6 +1086,78 @@ function renderGrid(mode, delay) {
     grid.appendChild(item);
     setTimeout(() => item.classList.add('show'), (delay||0) + (i + 6) * 60);
   });
+  renderIndex(mode, delay);
+}
+
+// ─── PROJECT COLOUR ───────────────────────────────────────────────────────────
+// Each project has a `color`. Hovering its tile (or index row) tints the cursor
+// and accent; opening it keeps the tint for the whole case study.
+const TINT_VARS = ['--accent', '--accent-soft', '--accent-glow', '--cursor-line', '--cursor-fill'];
+let openTint = null;
+function rgb(hex) { const h = hex.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); }
+function tint(color) {
+  const st = document.body.style;
+  if (!color) { TINT_VARS.forEach(v => st.removeProperty(v)); return; }
+  const [r, g, b] = rgb(color);
+  const soft = [r, g, b].map(c => Math.round(c + (255 - c) * 0.35));
+  st.setProperty('--accent', color);
+  st.setProperty('--accent-soft', `rgb(${soft.join(',')})`);
+  st.setProperty('--accent-glow', `rgba(${r},${g},${b},0.16)`);
+  st.setProperty('--cursor-line', `rgba(${r},${g},${b},0.85)`);
+  st.setProperty('--cursor-fill', color);
+}
+const canHover = matchMedia('(hover: hover)');
+function hoverTint(el, p) {
+  // Mouse hover on desktop, and keyboard focus. Not taps on phones, and not the
+  // focus that returns to a tile when you come back from a case study.
+  el.addEventListener('mouseenter', () => { if (canHover.matches) tint(p.color); });
+  el.addEventListener('mouseleave', () => tint(openTint));
+  el.addEventListener('focus', () => { if (el.matches(':focus-visible')) tint(p.color); });
+  el.addEventListener('blur', () => tint(openTint));
+}
+
+// Open with particles: they leave the tile you clicked and land on the first image.
+function openWithFlourish(p, fromEl) {
+  const from = fromEl && fromEl.getBoundingClientRect();
+  openProject(p);
+  requestAnimationFrame(() => {
+    const first = projImgs.querySelector('.pi');
+    if (from && first) particleLand(from, first.getBoundingClientRect(), p.color || MODES[currentMode].accent);
+  });
+}
+
+// ─── INDEX VIEW ───────────────────────────────────────────────────────────────
+// The text version of the grid: one row per project. Hovering a row shows its
+// thumbnail beside the cursor.
+const idxThumb = document.getElementById('idxThumb');
+function renderIndex(mode, delay) {
+  const inMode = p => p.mode === mode || (p.alsoIn || []).includes(mode);
+  indexEl.innerHTML = `<div class="idx-row idx-head" role="presentation"><span>Year</span><span>Project</span><span class="cl">Client</span><span class="d">Discipline</span><span class="r">Role</span></div>`;
+  PROJECTS.filter(inMode).forEach((p, i) => {
+    const row = document.createElement('button');
+    row.type = 'button'; row.className = 'idx-row'; row.dataset.id = p.id; row.setAttribute('role', 'listitem');
+    const role = p.role || (p.meta && p.meta.Role) || '';
+    row.innerHTML = `<span class="y">${p.year || '<span class="todo">year</span>'}</span><span>${p.title}</span>` +
+      `<span class="c cl">${p.client || ''}</span><span class="c d">${p.discipline || p.label || ''}</span><span class="c r">${role}</span>`;
+    row.addEventListener('click', () => { hideThumb(); openWithFlourish(p, row); });
+    row.addEventListener('mouseenter', () => { idxThumb.src = p.thumb; idxThumb.classList.add('on'); });
+    row.addEventListener('mouseleave', hideThumb);
+    hoverTint(row, p);
+    bindFill(row, 'view');
+    indexEl.appendChild(row);
+    setTimeout(() => row.classList.add('show'), (delay || 0) + i * 40);
+  });
+}
+function hideThumb() { idxThumb.classList.remove('on'); }
+document.addEventListener('mousemove', e => { idxThumb.style.left = e.clientX + 'px'; idxThumb.style.top = e.clientY + 'px'; });
+
+function setView(view) {
+  listing.dataset.view = view;
+  listing.querySelectorAll('.view-btn').forEach(b => {
+    const on = b.dataset.view === view;
+    b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
+  });
+  try { localStorage.setItem('view', view); } catch (e) {}
 }
 
 let lastOpenedId = null;
@@ -993,6 +1175,7 @@ function openProject(p) {
   const meta = p.meta || {};
   document.getElementById(pfx+'Meta').innerHTML = Object.entries(meta).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
   document.title = p.title + ' — Ebony Rose';
+  openTint = p.color || null; tint(openTint);
   projImgs.innerHTML = '';
   p.images.forEach(img => {
     const w = document.createElement('div');
@@ -1015,7 +1198,7 @@ function openProject(p) {
   });
   cv.classList.add('off'); panel.classList.add('on');
   document.getElementById('mode-toggle').classList.add('off');
-  grid.classList.add('off'); projImgs.classList.add('on');
+  listing.classList.add('off'); projImgs.classList.add('on');
   right.scrollTo(0,0);
   window.scrollTo(0,0);
   document.documentElement.scrollTop = 0;
@@ -1055,13 +1238,15 @@ window.addEventListener('scroll', () => {
 function closeProject() {
   const m = MODES[currentMode] || MODES.work;
   document.title = 'Ebony Rose';
+  openTint = null; tint(null);
   m.cv.classList.remove('off');
   m.panel.classList.remove('on');
   document.getElementById('mode-toggle').classList.remove('off');
-  grid.classList.remove('off'); projImgs.classList.remove('on');
+  listing.classList.remove('off'); projImgs.classList.remove('on');
   right.removeAttribute('tabindex'); right.removeAttribute('role'); right.removeAttribute('aria-label');
   // Return focus to the tile that was opened, so keyboard users keep their place
-  const tile = lastOpenedId && grid.querySelector(`.grid-item[data-id="${lastOpenedId}"]`);
+  const tile = lastOpenedId && listing.querySelector(
+    listing.dataset.view === 'index' ? `.idx-row[data-id="${lastOpenedId}"]` : `.grid-item[data-id="${lastOpenedId}"]`);
   if (tile) tile.focus();
 }
 [backBtn, playBackBtn, buildBackBtn].forEach(b => b.addEventListener('click', () => history.back()));
@@ -1075,9 +1260,10 @@ document.addEventListener('keydown', e => {
 
 // ─── LINKS TO PROJECTS ───────────────────────────────────────────────────────
 // Every project has its own shareable link that opens straight on the project,
-// skipping the intro. On the live site it's a clean path (ebonyrose.xyz/rounds),
-// which vercel.json points at index.html. Anywhere else (local server, previews)
-// it's a hash (#rounds). Old #links still work on the live site.
+// skipping the intro. On the live site it's a clean path (ebonyrose.xyz/rounds).
+// vercel.json serves that path from share/rounds.html, a tiny page that carries
+// the link preview (title, image) and then hands over to /#rounds. Anywhere else
+// (local server, previews) the link is a hash (#rounds).
 const CLEAN_URLS = /(^|\.)ebonyrose\.xyz$|\.vercel\.app$/.test(location.hostname);
 function projectUrl(id) { return CLEAN_URLS ? '/' + id : '#' + id; }
 function homeUrl()      { return CLEAN_URLS ? '/' : location.pathname + location.search; }
@@ -1101,6 +1287,7 @@ window.addEventListener('popstate', (e) => {
 
 function applyMode(mode, delay) {
   currentMode = mode;
+  openTint = null; tint(null);
   Object.keys(MODES).forEach(k => {
     document.body.classList.toggle(k, k === mode && k !== 'work');
     document.getElementById(MODES[k].btn).classList.toggle('active', k === mode);
@@ -1108,7 +1295,7 @@ function applyMode(mode, delay) {
     MODES[k].panel.classList.remove('on');
   });
   document.getElementById('mode-toggle').classList.remove('off');
-  grid.classList.remove('off'); projImgs.classList.remove('on');
+  listing.classList.remove('off'); projImgs.classList.remove('on');
   renderGrid(mode, delay||0);
   staggerRows(MODES[mode].cv, delay||0);
 }
@@ -1117,7 +1304,7 @@ function switchMode(mode) {
   if (mode === currentMode) return;
   const m = MODES[mode] || MODES.work;
   const r = document.getElementById(m.btn).getBoundingClientRect();
-  [...grid.querySelectorAll('.grid-item')].forEach(el => el.classList.remove('show'));
+  [...listing.querySelectorAll('.grid-item, .idx-row:not(.idx-head)')].forEach(el => el.classList.remove('show'));
   particleBurst(r.left + r.width/2, r.top + r.height/2, 55, m.accent, () => applyMode(mode, 80));
 }
 
@@ -1269,6 +1456,37 @@ function initSuggest() {
   }
 }
 
+// ─── COPY MY DETAILS ──────────────────────────────────────────────────────────
+// A short summary for recruiters to paste into their system or a message.
+const DETAILS = [
+  'Ebony Rose',
+  'Mid Weight Digital Designer, Melbourne',
+  'Open to mid-weight digital roles',
+  'ebonyroseaugustin@gmail.com',
+  'ebonyrose.xyz · linkedin.com/in/ebonyrosedesign',
+].join('\n');
+function initCopyDetails() {
+  const btn = document.getElementById('copyDetails');
+  const note = document.getElementById('copyNote');
+  if (!btn) return;
+  const done = ok => {
+    note.textContent = ok ? 'Copied. Paste it anywhere.' : "Couldn't copy. The details are above.";
+    setTimeout(() => { note.textContent = ''; }, 2600);
+  };
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = DETAILS; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    ta.remove(); done(ok);
+  };
+  btn.addEventListener('click', () => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(DETAILS).then(() => done(true), fallback);
+    } else fallback();
+  });
+}
+
 // ─── BUILDING LIST ────────────────────────────────────────────────────────────
 function renderBuilding() {
   const el = document.getElementById('buildingList');
@@ -1309,7 +1527,10 @@ function renderBuilding() {
 }
 
 initWatching();
+initCopyDetails();
 initSpotify();
+listing.querySelectorAll('.view-btn').forEach(b => { b.addEventListener('click', () => setView(b.dataset.view)); bindFill(b); });
+try { const v = localStorage.getItem('view'); if (v === 'index' || v === 'grid') setView(v); } catch (e) {}
 initSuggest();
 renderBuilding();
 
