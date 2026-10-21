@@ -183,6 +183,16 @@ body.play .suggest-form button:hover { border-color:#9B4DFF; color:#9B4DFF; }
 }
 .grid-item:hover .item-overlay { background: var(--accent-glow); }
 
+/* ── KEYBOARD FOCUS ──
+   Only shows for keyboard users (:focus-visible), never on mouse clicks.
+   Uses the current mode's accent so it matches Work / Play / Build. */
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+.grid-item:focus-visible { outline-offset: 6px; }
+.grid-item:focus-visible .thumb-wrap img { transform: scale(1.03); }
+.grid-item:focus-visible .item-overlay { background: var(--accent-glow); }
+.right:focus-visible { outline-offset: -2px; }
+.suggest-form input:focus-visible { outline: none; } /* has its own border focus state */
+
 .item-label { padding: 9px 0 2px; }
 .item-title { font-size: 12px; font-weight: 400; color: #fff; letter-spacing: 0.2px; line-height: 1.4; }
 .item-sub   { font-size: 11px; color: #555; margin-top: 2px; }
@@ -773,7 +783,7 @@ const PROJECTS = [
     desc:`<p>I developed an application tailored for young individuals struggling with organisation and daily management, with a strong emphasis on mental health support. This app incorporates specialised features such as break reminders, visualisers, calming timers, and music integration to aid stress management.</p>
 <p>Additionally, it includes notifications for physical activity and hydration, along with access to mental health professionals and techniques for anxiety and breathing management. Colour psychology is strategically utilised to enhance user engagement, employing red for energy, green for motivation, and blue for calm, particularly in sections dedicated to mental health.</p>
 <p>The application not only assists users in completing tasks but also promotes a balanced approach to time management, addressing the underlying issues of fatigue and demotivation. There is also potential to extend this application into a web-based platform for both Mac and Windows, further increasing its accessibility and utility.</p>`,
-    link:'https://www.figma.com', linkLabel:'Figma Prototype ↗',
+    link:'https://www.figma.com/proto/98MvqmccjLyviiaBpDkQuj/clearkind-UI-Wireframes?node-id=2-92&p=f&viewport=724%2C555%2C0.16&t=XTiaeKyQISFD9TkL-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2%3A92&show-proto-sidebar=1&page-id=0%3A1', linkLabel:'Figma Prototype ↗',
     images:[
       {src:'images/clearkind-01.jpg',  aspect:'land', span:'full'},
       {src:'images/clearkind-02.jpeg', aspect:'land', span:'full'},
@@ -876,12 +886,20 @@ function renderGrid(mode, delay) {
     lbl.innerHTML = `<div class="item-title">${p.title}</div><div class="item-sub">${p.label||p.subtitle}</div>`;
     item.appendChild(lbl);
     item.addEventListener('click', () => openProject(p));
+    // Keyboard: tiles are focusable and open with Enter or Space
+    item.tabIndex = 0;
+    item.setAttribute('role', 'button');
+    item.dataset.id = p.id;
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProject(p); }
+    });
     bindFill(item);
     grid.appendChild(item);
     setTimeout(() => item.classList.add('show'), (delay||0) + i * 60);
   });
 }
 
+let lastOpenedId = null;
 function openProject(p) {
   const m     = MODES[currentMode] || MODES.work;
   const panel = m.panel;
@@ -921,6 +939,13 @@ function openProject(p) {
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
   projImgs.querySelectorAll('.pi').forEach(el => bindFill(el));
+  // Keyboard: the image column can take focus so arrow keys scroll it,
+  // and focus moves to "← back" so the next keypress is somewhere useful.
+  right.tabIndex = 0;
+  right.setAttribute('role', 'region');
+  right.setAttribute('aria-label', p.title + ' images');
+  lastOpenedId = p.id;
+  panel.querySelector('.back-btn')?.focus({ preventScroll: true });
   updateParallax();
   if (!(history.state && history.state.project === p.id)) {
     history.pushState({ project: p.id, mode: currentMode }, '', '#' + p.id);
@@ -951,8 +976,19 @@ function closeProject() {
   m.panel.classList.remove('on');
   document.getElementById('mode-toggle').classList.remove('off');
   grid.classList.remove('off'); projImgs.classList.remove('on');
+  right.removeAttribute('tabindex'); right.removeAttribute('role'); right.removeAttribute('aria-label');
+  // Return focus to the tile that was opened, so keyboard users keep their place
+  const tile = lastOpenedId && grid.querySelector(`.grid-item[data-id="${lastOpenedId}"]`);
+  if (tile) tile.focus();
 }
 [backBtn, playBackBtn, buildBackBtn].forEach(b => b.addEventListener('click', () => history.back()));
+
+// Escape closes an open project
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && projImgs.classList.contains('on') && history.state && history.state.project) {
+    history.back();
+  }
+});
 
 // ─── BROWSER BACK/FORWARD ───────────────────────────────────────────────────
 window.addEventListener('popstate', (e) => {
@@ -994,6 +1030,10 @@ const intro     = document.getElementById('intro');
 const introName = document.getElementById('intro-name');
 const introBtns = document.getElementById('intro-btns');
 
+// While the intro is up, the page behind it can't be tabbed into
+const layoutEl = document.querySelector('.layout');
+layoutEl.inert = true;
+
 setTimeout(() => introName.classList.add('show'), 300);
 setTimeout(() => introBtns.classList.add('show'), 900);
 
@@ -1003,6 +1043,11 @@ function enterMode(mode) {
   introName.classList.add('hide');
 
   const m = MODES[mode] || MODES.work;
+
+  // Hand keyboard focus from the intro to the page
+  const hadFocus = intro.contains(document.activeElement);
+  layoutEl.inert = false;
+  if (hadFocus) document.getElementById(m.btn).focus({ preventScroll: true });
 
   if (m.word) {
     // ── Play / Build: dots take the mode's colour, flock to form its word, reveal
