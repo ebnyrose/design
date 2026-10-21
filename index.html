@@ -231,8 +231,83 @@ body.build #buildSidebar { display:block; }
 }
 .building-item button:hover { color:var(--accent-soft); text-decoration:underline; }
 
+/* ── REDESIGN: POSITIONING + STATUS ── */
+.pitch { font-size:21px; font-weight:400; line-height:1.3; letter-spacing:-0.1px; margin-bottom:22px; max-width:380px; text-wrap:balance; }
+.pitch em { font-style:normal; color:var(--accent); }
+body:not(.play):not(.build) .pitch em { color:#D4FF3A; } /* in Work, nod to Build's lime: the "I build it" bit */
+.status-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#3ddc84; margin-right:7px; vertical-align:1px;
+  box-shadow:0 0 0 0 rgba(61,220,132,0.6); animation: pulse 2.4s ease-out infinite; }
+@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(61,220,132,0.55)} 70%{box-shadow:0 0 0 7px rgba(61,220,132,0)} 100%{box-shadow:0 0 0 0 rgba(61,220,132,0)} }
+.role { color:#fff; }
+.todo { color:#777; border:1px dashed #444; border-radius:3px; padding:0 5px; font-size:12px; white-space:nowrap; }
+
+/* ── REDESIGN: YOUR ROUND (the 2-minute version) ──
+   Borrowed from Rounds: open on a plan that's already made. Three stops, in order,
+   with the walk drawn between them. Shuffle deals a different round. */
+.round { padding:12px 12px 4px; }
+.round.off { display:none; }
+.round-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:14px; }
+.round-title { font-size:13.5px; }
+.round-title span { color:#666; margin-left:10px; }
+.round-shuffle { background:none; border:1px solid #2a2a2a; border-radius:999px; color:#fff; font:inherit; font-size:12px; padding:5px 12px;
+  transition:border-color 0.2s, color 0.2s; }
+.round-shuffle:hover { border-color:var(--accent); }
+.round-route { position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.round-route::before { /* the walk between stops */
+  content:''; position:absolute; left:6px; right:calc((100% - 24px) / 3 - 6px); top:5px; height:0;
+  border-top:1.5px dashed #3a3a3a; }
+a.stop { text-decoration:none; }
+.stop { position:relative; background:none; border:none; padding:0; color:#fff; font:inherit; text-align:left; display:flex; flex-direction:column; gap:10px; min-width:0;
+  opacity:0; transform:translateY(8px); transition:opacity 0.45s ease, transform 0.45s ease; }
+.stop.show { opacity:1; transform:none; }
+.stop-pin { display:flex; align-items:center; gap:8px; font-size:11px; color:#888; letter-spacing:0.3px; text-transform:uppercase; position:relative; z-index:1; }
+.stop-pin i { width:11px; height:11px; border-radius:50%; background:#000; border:1.5px solid var(--accent); display:inline-block; }
+.stop:hover .stop-pin i, .stop:focus-visible .stop-pin i { background:var(--accent); }
+.stop-img { position:relative; overflow:hidden; aspect-ratio:4/3; background:#111; }
+.stop-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s ease; }
+.stop:hover .stop-img img { transform:scale(1.04); }
+.stop-name { font-size:13.5px; line-height:1.3; }
+.stop-why { font-size:12px; color:#888; line-height:1.45; }
+.stop-me { aspect-ratio:4/3; border:1px solid #222; padding:16px; display:flex; flex-direction:column; justify-content:space-between; gap:10px; }
+.stop-me .big { font-size:17px; line-height:1.3; text-wrap:balance; }
+.stop-me .small { font-size:12px; color:#888; }
+.round-divider { margin:28px 12px 0; padding-top:14px; border-top:1px solid #1c1c1c; font-size:11px; color:#555; letter-spacing:0.3px; text-transform:uppercase; }
+
+/* ── REDESIGN: PLACEHOLDER TILES (recent work goes here) ── */
+.grid-item.placeholder { cursor:default; }
+.ph-tile { aspect-ratio:4/3; border:1px dashed #333; display:flex; flex-direction:column; justify-content:flex-end; padding:16px; gap:4px; color:#666; font-size:12px; }
+.ph-tile strong { color:#aaa; font-weight:400; font-size:13.5px; }
+
+/* ── REDESIGN: CASE STUDY FACTS ── */
+.proj-meta { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px 20px; padding:14px 0 16px; margin-bottom:22px; border-top:1px solid #1c1c1c; border-bottom:1px solid #1c1c1c; }
+.proj-meta:empty { display:none; }
+.proj-meta dt { font-size:11px; color:#666; letter-spacing:0.3px; text-transform:uppercase; margin-bottom:3px; }
+.proj-meta dd { margin:0; color:#ddd; font-size:12.5px; line-height:1.45; }
+
+/* ── REDESIGN: INTRO SHORTCUT + CURSOR LABEL ── */
+.intro-hire { background:none; border:none; padding:0; font:inherit; font-size:11.5px; color:#777; letter-spacing:0.2px;
+  opacity:0; transition:opacity 0.7s ease, color 0.2s; }
+.intro-hire.show { opacity:1; } .intro-hire.hide { opacity:0; pointer-events:none; }
+.intro-hire:hover { color:#fff; }
+#cursor-label { position:fixed; pointer-events:none; z-index:10000; transform:translate(14px, 12px); font-size:11px; letter-spacing:0.2px;
+  color:#000; background:var(--cursor-fill); padding:2px 7px; border-radius:999px; opacity:0; transition:opacity 0.15s ease; white-space:nowrap; }
+#cursor-label.on { opacity:1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot { animation:none; }
+  .stop, .grid-item, .cv-row { transition:none; }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
+  .round-route { grid-template-columns:1fr; gap:22px; }
+  .round-route::before { left:5px; right:auto; top:6px; bottom:6px; height:auto; border-top:none; border-left:1.5px dashed #3a3a3a; }
+  .stop-img, .stop-me { margin-left:20px; }
+  .stop-name, .stop-why { margin-left:20px; }
+  .pitch { font-size:19px; }
+  .sidebar .round { padding:4px 0 30px; }
+  .sidebar .round-divider { display:none; }
+  #cursor-label { display:none; }
   html, body { overflow: auto; }
   *, *::before, *::after { cursor: auto !important; }
   #cursor { display: none; }
@@ -263,8 +338,10 @@ body.build #buildSidebar { display:block; }
     <button class="intro-btn" onclick="enterMode('play')">Play</button>
     <button class="intro-btn" onclick="enterMode('build')">Build</button>
   </div>
+  <button class="intro-hire" id="introHire" onclick="enterMode('work', true)">hiring? skip to the 2-minute version →</button>
 </div>
 <div id="cursor"></div>
+<div id="cursor-label"></div>
 
 <div class="layout">
   <aside class="sidebar">
@@ -279,15 +356,25 @@ body.build #buildSidebar { display:block; }
     <!-- ── WORK SIDEBAR ── -->
     <div id="workSidebar">
       <div class="cv-info" id="cvInfo">
+        <p class="pitch">Digital designer in Naarm. I design it in Figma, and sometimes <em>I build it too.</em></p>
         <div class="cv-row">
-          <div class="cv-label"><span class="dot">○</span>About me</div>
+          <div class="cv-label"><span class="dot">○</span>Status</div>
           <div class="cv-content">
-            <p>Designer based in Melbourne, Australia.<br>Experience in websites, social media, retail campaigns, motion graphics, eDMs &amp; print.</p>
+            <p><span class="status-dot"></span>Open to mid-weight digital roles</p>
+            <p class="sub">Melbourne · <a href="mailto:ebonyroseaugustin@gmail.com">say hi</a></p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-label"><span class="dot">○</span>What I do</div>
+          <div class="cv-content">
+            <p>Websites, ecommerce and app UI, from first Figma frame to launch.</p>
+            <p class="sub">Five years across studios and agencies, so also campaigns, social, motion, eDMs and print when the brief needs it.</p>
           </div>
         </div>
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Currently</div>
           <div class="cv-content">
+            <p class="role">Mid-weight Designer</p>
             <p>BRX — Prahran</p>
             <p class="sub">2024 — Now</p>
           </div>
@@ -295,11 +382,13 @@ body.build #buildSidebar { display:block; }
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Previously</div>
           <div class="cv-content">
+            <p class="role"><span class="todo">job title</span></p>
             <p>Woo Agency — Brunswick</p>
             <p class="sub">2022 — 2024</p>
+            <p class="role"><span class="todo">job title</span></p>
             <p>Sky Foundry — Adelaide</p>
             <p class="sub">2021 — 2022</p>
-            <p>Freelancer</p>
+            <p class="role">Freelance Designer</p>
             <p class="sub">2019 — Now</p>
           </div>
         </div>
@@ -315,9 +404,10 @@ body.build #buildSidebar { display:block; }
         <div class="cv-row">
           <div class="cv-label"><span class="dot">○</span>Software</div>
           <div class="cv-content">
-            <p>Figma &amp; Sketch</p>
+            <p>Figma — every day</p>
             <p>Adobe Creative Suite</p>
-            <p>p5.js — learning. very slowwwly.</p>
+            <p>HTML, CSS &amp; JS — enough to ship Rounds</p>
+            <p class="sub">p5.js — learning. very slowwwly.</p>
           </div>
         </div>
         <div class="cv-row">
@@ -334,6 +424,7 @@ body.build #buildSidebar { display:block; }
         <p class="site-name">Ebony Rose</p>
         <h2 class="proj-title" id="dTitle"></h2>
         <p class="proj-sub" id="dSub"></p>
+        <dl class="proj-meta" id="dMeta"></dl>
         <div class="proj-desc" id="dDesc"></div>
         <a class="proj-link" id="dLink" href="#" target="_blank"></a>
       </div>
@@ -397,6 +488,7 @@ body.build #buildSidebar { display:block; }
         <p class="site-name">Ebony Rose</p>
         <h2 class="proj-title" id="pdTitle"></h2>
         <p class="proj-sub" id="pdSub"></p>
+        <dl class="proj-meta" id="pdMeta"></dl>
         <div class="proj-desc" id="pdDesc"></div>
         <a class="proj-link" id="pdLink" href="#" target="_blank"></a>
       </div>
@@ -429,6 +521,7 @@ body.build #buildSidebar { display:block; }
         <p class="site-name">Ebony Rose</p>
         <h2 class="proj-title" id="bdTitle"></h2>
         <p class="proj-sub" id="bdSub"></p>
+        <dl class="proj-meta" id="bdMeta"></dl>
         <div class="proj-desc" id="bdDesc"></div>
         <a class="proj-link" id="bdLink" href="#" target="_blank"></a>
       </div>
@@ -437,6 +530,14 @@ body.build #buildSidebar { display:block; }
   </aside>
 
   <main class="right" id="right">
+    <section class="round" id="round" aria-labelledby="roundTitle">
+      <div class="round-head">
+        <p class="round-title" id="roundTitle">The 2-minute version<span>3 stops, in order</span></p>
+        <button class="round-shuffle" id="roundShuffle" type="button">↻ deal another round</button>
+      </div>
+      <div class="round-route" id="roundRoute"></div>
+      <p class="round-divider">Everything else</p>
+    </section>
     <div class="grid" id="grid"></div>
     <div class="proj-imgs" id="projImgs"></div>
   </main>
@@ -671,8 +772,10 @@ body.build #buildSidebar { display:block; }
 // ─── PROJECTS ─────────────────────────────────────────────────────────────────
 const PROJECTS = [
   {
-    id:'rounds', thumb:'images/rounds-thumb.jpg', aspect:'133%', mode:'build',
+    id:'rounds', thumb:'images/rounds-thumb.jpg', aspect:'133%', mode:'build', alsoIn:['work'],
     title:'Rounds', subtitle:'Side project · live on the web and iOS', label:'designed it, then built it',
+    why:'Designed and built an app end to end. Live on web and iOS.',
+    meta:{ Role:'Product design + build', Team:'Just me', Platforms:'Web app, installable PWA, iOS', Status:'Live, with real-time crew voting' },
     desc:`<p>Rounds plans a day or night out with your crew. You open it and there is already a plan waiting — three stops, times that work, the walk between them — and if you don't like it, one tap gives you another. Share it with a crew and everyone sees each other's votes as they change.</p>
 <p>It started because deciding where to go takes longer than going. That made the design problem the opposite of a blank canvas: the app has to have an opinion first and let you argue with it second, so nearly every screen opens on a decision already made rather than an empty state asking what you want.</p>
 <p>I designed it and then built it — the interface, the Melbourne venue list, a map that works out the walking route on the phone itself, and the server behind the live voting. It runs in a browser, installs on a phone like an app, and there is an iOS build.</p>`,
@@ -687,9 +790,12 @@ const PROJECTS = [
   },
   {
     id:'pirate-life', thumb:'images/pirate-life-thumb.jpeg', aspect:'land', mode:'work',
-    title:'Pirate Life Website', subtitle:'Brewery company in South Australia', label:'brand + ecommerce',
-    desc:`<p>Pirate Life Brewing, situated in South Australia, represents a swiftly expanding craft beer producer. In light of this growth, the company sought to revitalise its existing online retail presence to highlight a new lineup of merchandise, aiming to forge a more unified site experience.</p>
-<p>To achieve this, I implemented a blocky, robust layout that aligns with the brand's youthful and spirited character, subtly infusing this personality throughout the site. This approach is manifest in the playful illustration featured in the footer, the vibrant use of photography, and the strategic employment of emojis and icons to add depth and clarity to textual content.</p>`,
+    title:'Pirate Life Website', subtitle:'Brewery company in South Australia', label:'ecommerce web design',
+    why:'Ecommerce for a fast-growing craft brewery.', roundImg:'images/pirate-life-01.jpeg',
+    meta:{ Role:'<span class="todo">your role</span>', Team:'<span class="todo">who you worked with</span>', Scope:'Online shop redesign, new merch range', Outcome:'Live at shop.piratelife.com.au' },
+    desc:`<p>Pirate Life was growing fast and had a new merch range to sell, but the online shop felt like an afterthought next to the brand. The brief was one shop that felt like the beer.</p>
+<p>I went blocky and loud on purpose. Big product photography carries most of the page, a hand-drawn illustration sits in the footer, and emoji and icons do the small talk so the product copy can stay short.</p>
+<p><span class="todo">One line on what changed after launch, if you know it.</span></p>`,
     link:'https://shop.piratelife.com.au', linkLabel:'shop.piratelife.com.au ↗',
     images:[
       {src:'images/pirate-life-01.jpeg', aspect:'65%',  span:'full'},
@@ -702,6 +808,7 @@ const PROJECTS = [
   {
     id:'small-victories', thumb:'images/small-victories-thumb.webp', aspect:'land', mode:'work',
     title:'Small Victories Website', subtitle:'Winery in South Australia', label:'web design',
+    why:'Type-led site for a wine brand chasing a younger crowd.',
     desc:`<p>Small Victories is an innovative boutique wine brand nestled in the Barossa Valley, South Australia. This brand distinctly appeals to the 20 to 40-year-old fashionable female demographic residing in urban centres. Originating from Elderton Wines, traditionally catering to an audience aged between 30 and 60, Small Victories marks a significant departure towards a more contemporary market focus.</p>
 <p>In alignment with its refreshed branding strategy and to captivate its targeted audience, there was a clear directive for a minimalist and sophisticated user interface (UI). This was to be achieved with a pronounced emphasis on typographic layout, drawing heavily on the aesthetic cues of their existing wine labels to guide the visual direction.</p>`,
     link:'https://smallvictorieswine.com', linkLabel:'smallvictorieswine.com ↗',
@@ -716,6 +823,7 @@ const PROJECTS = [
   {
     id:'spellmans', thumb:'images/spellmans-thumb.jpg', aspect:'port', mode:'work',
     title:"Spellmans' Social", subtitle:'Cafe in South Australia', label:'branding',
+    why:'Café identity, from monogram to glassware.',
     desc:`<p>Situated in the heart of Adelaide, Spellmans' Social is a café that prides itself on creating an atmosphere that feels both inviting and intimate. In their pursuit of a unique brand identity, they expressed a desire for a design that seamlessly marries the nostalgia of yesteryears with the crisp, clean lines of modernity. They envisioned a colour palette that draws inspiration from nature, with deep, rich emerald green as the centrepiece, complemented by the warmth of browns and the subtlety of beige tones. This choice aimed not only to welcome guests but also to envelop them in a sense of comfort and sophistication.</p>
 <p>The introduction of a monogram was a thoughtful nod to classic design principles, ensuring that the essence of Spellmans' Social could be distilled into a simple, yet elegant, symbol.</p>
 <p>The client's enthusiastic response to this idea was a testament to its alignment with their vision for a brand that speaks of quality, warmth, and a timeless appeal, making Spellmans' Social not just a cafe, but a destination.</p>`,
@@ -733,6 +841,7 @@ const PROJECTS = [
   {
     id:'link', thumb:'images/link-thumb.jpeg', aspect:'port', mode:'work',
     title:'Link NFC Badge', subtitle:'Wearable Technology', label:'product design',
+    why:'A wearable NFC badge, designed down to the clasp.',
     desc:`<p>The concept revolves around a badge equipped with an NFC (Near Field Communication) chip, designed for convenience and ease of use without the necessity for charging. Activation occurs exclusively upon interaction with a reader, facilitating a seamless experience. Users can effortlessly detach the main compartment for swiping and subsequently reattach it to the base.</p>
 <p>This device is customisable to suit the unique daily requirements of each user. The design ensures that the brooch component securely fits within the main compartment, minimizing the risk of misplacement. Furthermore, users have the flexibility to wear just the pin independently, offering versatility for days when the full functionality of the device is not needed.</p>`,
     link:'', linkLabel:'',
@@ -780,6 +889,8 @@ const PROJECTS = [
   {
     id:'clearkind', thumb:'images/clearkind-thumb.jpeg', aspect:'port', mode:'play',
     title:'clearkind.', subtitle:'Health & Lifestyle App · Conceptual Project', label:'mental health app concept',
+    why:'App concept with a clickable Figma prototype.',
+    meta:{ Role:'UX + UI, solo', Type:'Concept app', Tools:'Figma (prototype linked)', Focus:'Planning with mental health support built in' },
     desc:`<p>I developed an application tailored for young individuals struggling with organisation and daily management, with a strong emphasis on mental health support. This app incorporates specialised features such as break reminders, visualisers, calming timers, and music integration to aid stress management.</p>
 <p>Additionally, it includes notifications for physical activity and hydration, along with access to mental health professionals and techniques for anxiety and breathing management. Colour psychology is strategically utilised to enhance user engagement, employing red for energy, green for motivation, and blue for calm, particularly in sections dedicated to mental health.</p>
 <p>The application not only assists users in completing tasks but also promotes a balanced approach to time management, addressing the underlying issues of fatigue and demotivation. There is also potential to extend this application into a web-based platform for both Mac and Windows, further increasing its accessibility and utility.</p>`,
@@ -799,6 +910,27 @@ const PROJECTS = [
 // opens it in place; use `href` instead for something with no project page yet.
 const BUILDING = [
   { name:'Rounds', note:'plan a night out with your crew. works on your phone.', id:'rounds', status:'live' },
+];
+
+// ─── YOUR ROUND ───────────────────────────────────────────────────────────────
+// The "2-minute version" at the top of Work. Stop 1 deals from PRODUCT, stop 2
+// from CLIENT, stop 3 is always you. Shuffle deals a different pair.
+const ROUND = {
+  product: ['rounds', 'clearkind'],
+  client:  ['pirate-life', 'small-victories', 'spellmans', 'link'],
+  me: {
+    big:  'Mid-weight designer, open to digital roles.',
+    small:'BRX now. Woo Agency and Sky Foundry before that. RMIT Communication Design.',
+    email:'ebonyroseaugustin@gmail.com'
+  }
+};
+
+// ─── PLACEHOLDERS ─────────────────────────────────────────────────────────────
+// Dashed tiles in the Work grid marking where recent work should go. Delete an
+// entry once its real project is in PROJECTS.
+const PLACEHOLDERS = [
+  { title:'BRX — 2024 to now', note:'2–3 recent projects go here. Password-protect if the client needs it.' },
+  { title:'Woo Agency — 2022 to 2024', note:'Your strongest Woo project. Even one does a lot.' },
 ];
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
@@ -874,7 +1006,8 @@ function staggerRows(cvEl, delay) {
 
 function renderGrid(mode, delay) {
   grid.innerHTML = '';
-  PROJECTS.filter(p => p.mode === mode).forEach((p, i) => {
+  const inMode = p => p.mode === mode || (p.alsoIn || []).includes(mode);
+  PROJECTS.filter(inMode).forEach((p, i) => {
     const item = document.createElement('div');
     item.className = 'grid-item';
     const wrap = document.createElement('div');
@@ -893,11 +1026,78 @@ function renderGrid(mode, delay) {
     item.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProject(p); }
     });
-    bindFill(item);
+    bindFill(item, 'view');
     grid.appendChild(item);
     setTimeout(() => item.classList.add('show'), (delay||0) + i * 60);
   });
+  if (mode === 'work') PLACEHOLDERS.forEach((ph, i) => {
+    const item = document.createElement('div');
+    item.className = 'grid-item placeholder';
+    item.innerHTML = `<div class="ph-tile"><strong>${ph.title}</strong>${ph.note}</div>
+      <div class="item-label"><div class="item-title">Placeholder</div><div class="item-sub">recent work</div></div>`;
+    grid.appendChild(item);
+    setTimeout(() => item.classList.add('show'), (delay||0) + (i + 6) * 60);
+  });
+  renderRound(mode, delay);
 }
+
+// ─── YOUR ROUND ───────────────────────────────────────────────────────────────
+const roundEl    = document.getElementById('round');
+const roundRoute = document.getElementById('roundRoute');
+let roundPick = { product: 'rounds', client: 'pirate-life' };
+
+function openFromAnywhere(p) {
+  const target = (p.alsoIn || []).includes(currentMode) ? currentMode : p.mode;
+  if (target !== currentMode) applyMode(target, 0);
+  openProject(p);
+}
+
+// On phones the sidebar stacks above the grid, which would bury the round under
+// the whole CV. Move it up to sit right under Status instead.
+const phoneMQ = matchMedia('(max-width: 768px)');
+function placeRound() {
+  const statusRow = document.querySelector('#cvInfo .cv-row');
+  if (phoneMQ.matches) statusRow.after(roundEl);
+  else document.getElementById('right').prepend(roundEl);
+}
+phoneMQ.addEventListener('change', placeRound);
+placeRound();
+
+function renderRound(mode, delay) {
+  roundEl.classList.toggle('off', mode !== 'work');
+  if (mode !== 'work') return;
+  roundRoute.innerHTML = '';
+  const stops = [PROJECTS.find(p => p.id === roundPick.product), PROJECTS.find(p => p.id === roundPick.client)];
+  stops.forEach((p, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'stop';
+    b.innerHTML = `<span class="stop-pin"><i></i>Stop ${i + 1} · ~40 sec</span>
+      <span class="stop-img"><img src="${p.roundImg || p.thumb}" alt=""></span>
+      <span class="stop-name">${p.title}</span><span class="stop-why">${p.why || p.label}</span>`;
+    b.addEventListener('click', () => openFromAnywhere(p));
+    bindFill(b, 'stop ' + (i + 1));
+    roundRoute.appendChild(b);
+  });
+  const me = document.createElement('a');
+  me.className = 'stop'; me.href = 'mailto:' + ROUND.me.email;
+  me.innerHTML = `<span class="stop-pin"><i></i>Stop 3 · ~30 sec</span>
+    <span class="stop-me"><span class="big">${ROUND.me.big}</span><span class="small">${ROUND.me.small}<br><br>${ROUND.me.email}</span></span>
+    <span class="stop-name">Me</span><span class="stop-why">The CV's on the left. Email's right here.</span>`;
+  bindFill(me, 'say hi');
+  roundRoute.appendChild(me);
+  [...roundRoute.children].forEach((el, i) => setTimeout(() => el.classList.add('show'), (delay || 0) + i * 90));
+}
+
+document.getElementById('roundShuffle').addEventListener('click', e => {
+  const pickOther = (list, cur) => { const o = list.filter(x => x !== cur); return o[Math.floor(Math.random() * o.length)]; };
+  // change at least one stop; usually both
+  const next = { product: Math.random() < 0.5 ? pickOther(ROUND.product, roundPick.product) : roundPick.product,
+                 client:  pickOther(ROUND.client, roundPick.client) };
+  roundPick = next;
+  const r = e.currentTarget.getBoundingClientRect();
+  [...roundRoute.children].forEach(el => el.classList.remove('show'));
+  particleBurst(r.left + r.width / 2, r.top + r.height / 2, 40, MODES[currentMode].accent, () => renderRound('work', 0));
+});
 
 let lastOpenedId = null;
 function openProject(p) {
@@ -911,6 +1111,9 @@ function openProject(p) {
   const lnk = document.getElementById(pfx+'Link');
   lnk.href = p.link||'#'; lnk.textContent = p.linkLabel;
   lnk.style.display = p.link ? '' : 'none';
+  const meta = document.getElementById(pfx+'Meta');
+  meta.innerHTML = p.meta ? Object.entries(p.meta).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('') : '';
+  roundEl.classList.add('off');
   projImgs.innerHTML = '';
   p.images.forEach(img => {
     const w = document.createElement('div');
@@ -976,6 +1179,7 @@ function closeProject() {
   m.panel.classList.remove('on');
   document.getElementById('mode-toggle').classList.remove('off');
   grid.classList.remove('off'); projImgs.classList.remove('on');
+  roundEl.classList.toggle('off', currentMode !== 'work');
   right.removeAttribute('tabindex'); right.removeAttribute('role'); right.removeAttribute('aria-label');
   // Return focus to the tile that was opened, so keyboard users keep their place
   const tile = lastOpenedId && grid.querySelector(`.grid-item[data-id="${lastOpenedId}"]`);
@@ -995,7 +1199,7 @@ window.addEventListener('popstate', (e) => {
   const state = e.state;
   if (state && state.project) {
     if (state.mode !== currentMode) switchMode(state.mode);
-    const list = PROJECTS.filter(pr => pr.mode === state.mode);
+    const list = PROJECTS.filter(pr => pr.mode === state.mode || (pr.alsoIn || []).includes(state.mode));
     const proj = list.find(pr => pr.id === state.project);
     if (proj) openProject(proj);
   } else {
@@ -1036,10 +1240,14 @@ layoutEl.inert = true;
 
 setTimeout(() => introName.classList.add('show'), 300);
 setTimeout(() => introBtns.classList.add('show'), 900);
+const introHire = document.getElementById('introHire');
+setTimeout(() => introHire.classList.add('show'), 1300);
 
-function enterMode(mode) {
+function enterMode(mode, toRound) {
   // Lock buttons immediately
   introBtns.classList.add('hide');
+  introHire.classList.add('hide');
+  if (toRound) setTimeout(() => document.querySelector('.stop')?.focus({ preventScroll: true }), 900);
   introName.classList.add('hide');
 
   const m = MODES[mode] || MODES.work;
@@ -1069,8 +1277,8 @@ function enterMode(mode) {
   }
 }
 
-// Auto-dismiss to Work after 8s
-setTimeout(() => { if (document.getElementById('intro')) enterMode('work'); }, 8000);
+// Auto-dismiss to Work after 5s (was 8s: recruiters arriving from LinkedIn shouldn't wait)
+setTimeout(() => { if (document.getElementById('intro')) enterMode('work'); }, 5000);
 
 // ─── CURSOR ──────────────────────────────────────────────────────────────────
 document.addEventListener('mousemove', e => {
@@ -1080,9 +1288,14 @@ document.addEventListener('mousemove', e => {
 document.addEventListener('mouseleave', () => cur.style.opacity = '0');
 document.addEventListener('mouseenter', () => cur.style.opacity = '1');
 
-function bindFill(el) {
-  el.addEventListener('mouseenter', () => cur.classList.add('filled'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('filled'));
+const curLabel = document.getElementById('cursor-label');
+document.addEventListener('mousemove', e => { curLabel.style.left = e.clientX + 'px'; curLabel.style.top = e.clientY + 'px'; });
+function bindFill(el, label) {
+  el.addEventListener('mouseenter', () => {
+    cur.classList.add('filled');
+    if (label) { curLabel.textContent = label; curLabel.classList.add('on'); }
+  });
+  el.addEventListener('mouseleave', () => { cur.classList.remove('filled'); curLabel.classList.remove('on'); });
 }
 document.querySelectorAll('a, button').forEach(bindFill);
 
