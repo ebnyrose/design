@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Melbourne × Naarm. A mid-weight designer making things for fun, not just briefs. Web and product UI, brand, campaign and motion. Open to mid-weight digital roles.">
+<meta name="description" content="Designer based in Melbourne, Australia. Experience in advertising, UI/UX, social media, retail campaigns, branding and print. Open to mid-weight digital roles.">
 <!-- Link preview for the home page. Project pages get their own: see tools/make_share_pages.py -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ebony Rose">
 <meta property="og:title" content="Ebony Rose — Mid-Weight Digital Designer">
-<meta property="og:description" content="A mid-weight designer making things for fun, not just briefs.">
+<meta property="og:description" content="Designer based in Melbourne, Australia. Advertising, UI/UX, social, retail campaigns, branding &amp; print.">
 <meta property="og:url" content="https://www.ebonyrose.xyz/">
 <meta property="og:image" content="https://www.ebonyrose.xyz/share/og/home.jpg">
 <meta property="og:image:width" content="1200">
@@ -290,7 +290,7 @@ const pv=$('#pv'),pi=$('img',pv),FL={on:false,x:0,y:0,mx:0,my:0,s:0,r:0,w:300,h:
 function home(){cancelAnimationFrame(raf);clearInterval(clock);document.title='Ebony Rose Portfolio';
  const jobs=ME.jobs;
 app.innerHTML=`<div class="fade"><section class="open"><div class="shelf" id="shelf" aria-label="The work, as a rack of CDs. Drag to browse, click a case to open the project."><div class="cdrow" id="cdrow"></div></div><p class="rlab mono" id="rlab"></p> <h1 id="hl">${hl()}</h1>
- <p class="sub">Agency-side since 2021, freelancing since 2019. Web and product UI, brand, campaign and motion — now mid-weight digital at ${esc(jobs[0].at.split(',')[0])}.</p>
+ <p class="sub">I’m a designer based in Melbourne, Australia. With experience in advertising, UI/UX, social media, retail campaigns, branding &amp; print.</p>
  <dl class="hud"><dt>Local time</dt><dd id="clk">—</dd></dl></section>
  <div class="sec"><span id="cnt">Work (${count(flt)})</span><span class="vs" id="vs"><button class="vb" data-v="list" aria-pressed="${vw==='list'}"><i></i>List</button><button class="vb" data-v="grid" aria-pressed="${vw==='grid'}"><i></i>Grid</button></span></div>
  ${vw==='list'?`<section class="list">${WORK.map((p,i)=>`<a class="row" href="#${p.id}" data-id="${p.id}"><span class="n">${N(i)}</span><span class="t">${esc(p.title)}</span><img class="rth" src="${cover(p)}" alt="" loading="lazy"><span class="d">${esc(p.discipline)}</span><span class="cl">${esc(p.client)}</span></a>`).join('')}</section>`
