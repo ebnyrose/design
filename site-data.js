@@ -1,27 +1,29 @@
 // Site content. Images are [src, width, height] so every layout keeps the real ratio.
 window.ME = {
  "name": "Ebony Rose",
- "role": "Mid Weight Digital Designer",
- "studio": "BRX, Prahran",
+ "role": "Mid-Weight Digital Designer",
+ "studio": "BRX Advertising, Prahran",
  "place": "Melbourne × Naarm",
  "status": "Open to mid-weight digital roles",
  "email": "ebonyroseaugustin@gmail.com",
  "linkedin": "https://www.linkedin.com/in/ebonyrosedesign/",
  "jobs": [
   {
-   "t": "Mid Weight Digital Designer",
-   "at": "BRX, Prahran",
+   "t": "Mid-Weight Digital Designer",
+   "at": "BRX Advertising, Prahran",
+   "url": "https://www.brx.com.au",
    "y": "2024–now"
   },
   {
    "t": "Junior Designer",
-   "at": "Woo Agency, Brunswick",
-   "y": "2022–24"
+   "at": "WOO Group, Brunswick",
+   "url": "https://woogroup.com.au/",
+   "y": "2022–2024"
   },
   {
    "t": "Graphic Designer",
-   "at": "Sky Foundry, Adelaide",
-   "y": "2021–22"
+   "at": "Sky Foundry, Adelaide (remote)",
+   "y": "2021–2022"
   },
   {
    "t": "Freelance Designer",
