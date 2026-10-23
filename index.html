@@ -81,7 +81,8 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 .cd .b{transform:rotateX(-90deg) translateZ(calc(var(--ch)/2));background:#9a9aa2}
 .cd .sh{position:absolute;width:calc(var(--cw) + 30px);height:44px;left:-6px;top:calc(var(--ch) - 22px);transform:rotateX(90deg) translateZ(-22px);background:radial-gradient(closest-side,rgba(0,0,0,.45),transparent);pointer-events:none}
 :root[data-theme=light] .cd .sh{background:radial-gradient(closest-side,rgba(0,0,0,.22),transparent)}
-@media (max-width:900px){.cdrow{left:50%;top:56%;transform:rotateX(-14deg) rotateY(-34deg) translateZ(var(--shift,0px))}}
+@media (max-width:900px){.shelf{position:relative;inset:auto;grid-column:1/-1;grid-row:3;height:clamp(290px,40svh,400px);margin-top:12px}
+ .cdrow{left:50%;top:50%;transform:rotateX(-14deg) rotateY(-34deg) translateZ(var(--shift,0px))}}
 .open h1{position:relative;z-index:5;grid-column:1/span 6;grid-row:1;margin:0;font:700 clamp(22px,2.5vw,38px)/1.05 var(--wide);font-stretch:112%;font-variation-settings:'wdth' 112;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance;pointer-events:none}
 .open .sub{position:relative;z-index:5;grid-column:1/span 5;grid-row:2;margin:14px 0 0;color:var(--mid);max-width:54ch;pointer-events:none}
 .open h1 em{font-style:normal;font-weight:300;color:var(--mid);display:block}
@@ -126,7 +127,15 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 .bg li.fav>:nth-child(2){color:var(--fg)}
 .bg li.cur>:nth-child(2),.bg li.cur>:nth-child(3){color:var(--fg)}.bg li>:nth-child(2){grid-column:5/span 3;color:var(--mid)}.bg li>:nth-child(3){grid-column:8/span 2;text-align:right;font:400 12.5px/inherit var(--mono);letter-spacing:0;color:var(--mid)}
 .bg li.n2>:nth-child(1){grid-column:1/span 4}.bg li.n2>:nth-child(2){grid-column:5/span 5;color:var(--mid)}
-.foot{padding:14px var(--pad) 22px;color:var(--mid);text-transform:uppercase;letter-spacing:.02em;display:flex;justify-content:space-between;border-top:1px solid var(--rule)}
+.foot{padding:34px var(--pad) 26px;color:var(--mid);text-transform:uppercase;letter-spacing:.02em;border-top:1px solid var(--rule)}
+.fc{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px var(--pad);align-items:baseline}
+.fc .k{grid-column:1/span 3;color:var(--fg)}
+.fl{grid-column:4/span 5;display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+.fl a,.fl button{color:var(--fg);font:inherit;letter-spacing:inherit;text-transform:uppercase;text-align:left}
+.fc .st{grid-column:10/span 3;display:flex;gap:8px;align-items:center;justify-content:flex-end;color:var(--fg);text-align:right}
+.fb{display:flex;justify-content:space-between;margin-top:34px;padding-top:14px;border-top:1px solid var(--rule)}
+@media (max-width:900px){.bg .bgrow:nth-of-type(3) li>:nth-child(2){display:none}
+ .fc{gap:10px}.fc .k,.fl,.fc .st{grid-column:1/-1}.fc .st{justify-content:flex-start;text-align:left}.fb{margin-top:24px}}
 /* project */
 .pg{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 var(--pad);padding:var(--pad) var(--pad) 60px}
 .stack{grid-column:1/span 7;display:flex;flex-direction:column;gap:var(--pad)}
@@ -144,7 +153,7 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 @media (prefers-reduced-motion:reduce){.fade,.dot{animation:none}*{transition:none!important}}
 @media (max-width:900px){
  .hd{padding:8px var(--pad);row-gap:8px}.hd .n{grid-column:1/span 6}.hd .r{grid-column:7/span 6;grid-row:1}.hd .f{grid-column:1/-1;grid-row:2;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
- .open{min-height:76svh;padding-top:18px}.open h1{grid-column:1/-1;grid-row:auto}.open .sub{grid-column:1/-1;grid-row:auto;max-width:none}
+ .open{min-height:0;padding:18px var(--pad) 0}.open h1{grid-column:1/-1;grid-row:auto}.open .sub{grid-column:1/-1;grid-row:auto;max-width:none}
  .row .d,.row .cl{display:none}.row{align-items:center;padding:12px 0}.row .n{grid-column:1/span 1;padding:0}.row .t{grid-column:2/span 7;font-size:clamp(24px,7.4vw,34px)}.row .rth{display:block;grid-column:9/span 4;justify-self:end;height:46px;width:auto;object-fit:cover}.gv{grid-template-columns:repeat(2,minmax(0,1fr))}
  .bg h3,.bg ul{grid-column:1/-1}.bg li{display:flex;flex-wrap:wrap;gap:2px 14px}.bg li>*{text-align:left!important}#pv{display:none}
  .pg{display:flex;flex-direction:column}.panel{position:static;order:-1;max-height:none;margin-bottom:var(--pad)}}
@@ -198,7 +207,7 @@ function field(){const hero=$('#shelf'),row=$('#cdrow'),lab=$('#rlab');if(!hero|
  const cl=(a,v,b2)=>Math.max(a,Math.min(b2,v));
  let cw=0,gap=0,zs=[];
  const layout=()=>{const vw=innerWidth,sm=vw<900;
-  cw=sm?cl(150,vw*.5,210):cl(230,vw*.22,300);gap=sm?cw*.62:cw*.78;
+  cw=sm?cl(104,vw*.33,148):cl(230,vw*.22,300);gap=sm?cw*.62:cw*.78;
   const d=sm?cl(8,vw*.02,12):cl(12,vw*.014,20),sp=sm?10:cl(10,vw*.012,18);
   hero.style.setProperty('--cw',cw+'px');hero.style.setProperty('--ch',cw+'px');
   hero.style.setProperty('--cd',d+'px');hero.style.setProperty('--cgap',gap+'px');hero.style.setProperty('--spine',sp+'px');
@@ -287,6 +296,17 @@ function tick(){const d=new Date(),f=new Intl.DateTimeFormat('en-AU',{timeZone:'
  el.innerHTML=esc(f.format(d).replace(',',''))+' <i>'+esc(quip(+g('hour'),+g('minute')))+'</i>';}
 /* home */
 const pv=$('#pv'),pi=$('img',pv),FL={on:false,x:0,y:0,mx:0,my:0,s:0,r:0,w:300,h:300,raf:0};addEventListener('pointermove',e=>{FL.mx=e.clientX;FL.my=e.clientY});
+const foot=()=>`<footer class="foot">
+ <div class="fc"><span class="k">Contact</span><div class="fl">
+  <a class="ul" href="${mail}">${esc(ME.email)}</a>
+  <a class="ul" href="${esc(ME.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>
+  <a class="ul" href="https://ebnyrose.github.io" target="_blank" rel="noopener">ebnyrose.github.io ↗</a>
+  <button class="ul" id="cp">Copy email</button>
+  <a class="ul" id="cvp" href="Ebony-Rose-CV.pdf" hidden>CV (PDF) ↓</a></div>
+  <span class="st"><i class="dot"></i>${esc(ME.status)}</span></div>
+ <div class="fb"><span>© Ebony Rose</span><span>${esc(ME.place)}</span></div></footer>`;
+function wireFoot(){const c=$('#cp');if(c)c.onclick=e=>{const o=e.target.textContent;const d=()=>{e.target.textContent='Copied';setTimeout(()=>e.target.textContent=o,1400)};try{navigator.clipboard.writeText(ME.email).then(d,d)}catch(x){d()}};
+ fetch('Ebony-Rose-CV.pdf',{method:'HEAD'}).then(r=>{if(r.ok&&$('#cvp'))$('#cvp').hidden=false}).catch(()=>{})}
 function home(){cancelAnimationFrame(raf);clearInterval(clock);document.title='Ebony Rose Portfolio';
  const jobs=ME.jobs;
 app.innerHTML=`<div class="fade"><section class="open"><div class="shelf" id="shelf" aria-label="The work, as a rack of CDs. Drag to browse, click a case to open the project."><div class="cdrow" id="cdrow"></div></div><p class="rlab mono" id="rlab"></p> <h1 id="hl">${hl()}</h1>
@@ -299,12 +319,10 @@ app.innerHTML=`<div class="fade"><section class="open"><div class="shelf" id="sh
   <div class="bgrow"><h3>Experience</h3><ul>${jobs.map((j,i)=>`<li class="${i?'':'cur'}"><span>${esc(j.t)}</span><span>${j.url?`<a class="ul" href="${esc(j.url)}" target="_blank" rel="noopener">${esc(j.at)} ↗</a>`:esc(j.at)}</span><span>${esc(j.y)}</span></li>`).join('')}</ul></div>
   <div class="bgrow"><h3>Education</h3><ul><li><span>Bachelor of Design</span><span>RMIT, Communication Design</span><span>2019–2021</span></li><li><span>High Achievers Award</span><span>Visual Communication</span><span>2017</span></li></ul></div>
   <div class="bgrow"><h3>Tools</h3><ul><li class="n2 fav"><span>Figma</span><span>my bread &amp; butter</span></li><li class="n2"><span>Adobe Creative Suite</span><span>we&rsquo;ve been through a lot together</span></li><li class="n2"><span>Claude / Higgsfield</span><span>I still make the calls</span></li><li class="n2"><span>macOS &amp; PC</span><span>fluent in both, loyal to neither</span></li><li class="n2"><span>p5.js &amp; GitHub</span><span>learning&hellip;</span></li></ul></div>
-  <div class="bgrow"><h3>Contact</h3><ul><li class="n2"><a class="ul" href="${mail}">${esc(ME.email)}</a><span>Open to mid-weight digital roles</span></li><li class="n2"><a class="ul" href="${esc(ME.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a><a class="ul" href="https://ebnyrose.github.io" target="_blank" rel="noopener">ebnyrose.github.io ↗</a></li><li class="n2"><button class="ul" id="cp">Copy email</button><a class="ul" id="cvp" href="Ebony-Rose-CV.pdf" hidden>CV (PDF) ↓</a></li></ul></div>
  </section>
- <footer class="foot"><span>© Ebony Rose</span><span>${esc(ME.place)}</span></footer></div>`;
+ ${foot()}</div>`;
  $('#vs').onclick=e=>{const b=e.target.closest('button');if(b){vw=b.dataset.v;home()}};
- if($('#cp'))$('#cp').onclick=e=>{const o=e.target.textContent;const d=()=>{e.target.textContent='Copied';setTimeout(()=>e.target.textContent=o,1400)};try{navigator.clipboard.writeText(ME.email).then(d,d)}catch(x){d()}};
- fetch('Ebony-Rose-CV.pdf',{method:'HEAD'}).then(r=>{if(r.ok&&$('#cvp'))$('#cvp').hidden=false}).catch(()=>{});
+ wireFoot();
  FL.on=false;$$('.row').forEach(r=>{r.onpointerenter=()=>{if(!matchMedia('(pointer:fine)').matches)return;const p=byId(r.dataset.id),m=p.id==='clearkind'?p.imgs[0]:p.thumb,q=m[1]/m[2];FL.w=q>=1?300:230;FL.h=FL.w/q;pi.src=cover(p);pv.style.width=FL.w+'px';pv.style.height=FL.h+'px';if(!FL.on){FL.x=FL.mx;FL.y=FL.my}FL.on=true};r.onpointerleave=()=>{FL.on=false}});cancelAnimationFrame(FL.raf);(function lp(){FL.x+=(FL.mx-FL.x)*.13;FL.y+=(FL.my-FL.y)*.13;FL.s+=((FL.on?1:0)-FL.s)*(FL.on?.14:.2);FL.r+=((reduce?0:Math.max(-8,Math.min(8,(FL.mx-FL.x)*.05)))-FL.r)*.1;pv.style.opacity=Math.min(1,FL.s*1.4);pv.style.transform=`translate3d(${FL.x+46}px,${FL.y-FL.h/2}px,0) scale(${.86+FL.s*.14}) rotate(${FL.r}deg)`;FL.raf=requestAnimationFrame(lp)})();
  field();tick();clock=setInterval(tick,1000);applyFilter();}
 /* project */
@@ -317,7 +335,8 @@ function proj(p){cancelAnimationFrame(raf);cancelAnimationFrame(FL.raf);FL.on=fa
  <p class="pitch">${esc(p.line||p.subtitle)}</p>${p.desc.map(t=>`<p class="b">${esc(t)}</p>`).join('')}
  <dl class="meta">${p.meta.Client?'':`<dt>Client</dt><dd>${esc(p.client)}</dd>`}${Object.entries(p.meta).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
  ${p.link?`<a class="ul mono" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.linkLabel)} ↗</a>`:''}
- <a class="ul mono" href="#${n.id}">Next: [ ${esc(n.title)} ] →</a></aside></article>`;
+ <a class="ul mono" href="#${n.id}">Next: [ ${esc(n.title)} ] →</a></aside></article>${foot()}`;
+ wireFoot();
  $('#cls').onclick=e=>{e.preventDefault();location.hash=''};
  $$('.ths button').forEach(b=>b.onclick=()=>{$('#f'+b.dataset.i).scrollIntoView({behavior:reduce?'auto':'smooth'});$$('.ths button').forEach(x=>x.setAttribute('aria-current',x===b))});
 }
