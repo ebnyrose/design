@@ -46,50 +46,12 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 .dot{width:7px;height:7px;border-radius:50%;background:var(--live);display:inline-block;animation:b 3s ease-in-out infinite}@keyframes b{50%{opacity:.35}}
 /* opening: live status field */
 .open{background:var(--bg);color:var(--fg);position:relative;overflow:hidden;min-height:clamp(480px,80svh,880px);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 var(--pad);padding:clamp(26px,5vh,54px) var(--pad) var(--pad);align-items:start;align-content:start;border-bottom:1px solid var(--rule)}
-.shelf{position:absolute;inset:0;z-index:1;overflow:hidden;perspective:6000px;cursor:grab;touch-action:pan-y;--cw:240px;--ch:211px;--cd:18px;--cgap:42px;--spine:16px}
-.shelf.drag{cursor:grabbing}
-.cdrow{position:absolute;left:50%;top:52%;width:0;height:0;transform-style:preserve-3d;transform:rotateX(-16deg) rotateY(-38deg) translateZ(var(--shift,0px));transition:transform .9s cubic-bezier(.2,.8,.2,1)}
-.cd{position:absolute;width:var(--cw);height:var(--ch);left:calc(var(--cw)/-2);top:calc(var(--ch)/-2);transform-style:preserve-3d;border:0;padding:0;background:none;will-change:transform}
-.cd .f{position:absolute;left:0;top:0;backface-visibility:hidden}
-.cd .front{width:100%;height:100%;transform:translateZ(calc(var(--cd)/2));background:linear-gradient(135deg,#e7e7ec,#c6c6cf 55%,#dedee5);border-radius:3px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
-.cd .art{position:absolute;top:4%;bottom:4%;left:calc(var(--spine) + 1%);aspect-ratio:1;overflow:hidden;background:var(--c,#111) center/cover no-repeat;background-image:var(--art);color:var(--ink,#111);box-shadow:0 0 0 1px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.45);display:flex;flex-direction:column;justify-content:space-between;padding:7%}
-.cd .art>*{position:relative;z-index:2}
-.cd .art .no{align-self:flex-start;font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:#fff;mix-blend-mode:difference}
-.cd .art .ti{display:none;font:700 clamp(13px,1.35vw,22px)/.95 var(--wide);font-stretch:112%;font-variation-settings:'wdth' 112;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
-.cd .art .di{display:none;font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;opacity:.75;margin-top:.4em}
-.cd .art .mk{display:none}
-/* a different mark per sleeve, built from the project colour */
-.cd .art.m0 .mk{background:radial-gradient(circle at 70% 34%,transparent 0 11%,currentColor 11% 15%,transparent 15% 22%,currentColor 22% 26%,transparent 26% 34%,currentColor 34% 38%,transparent 38%)}
-.cd .art.m1 .mk{background:repeating-linear-gradient(180deg,currentColor 0 6%,transparent 6% 13%);opacity:.22}
-.cd .art.m2 .mk{background:radial-gradient(circle at 72% 30%,currentColor 0 26%,transparent 26%);opacity:.28}
-.cd .art.m3 .mk{background:repeating-linear-gradient(135deg,currentColor 0 3%,transparent 3% 9%);opacity:.2}
-.cd .art.m4 .mk{background:radial-gradient(circle at 28% 26%,currentColor 0 7%,transparent 7%),radial-gradient(circle at 68% 26%,currentColor 0 7%,transparent 7%),radial-gradient(circle at 28% 62%,currentColor 0 7%,transparent 7%),radial-gradient(circle at 68% 62%,currentColor 0 7%,transparent 7%);opacity:.3}
-.cd .art::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.1),transparent 40%)}
-.cd .front::before{content:'';position:absolute;inset:0 auto 0 0;width:var(--spine);background:linear-gradient(90deg,rgba(64,64,74,.95),rgba(120,120,132,.6) 60%,rgba(255,255,255,.55));border-right:1px solid rgba(255,255,255,.65)}
-.cd .front::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.1) 22%,transparent 34%,transparent 64%,rgba(255,255,255,.3) 78%,rgba(255,255,255,.05) 92%);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45),inset 0 1px 0 rgba(255,255,255,.75),inset 0 0 22px rgba(255,255,255,.18)}
-.cd .cap{display:none}
-.cd .cap b{display:block;font-weight:500}
-.cd .back{width:100%;height:100%;transform:rotateY(180deg) translateZ(calc(var(--cd)/2));background:linear-gradient(135deg,#e9e9ec,#bdbdc4)}
-.cd .l,.cd .r{width:var(--cd);height:100%;left:calc(50% - var(--cd)/2)}
-.cd .l{transform:rotateY(-90deg) translateZ(calc(var(--cw)/2));background:linear-gradient(90deg,#4a4a56,#73737f,#3e3e48);overflow:hidden}
-.cd .l span,.cd .r span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(90deg);transform-origin:center;white-space:nowrap;font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase}
-.cd .l span{color:rgba(255,255,255,.92)}
-.cd .r span{color:#2a2a2e}
-.cd .r{overflow:hidden;transform:rotateY(90deg) translateZ(calc(var(--cw)/2));background:repeating-linear-gradient(180deg,transparent 0 30%,rgba(150,150,160,.75) 30% 30.6%,transparent 30.6% 33%,rgba(150,150,160,.75) 33% 33.6%,transparent 33.6% 70%),linear-gradient(90deg,rgba(255,255,255,.95),rgba(190,190,200,.9) 30%,rgba(240,240,245,.95) 70%,rgba(150,150,160,.9))}
-.cd .t,.cd .b{width:100%;height:var(--cd);top:calc(50% - var(--cd)/2)}
-.cd .t{transform:rotateX(90deg) translateZ(calc(var(--ch)/2));background:linear-gradient(90deg,#50505c 0 var(--spine),transparent var(--spine)),linear-gradient(180deg,rgba(255,255,255,.98),rgba(200,200,210,.9) 45%,rgba(255,255,255,.95))}
-.cd .b{transform:rotateX(-90deg) translateZ(calc(var(--ch)/2));background:#9a9aa2}
-.cd .sh{position:absolute;width:calc(var(--cw) + 30px);height:44px;left:-6px;top:calc(var(--ch) - 22px);transform:rotateX(90deg) translateZ(-22px);background:radial-gradient(closest-side,rgba(0,0,0,.45),transparent);pointer-events:none}
-:root[data-theme=light] .cd .sh{background:radial-gradient(closest-side,rgba(0,0,0,.22),transparent)}
-@media (max-width:900px){.shelf{position:relative;inset:auto;grid-column:1/-1;grid-row:3;height:clamp(260px,36svh,360px);margin-top:12px}
- .cdrow{left:50%;top:50%;transform:rotateX(-14deg) rotateY(-34deg) translateZ(var(--shift,0px))}}
+.mag{position:absolute;inset:0;z-index:1;overflow:hidden}
+.mag canvas{display:block;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+.mag canvas.hit{cursor:pointer}.mag canvas:active{cursor:grabbing}
 .open h1{position:relative;z-index:5;grid-column:1/span 6;grid-row:1;margin:0;font:700 clamp(22px,2.5vw,38px)/1.05 var(--wide);font-stretch:112%;font-variation-settings:'wdth' 112;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance;pointer-events:none}
 .open .sub{position:relative;z-index:5;grid-column:1/span 5;grid-row:2;margin:14px 0 0;color:var(--mid);max-width:54ch;pointer-events:none}
 .open h1 em{font-style:normal;font-weight:300;color:var(--mid);display:block}
-.rlab{position:absolute;left:var(--pad);bottom:calc(var(--pad) + 30px);margin:0;z-index:6;background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:blur(3px);padding:3px 7px;opacity:0;transition:opacity .25s;pointer-events:none;display:flex;gap:10px;align-items:baseline}
-.rlab b{font-weight:400;color:var(--fg)}
-.rlab i{font-style:normal;color:var(--mid)}
-.rlab{color:var(--mid);text-transform:uppercase;letter-spacing:.02em}
 .hud{text-transform:uppercase;letter-spacing:.02em;position:absolute;left:var(--pad);bottom:var(--pad);z-index:6;background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:blur(3px);padding:3px 7px;margin:0;display:flex;gap:10px;pointer-events:none}
 .hud dt,.hud dd{text-transform:uppercase;letter-spacing:.02em}.hud dt{color:var(--mid)}.hud dd{margin:0}.hud dd i{font-style:normal;color:var(--mid)}.hud dd i::before{content:'· '}
 .hint{position:absolute;left:var(--pad);top:var(--pad);color:var(--mid);pointer-events:none;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(4px);padding:6px 8px;margin:0 -8px -6px}
@@ -152,8 +114,8 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 .fade{animation:in .5s cubic-bezier(.16,1,.3,1)}@keyframes in{from{opacity:0;transform:translateY(8px)}}
 @media (prefers-reduced-motion:reduce){.fade,.dot{animation:none}*{transition:none!important}}
 @media (max-width:900px){
- .rlab{position:static;grid-column:1/-1;grid-row:4;margin:14px 0 0;padding:0;background:none;backdrop-filter:none;opacity:1!important}
- .hud{position:static;grid-column:1/-1;grid-row:5;margin:6px 0 0;padding:0;background:none;backdrop-filter:none;flex-wrap:wrap;column-gap:8px}
+ .mag{position:relative;inset:auto;grid-column:1/-1;grid-row:3;height:clamp(290px,40svh,400px);margin-top:10px}
+ .hud{position:static;grid-column:1/-1;grid-row:4;margin:6px 0 0;padding:0;background:none;backdrop-filter:none;flex-wrap:wrap;column-gap:8px}
  .hd{padding:8px var(--pad);row-gap:8px}.hd .n{grid-column:1/span 6}.hd .r{grid-column:7/span 6;grid-row:1}.hd .f{grid-column:1/-1;grid-row:2;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
  .open{min-height:0;padding:18px var(--pad) 18px}.open h1{grid-column:1/-1;grid-row:auto}.open .sub{grid-column:1/-1;grid-row:auto;max-width:none}
  .row .d,.row .cl{display:none}.row{align-items:center;padding:12px 0}.row .n{grid-column:1/span 1;padding:0}.row .t{grid-column:2/span 7;font-size:clamp(24px,7.4vw,34px)}.row .rth{display:block;grid-column:9/span 4;justify-self:end;height:46px;width:auto;object-fit:cover}.gv{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -169,6 +131,7 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 </header>
 <main id="app"></main>
 <div id="pv"><img alt=""></div>
+<script src="three.min.js"></script>
 <script src="site-data.js"></script>
 <script>
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -190,96 +153,211 @@ const count=k=>k==='all'?WORK.length:WORK.filter(p=>p.mode===k).length;
 function nav(){$('#f').innerHTML=[['all','All'],['work','Work'],['play','Play'],['build','Build']].map(([k,l])=>`<button data-k="${k}" aria-pressed="${flt===k}">${l}<sup>${count(k)}</sup></button>`).join('');}
 function hl(){const[t,sb]=TAG[flt];return (t?esc(t)+' ':'')+(sb?`<em>${esc(sb)}</em>`:'')}
 function tag(){const h=$('#hl');if(!h)return;if(reduce){h.innerHTML=hl();return}h.animate([{opacity:1},{opacity:0}],{duration:120,fill:'forwards'});setTimeout(()=>{h.innerHTML=hl();h.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:380,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'})},120)}
-$('#f').onclick=e=>{const b=e.target.closest('button');if(!b)return;flt=b.dataset.k;nav();tag();if(location.hash)location.hash='';else{applyFilter();if($('#cdrow'))field()}};
+$('#f').onclick=e=>{const b=e.target.closest('button');if(!b)return;flt=b.dataset.k;nav();tag();if(location.hash)location.hash='';else{applyFilter();if($('#mag'))field()}};
 function applyFilter(){let k=0;$$('.row,.card').forEach(r=>{const on=flt==='all'||byId(r.dataset.id).mode===flt;r.classList.toggle('off',!on);if(on&&r.classList.contains('row'))r.querySelector('.n').textContent=N(k++);});const c=$('#cnt');if(c)c.textContent='Work ('+count(flt)+')'}
 $('#home').onclick=e=>{e.preventDefault();if(location.hash)location.hash='';else scrollTo({top:0,behavior:'smooth'})};
-/* the rack: one jewel case per project, riffling like a CD shelf */
-function field(){const hero=$('#shelf'),row=$('#cdrow'),lab=$('#rlab');if(!hero||!row)return;
- const gen=String(Date.now()+Math.random());row.dataset.gen=gen;
- const base=WORK.filter(w=>flt==='all'||w.mode===flt);
- const reps=Math.max(2,Math.ceil(16/Math.max(1,base.length)));
- const ws=Array.from({length:reps*base.length},(_,k)=>base[k%base.length]);
- const lum=h=>{const c=h.replace('#','');const n=parseInt(c.length===3?c.split('').map(x=>x+x).join(''):c,16);
-  return(.2126*((n>>16)&255)+.7152*((n>>8)&255)+.0722*(n&255))/255};
- row.innerHTML=ws.map((p,i)=>{const c=p.color||'#c9c9cc',ink=lum(c)>.62?'#111114':'#f4f4ef';
-  return `<button class="cd" type="button" data-id="${p.id}" aria-label="${esc(p.title)}, ${esc(p.discipline)}">
-  <span class="sh"></span><span class="f back"></span><span class="f b"></span><span class="f l"><span>${esc(p.title)} · ${esc(p.client)}</span></span><span class="f r"><span>${esc(p.title)} · ${esc(p.discipline)}</span></span><span class="f t"></span>
-  <span class="f front"><span class="art m${i%5}" style="--c:${c};--ink:${ink};--art:url('${cover(p)}')"><span class="mk"></span><span class="no">ER · ${String(WORK.indexOf(p)+1).padStart(2,'0')}</span><span><span class="ti">${esc(p.title)}</span><span class="di">${esc(p.discipline)}</span></span></span></span></button>`}).join('');
- const cds=[...row.children],n=cds.length,mid=(n-1)/2;
- const cl=(a,v,b2)=>Math.max(a,Math.min(b2,v));
- let cw=0,gap=0,zs=[];
- const layout=()=>{const vw=innerWidth,sm=vw<900;
-  cw=sm?cl(104,vw*.33,148):cl(230,vw*.22,300);gap=sm?cw*.62:cw*.78;
-  const d=sm?cl(8,vw*.02,12):cl(12,vw*.014,20),sp=sm?10:cl(10,vw*.012,18);
-  hero.style.setProperty('--cw',cw+'px');hero.style.setProperty('--ch',cw+'px');
-  hero.style.setProperty('--cd',d+'px');hero.style.setProperty('--cgap',gap+'px');hero.style.setProperty('--spine',sp+'px');
-  zs=cds.map((_,i)=>(mid-i)*gap)};layout();
- const onres=()=>layout();addEventListener('resize',onres);
- const W={peak:1.15,lift:16,width:1.05,speed:2.2,rest:1.2,hoverPull:.6,ease:.1};
- const st=cds.map(()=>({x:0,y:-900}));let hov=null,down=false,moved=false,shift=0,sx=0,s0=0;
- const say=p=>{if(!lab)return;if(p){lab.innerHTML=`<b>${esc(p.title)}</b> ${esc(p.discipline)} <i>→</i>`;lab.style.opacity=1}else lab.style.opacity=0};
- let hx=-1,hy=-1;
- const setHov=cd=>{if(cd===hov)return;hov=cd;say(cd?byId(cd.dataset.id):null);hero.style.cursor=cd?'pointer':''};
- cds.forEach(cd=>{cd.addEventListener('focus',()=>setHov(cd));
-  cd.addEventListener('blur',()=>{if(hov===cd)setHov(null)});
-  cd.addEventListener('click',e=>{e.preventDefault();if(!moved)location.hash=cd.dataset.id})});
- const pick=()=>{if(hx<0||down)return;
-  const el=document.elementFromPoint(hx,hy),cd=el&&el.closest?el.closest('.cd'):null;
-  if(cd){setHov(cd);return}
-  if(hov){const r=hov.getBoundingClientRect(),m=26;
-   if(hx<r.left-m||hx>r.right+m||hy<r.top-m||hy>r.bottom+m)setHov(null)}};
- const lim=()=>n*gap/2;
- let vshift=0,px2=0,pt=0,tipX=.5,tipY=.5,tipped=false;
- const setShift=v=>{shift=Math.max(-lim(),Math.min(lim(),v));row.style.setProperty('--shift',shift+'px')};
- const pd=e=>{down=true;moved=false;sx=e.clientX;s0=shift;px2=e.clientX;pt=performance.now();vshift=0;hero.classList.add('drag')};
- const pm=e=>{if(!down)return;const now2=performance.now(),dx=e.clientX-sx;if(Math.abs(dx)>4)moved=true;
-  row.style.transition='none';setShift(s0-dx*1.2);
-  const dt2=Math.max(8,now2-pt);vshift=(-(e.clientX-px2)*1.2)/dt2*16;px2=e.clientX;pt=now2};
- const pu=()=>{if(!down)return;down=false;hero.classList.remove('drag');row.style.transition='';setTimeout(()=>moved=false,0)};
- hero.addEventListener('pointerdown',pd);addEventListener('pointermove',pm);addEventListener('pointerup',pu);
- hero.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)<Math.abs(e.deltaY)&&!e.shiftKey)return;e.preventDefault();vshift+=(e.deltaX||e.deltaY)*.25},{passive:false});
- // the rack tips toward the cursor, and keeps breathing when left alone
- hero.addEventListener('pointermove',e=>{const b=hero.getBoundingClientRect();tipX=(e.clientX-b.left)/b.width;tipY=(e.clientY-b.top)/b.height;tipped=true;hx=e.clientX;hy=e.clientY});
- hero.addEventListener('pointerleave',()=>{tipped=false;hx=hy=-1;setHov(null)});
- let rx2=-16,ry2=-38,tx2=-16,ty2=-38;
- // the riffle: direction, speed and pauses all change each pass
- let dir=1,spd2=W.speed,rest=W.rest,crest=-999,waiting=1.1,pops=[];
- const roll2=()=>{pops=[];dir=Math.random()<.35?-1:1;spd2=W.speed*(.7+Math.random()*.9);rest=.5+Math.random()*2.2;
-  crest=dir>0?-W.width*3:n+W.width*3;
-  if(Math.random()<.3){const k=1+Math.floor(Math.random()*3);pops=Array.from({length:k},()=>({i:Math.floor(Math.random()*n),t:.5+Math.random()*.5})).filter(q=>q.i<n)}else pops=[]};
- const t0=performance.now(),intro=600+n*45;let id=0,calm=1;
- function frame(now){if(!document.body.contains(row)||row.dataset.gen!==gen){cancelAnimationFrame(id);return}
-  const t=(now-t0)/1000,dt=Math.min(.05,(now-(frame.p||now))/1000);frame.p=now;
-  pick();const busy=hov||down;calm+=((busy?0:1)-calm)*(1-Math.exp(-dt*6));
-  // riffle timing
-  if(t>intro/1000&&!reduce){
-   if(waiting>0){if(!busy)waiting-=dt;if(waiting<=0)roll2()}
-   else{crest+=dir*spd2*dt;if(dir>0?crest>n+W.width*3:crest<-W.width*3){crest=-999;waiting=rest}}}
-  // momentum and a soft bounce at the ends
-  if(!down&&Math.abs(vshift)>.02){setShift(shift+vshift);vshift*=.94;
-   if(shift<=-lim()||shift>=lim())vshift*=-.35}
-  // tip + idle breathing
-  const br=reduce?0:Math.sin(t*.55),br2=reduce?0:Math.sin(t*.37+1.3);
-  tx2=-16+(tipped?(tipY-.5)*6:0)+br*1.2;ty2=-38+(tipped?(tipX-.5)*8:0)+br2*1.8;
-  rx2+=(tx2-rx2)*.07;ry2+=(ty2-ry2)*.07;
-  row.style.transform=`rotateX(${rx2.toFixed(2)}deg) rotateY(${ry2.toFixed(2)}deg) translateZ(var(--shift,0px))`;
-  const hi=hov?cds.indexOf(hov):-1;
-  cds.forEach((cd,i)=>{const s=st[i],d=(i-crest)/W.width,w=(!reduce&&crest>-900)?Math.exp(-d*d)*calm:0;
-   let tx=w*W.peak*cw,ty=-w*W.lift;
-   // the odd case that pops on its own
-   for(const q of pops)if(q.i===i&&waiting<=0)tx=Math.max(tx,q.t*.9*cw*calm);
-   if(hi>=0){const dd=Math.abs(i-hi);
-    if(dd===0){tx=Math.max(tx,W.hoverPull*cw);ty=-12}
-    else if(dd===1)tx=Math.max(tx,.3*cw);
-    else if(dd===2)tx=Math.max(tx,.12*cw)}
-   // nothing ever sits perfectly still
-   const bob=reduce?0:Math.sin(t*1.1+i*.7)*1.4,sway=reduce?0:Math.cos(t*.8+i*.5)*1.1;
-   const startAt=60+i*45;if(now-t0<startAt&&!reduce)ty=-900;
-   const k=reduce?1:W.ease;s.x+=(tx-s.x)*k;s.y+=(ty-s.y)*(s.y<-50?.14:k);
-   cd.style.transform=`translateZ(${zs[i]}px) translateX(${(s.x+sway).toFixed(2)}px) translateY(${(s.y+bob).toFixed(2)}px)`});
+/* the magazine: every project a leaf, hinged on one spine, turning through forms */
+function field(){const host=$('#mag');if(!host)return;
+ const gen=String(Date.now()+Math.random());host.dataset.gen=gen;
+ host.innerHTML='';
+ if(!window.THREE){host.innerHTML='';return}
+ const base=WORK.filter(w=>flt==='all'||w.mode===flt),COPIES=3;
+ const PW=512,PH=700;
+ // one leaf: the cover on the left page, the credits on the right
+ function spread(p,n){const c=document.createElement('canvas');c.width=1024;c.height=700;const g=c.getContext('2d');
+  g.fillStyle='#0b0b0d';g.fillRect(0,0,512,700);
+  g.fillStyle='#efeee9';g.fillRect(512,0,512,700);
+  g.fillStyle='#14141a';g.font='700 46px Archivo,system-ui,sans-serif';
+  const words=p.title.toUpperCase().split(' ');let y=120;
+  words.forEach(w=>{g.fillText(w,552,y);y+=48});
+  g.fillStyle='#55554f';g.font='400 19px "Roboto Mono",monospace';
+  g.fillText(p.discipline.toUpperCase(),552,y+26);
+  g.fillText(p.client.toUpperCase(),552,y+54);
+  g.fillText('ER · '+String(n).padStart(2,'0'),552,648);
+  const gr=g.createLinearGradient(482,0,542,0);
+  gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(.5,'rgba(0,0,0,.25)');gr.addColorStop(1,'rgba(0,0,0,0)');
+  g.fillStyle=gr;g.fillRect(482,0,60,700);
+  const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;
+  const im=new Image();im.onload=()=>{const q=im.width/im.height;let sw=im.width,sh=im.height,sx=0,sy=0,cr=512/700;
+   if(q>cr){sw=im.height*cr;sx=(im.width-sw)/2}else{sh=im.width/cr;sy=(im.height-sh)/2}
+   g.drawImage(im,sx,sy,sw,sh,0,0,512,700);g.fillStyle=gr;g.fillRect(482,0,60,700);t.needsUpdate=true};
+  im.src=cover(p);
+  return t}
+ const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+ renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputEncoding=THREE.sRGBEncoding;
+ renderer.setClearColor(0x000000,0);host.appendChild(renderer.domElement);
+ const cv=renderer.domElement,scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(46,1,.1,50);
+ const LW=1.25,LH=LW*700/1024,SPINE=.1;
+ const fGeo=new THREE.PlaneGeometry(LW,LH);fGeo.translate(LW/2,0,0);
+ const bGeo=new THREE.PlaneGeometry(LW,LH);bGeo.rotateY(Math.PI);bGeo.translate(LW/2,0,0);
+ const books=[],pick=[];let k=0;
+ base.forEach((p,pi)=>{const tex=spread(p,WORK.indexOf(p)+1);
+  for(let c=0;c<COPIES;c++){
+   const a0=(pi/base.length)*360+(c-1)*1.6+(pi%2?4:-4);
+   const front=new THREE.Mesh(fGeo,new THREE.MeshBasicMaterial({map:tex}));
+   const back=new THREE.Mesh(bGeo,new THREE.MeshBasicMaterial({map:tex}));
+   front.userData.idx=back.userData.idx=k;const holder=new THREE.Group();holder.add(front,back);scene.add(holder);
+   const ang=a0*Math.PI/180;
+   books.push({i:k,id:p.id,holder,ang,cur:ang,phase:Math.random()*6.28,hover:0,v:{hover:0}});
+   holder.traverse(o=>{if(o.isMesh)pick.push(o)});k++}});
+ const norm=a=>((a%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
+ [...books].sort((x,y)=>norm(x.ang-Math.PI/2)-norm(y.ang-Math.PI/2)).forEach((b,r)=>{b.rank=r});
+ const DEG=Math.PI/180,NL=books.length,MID=(NL-1)/2;
+ const _q=new THREE.Quaternion(),_q2=new THREE.Quaternion(),_e=new THREE.Euler(),_m=new THREE.Matrix4();
+ const _v=new THREE.Vector3(),_w=new THREE.Vector3(),_w2=new THREE.Vector3(),_w3=new THREE.Vector3();
+ function yawQ(q,a){_e.set(0,a,0);return q.setFromEuler(_e)}
+  function fromCentre(out, cx, cy, cz, s) { // place the leaf so its middle lands on (cx, cy, cz)
+    _v.set(LW * s / 2, 0, 0).applyQuaternion(out.q);
+    out.p.set(cx - _v.x, cy - _v.y, cz - _v.z); out.s = s;
+  }
+  // a leaf standing across a path, like one slice of a ribbon: its face points along the path,
+  // and it turns about the path by `twist`
+  function crossSection(o, px, py, pz, tx, ty, tz, twist, s) {
+    const T = _w.set(tx, ty, tz).normalize();
+    const ref = Math.abs(T.y) > .9 ? _w2.set(1, 0, 0) : _w2.set(0, 1, 0);
+    const X0 = _w3.copy(ref).addScaledVector(T, -ref.dot(T)).normalize();   // across the path
+    const Y0 = _v.crossVectors(T, X0);                                        // the other way across
+    const X = _w2.copy(X0).multiplyScalar(Math.cos(twist)).addScaledVector(Y0, Math.sin(twist));
+    const Y = _w3.crossVectors(T, X);
+    o.q.setFromRotationMatrix(_m.makeBasis(X, Y, T));
+    fromCentre(o, px, py, pz, s);
+  }
+  const MODES = [
+    { name: "Fanned", spin: "turn", pose(b, t, o) {             // the original: every leaf on one spine
+        const A = b.ang + (reduce ? 0 : Math.sin(t * .5 + b.phase) * .02);
+        yawQ(o.q, A); o.p.set(Math.cos(A) * SPINE, 0, -Math.sin(A) * SPINE); o.s = 1;
+      } },
+    { name: "Burst", spin: "turn", stiff: 4.2, pose(b, t, o, mt) {   // the fanned magazine blows apart into a cloud, hangs, then snaps back to the spine
+        if (mt < 1.6 || mt > 7.2) { MODES[0].pose(b, t, o); return; }
+        const i = b.rank, y = 1 - 2 * (i + .5) / NL, r = Math.sqrt(1 - y * y), th = i * 2.39996 + t * .12;
+        const R = 1.05 + .45 * Math.sin(b.phase * 7.3) ** 2;
+        o.q.setFromEuler(_e.set(Math.sin(b.phase * 3) * 1.4 + t * .25, b.phase * 2 + t * .2, Math.cos(b.phase * 5) * .9));
+        fromCentre(o, r * Math.cos(th) * R * 1.3, y * R * .75, r * Math.sin(th) * R, .48);
+      } },
+    { name: "Möbius", spin: "sway", pose(b, t, o) {             // a tilted ring of pages with one slow half-twist travelling round it
+        const phi = b.rank / NL * Math.PI * 2 + t * .22, R = 1.45;
+        const twist = phi / 2 + t * .5;
+        _q.setFromEuler(_e.set(.5, 0, 0));                           // tip the ring towards you
+        yawQ(o.q, phi - Math.PI / 2).multiply(_q2.setFromEuler(_e.set(0, 0, twist)));
+        o.q.premultiply(_q);
+        _w.set(Math.sin(phi) * R, 0, Math.cos(phi) * R).applyQuaternion(_q);
+        fromCentre(o, _w.x, _w.y, _w.z, .5);
+      } },
+    { name: "Infinity", spin: "sway", pose(b, t, o) {           // a figure-eight ribbon, the pages flowing round it and rolling as they go
+        const curve = u => {
+          const d = 1 + Math.sin(u) ** 2, a = 1.75;
+          return [a * Math.cos(u) / d, .22 * Math.sin(2 * u), a * Math.sin(u) * Math.cos(u) / d * 1.2];
+        };
+        const u = b.rank / NL * Math.PI * 2 + t * .2;
+        const [x, y, z] = curve(u), [x2, y2, z2] = curve(u + .01);
+        const tilt = _q2.setFromEuler(_e.set(.75, 0, 0)); // tipped towards you so the figure eight reads
+        const P = _w.set(x, y, z).applyQuaternion(tilt), px = P.x, py = P.y, pz = P.z;
+        const D = _w.set(x2 - x, y2 - y, z2 - z).applyQuaternion(tilt);
+        crossSection(o, px, py, pz, D.x, D.y, D.z, u + t * .6, .48);
+      } },
+    { name: "Double helix", spin: "turn", pose(b, t, o) {       // two strands of pages winding round each other
+        const strand = b.rank % 2, step = b.rank >> 1;
+        const A = step * 24 * DEG + strand * Math.PI + t * .15;
+        yawQ(o.q, A);
+        fromCentre(o, Math.sin(A) * .78, (step - (NL / 2 - 1) / 2) * .13, Math.cos(A) * .78, .46);
+      } },
+    { name: "Twisted tower", spin: "turn", pose(b, t, o) {      // six stacked stars of pages, each ring turned against the next, winding and unwinding
+        const per = 6, k = Math.floor(b.rank / per), j = b.rank % per, rings = NL / per;
+        const wind = reduce ? .35 : Math.sin(t * .45) * .7;
+        const A = j * (360 / per) * DEG + (k - (rings - 1) / 2) * wind;
+        yawQ(o.q, A).multiply(_q2.setFromEuler(_e.set(0, 0, .12)));
+        o.p.set(Math.cos(A) * .05, (k - (rings - 1) / 2) * .46 - .1, -Math.sin(A) * .05); o.s = .5;
+      } },
+    { name: "Orbit", spin: "turn", pose(b, t, o) {              // three tilted rings of pages crossing like an atom, each circling its own way
+        const ring = b.rank % 3, j = Math.floor(b.rank / 3), per = NL / 3;
+        const phi = j / per * Math.PI * 2 + t * (.3 + ring * .08) * (ring === 1 ? -1 : 1);
+        _q.setFromEuler(_e.set(1.15, ring * 2.094, 0, "YXZ"));      // each ring on its own tilt, 120 degrees apart
+        yawQ(o.q, phi).premultiply(_q);
+        _w.set(Math.sin(phi) * 1.35, 0, Math.cos(phi) * 1.35).applyQuaternion(_q);
+        fromCentre(o, _w.x, _w.y, _w.z, .4);
+      } },
+    { name: "Domino", spin: "turn", pose(b, t, o) {             // a ring of standing pages that topple one after another, then stand back up
+        const phi = b.rank / NL * Math.PI * 2, R = 1.35, s = .5, h = LH * s;
+        const wave = (Math.sin(phi - t * 1.5) + 1) / 2;
+        const fall = (reduce ? 0 : wave ** 4) * .62;                   // tipping towards the next page round the ring
+        const tilt = _q.setFromEuler(_e.set(.32, 0, 0));
+        yawQ(o.q, phi - Math.PI / 2).multiply(_q2.setFromEuler(_e.set(-fall, 0, 0)));
+        o.q.premultiply(tilt);
+        // pivot on the bottom edge: centre = foot + rotated half height
+        const up = _w2.set(0, h / 2, 0).applyQuaternion(o.q);
+        const foot = _w.set(Math.sin(phi) * R, -.3, Math.cos(phi) * R).applyQuaternion(tilt);
+        fromCentre(o, foot.x + up.x, foot.y + up.y, foot.z + up.z, s);
+      } },
+    { name: "Vortex", spin: "sway", direct: true, pose(b, t, o) {   // pages circle down a funnel, shrinking as they sink, then reappear at the rim
+        const u = ((b.rank / NL + t * .045) % 1 + 1) % 1;           // 0 at the rim, 1 at the bottom
+        const A = b.rank * 2.39996 + u * 3 * Math.PI;
+        const R = .2 + 1.8 * (1 - u) ** 1.3, y = .75 - u * 1.4;
+        yawQ(o.q, A).multiply(_q2.setFromEuler(_e.set(-.8, 0, 0)));  // leaning back into the funnel
+        _q.setFromEuler(_e.set(.6, 0, 0)); o.q.premultiply(_q);       // tip the funnel towards you to look down into it
+        _w.set(Math.sin(A) * R, y, Math.cos(A) * R).applyQuaternion(_q);
+        fromCentre(o, _w.x, _w.y, _w.z, .55 * Math.sin(Math.PI * u) ** .6 + .001);
+      } },
+    { name: "Globe", spin: "turn", pose(b, t, o) {              // pages spread evenly over a sphere, facing out, the sphere breathing
+        const i = b.rank, y = 1 - 2 * (i + .5) / NL, r = Math.sqrt(1 - y * y);
+        const th = i * 2.39996 + t * .15, R = 1.2 + (reduce ? 0 : Math.sin(t * .8) * .08);
+        const Z = _w.set(r * Math.cos(th), y, r * Math.sin(th));
+        const X = _w2.crossVectors(_v.set(0, 1, 0), Z).normalize(), Y = _w3.crossVectors(Z, X);
+        o.q.setFromRotationMatrix(_m.makeBasis(X, Y, Z));
+        fromCentre(o, Z.x * R, Z.y * R, Z.z * R, .36);
+      } },
+  ];
+  // the main page keeps a chosen set, in this order
+  const KEEP = ["Fanned", "Burst", "Möbius", "Double helix", "Twisted tower", "Domino"];
+  MODES.splice(0, MODES.length, ...KEEP.map(n => MODES.find(m => m.name === n)));
+  const MODE_SECS = 10;
+ let modeIdx=0,prevIdx=0,modeTime=1;
+ const goal={p:new THREE.Vector3(),q:new THREE.Quaternion(),s:1};
+ books.forEach(b=>{MODES[0].pose(b,0,goal);b.lp=goal.p.clone();b.lq=goal.q.clone();b.ls=goal.s;b.lpv=new THREE.Vector3();b.lsv=0});
+ function size(){const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+ const onres=()=>size();addEventListener('resize',onres);size();
+ const ray=new THREE.Raycaster(),ndc=new THREE.Vector2(9,9);
+ let inside=false,drag=false,lastX=0,lastY=0,moved=0,spin=0,spinV=0,elev=.2,elevT=.2,hov=-1;
+ const setPtr=e=>{const r=cv.getBoundingClientRect();ndc.x=(e.clientX-r.left)/r.width*2-1;ndc.y=-((e.clientY-r.top)/r.height)*2+1;inside=true};
+ cv.addEventListener('pointerdown',e=>{setPtr(e);drag=true;moved=0;lastX=e.clientX;lastY=e.clientY;cv.setPointerCapture(e.pointerId)});
+ cv.addEventListener('pointermove',e=>{setPtr(e);if(!drag)return;
+  const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;moved+=Math.abs(dx)+Math.abs(dy);
+  const kk=4/Math.max(cv.clientWidth,1);spin+=dx*kk;spinV=dx*kk*60;elevT=Math.max(-.2,Math.min(.85,elevT+dy*.003))});
+ cv.addEventListener('pointerup',()=>{drag=false;if(moved<6&&hov>=0)location.hash=books[hov].id});
+ cv.addEventListener('pointercancel',()=>drag=false);
+ cv.addEventListener('pointerleave',()=>{inside=false;ndc.set(9,9)});
+ cv.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)<Math.abs(e.deltaY)&&!e.shiftKey)return;e.preventDefault();spinV-=(e.deltaX||e.deltaY)*.0015},{passive:false});
+ const AUTO=reduce?.03:.12;
+ const spr=(o,v,key,target,w,z,dt)=>{const a=w*w*(target-o[key])-2*z*w*v[key];v[key]+=a*dt;o[key]+=v[key]*dt};
+ const camDir=new THREE.Vector3(),restP=new THREE.Vector3(),restQ=new THREE.Quaternion();
+ const wrapA=a=>Math.atan2(Math.sin(a),Math.cos(a));
+ let prev=performance.now(),clock2=0,id=0;
+ function frame(t){if(!document.body.contains(host)||host.dataset.gen!==gen){cancelAnimationFrame(id);renderer.dispose();return}
+  const dt=Math.max(0,Math.min(.033,(t-prev)/1000));prev=t;clock2+=dt;
+  if(!reduce){modeTime+=dt;if(modeTime>=MODE_SECS){modeTime=0;prevIdx=modeIdx;modeIdx=(modeIdx+1)%MODES.length}}
+  if(!drag){if(MODES[modeIdx].spin==='sway'){const sway=reduce?0:Math.sin(clock2*.35)*.3;spin+=wrapA(sway-spin)*(1-Math.exp(-dt*1.1));spinV=0}
+   else{const want=hov>=0?AUTO*.3:AUTO;spinV+=(want-spinV)*(1-Math.exp(-dt*1.6));spin+=spinV*dt}}
+  elev+=(elevT-elev)*(1-Math.exp(-dt*5));
+  const halfW=Math.tan(THREE.MathUtils.degToRad(camera.fov/2))*camera.aspect;
+  const dist=Math.max(4.4,2.05/halfW);
+  camera.position.set(0,Math.sin(elev)*dist,Math.cos(elev)*dist);camera.lookAt(0,-.04,0);camera.getWorldDirection(camDir);
+  if(inside&&!drag){ray.setFromCamera(ndc,camera);const hits=ray.intersectObjects(pick,false),ids=hits.map(h=>h.object.userData.idx);
+   hov=ids.includes(hov)?hov:(ids.length?ids[0]:-1)}else hov=-1;
+  cv.classList.toggle('hit',hov>=0);
+  for(const b of books){spr(b,b.v,'hover',b.i===hov?1:0,9,.85,dt);const h=b.hover;
+   const started=modeTime>b.rank*.03,mode=MODES[started?modeIdx:prevIdx];
+   mode.pose(b,clock2,goal,started?modeTime:MODE_SECS);
+   const W0=mode.stiff||2.4;
+   _v.copy(goal.p).sub(b.lp).multiplyScalar(W0*W0).addScaledVector(b.lpv,-2*W0);
+   b.lpv.addScaledVector(_v,dt);b.lp.addScaledVector(b.lpv,dt);
+   b.lsv+=(W0*W0*(goal.s-b.ls)-2*W0*b.lsv)*dt;b.ls+=b.lsv*dt;
+   b.lq.slerp(goal.q,1-Math.exp(-dt*W0*1.25));
+   if(mode.direct&&started){const kk=Math.min(1,Math.max(0,(modeTime-2.5)/1.5)),e2=kk*kk*(3-2*kk);
+    b.lp.lerp(goal.p,e2);b.lq.slerp(goal.q,e2);b.ls+=(goal.s-b.ls)*e2;if(kk>=1){b.lpv.set(0,0,0);b.lsv=0}}
+   yawQ(_q,spin);restQ.copy(_q).multiply(b.lq);restP.copy(b.lp).applyQuaternion(_q);restP.y+=h*.04;
+   b.holder.position.copy(restP);b.holder.quaternion.copy(restQ);b.holder.scale.setScalar(b.ls*(1+h*.04))}
+  renderer.render(scene,camera);
   id=requestAnimationFrame(frame);raf=id}
- id=requestAnimationFrame(frame);raf=id;
- if(lab){lab.innerHTML='<i>Drag to flick through. Click a case to open it.</i>';lab.style.opacity=1;setTimeout(()=>{if(!hov)say(null)},5200)}}
+ id=requestAnimationFrame(frame);raf=id}
 function quip(h,m){
  if(h===0||h===1)return 'should be asleep';
  if(h<5)return 'this is not a normal hour';
@@ -311,7 +389,8 @@ function wireFoot(){const c=$('#cp');if(c)c.onclick=e=>{const o=e.target.textCon
  fetch('Ebony-Rose-CV.pdf',{method:'HEAD'}).then(r=>{if(r.ok&&$('#cvp'))$('#cvp').hidden=false}).catch(()=>{})}
 function home(){cancelAnimationFrame(raf);clearInterval(clock);document.title='Ebony Rose Portfolio';
  const jobs=ME.jobs;
-app.innerHTML=`<div class="fade"><section class="open"><div class="shelf" id="shelf" aria-label="The work, as a rack of CDs. Drag to browse, click a case to open the project."><div class="cdrow" id="cdrow"></div></div><p class="rlab mono" id="rlab"></p> <h1 id="hl">${hl()}</h1>
+app.innerHTML=`<div class="fade"><section class="open"><div class="mag" id="mag" aria-label="The work, as a magazine you can spin. Drag to turn, click a page to open the project."></div>
+ <h1 id="hl">${hl()}</h1>
  <p class="sub">I’m a designer based in Melbourne, Australia. With experience in advertising, UI/UX, social media, retail campaigns, branding &amp; print.</p>
  <dl class="hud"><dt>Local time</dt><dd id="clk">—</dd></dl></section>
  <div class="sec"><span id="cnt">Work (${count(flt)})</span><span class="vs" id="vs"><button class="vb" data-v="list" aria-pressed="${vw==='list'}"><i></i>List</button><button class="vb" data-v="grid" aria-pressed="${vw==='grid'}"><i></i>Grid</button></span></div>
