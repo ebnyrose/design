@@ -307,7 +307,7 @@ function field(){const host=$('#mag');if(!host)return;
  function size(){const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
  const onres=()=>size();addEventListener('resize',onres);size();
  const ray=new THREE.Raycaster(),ndc=new THREE.Vector2(9,9);
- let inside=false,drag=false,lastX=0,lastY=0,moved=0,spin=0,spinV=0,elev=.2,elevT=.2,hov=-1;
+ let inside=false,drag=false,lastX=0,lastY=0,moved=0,spin=0,spinV=0,elev=.42,elevT=.42,hov=-1;
  const setPtr=e=>{const r=cv.getBoundingClientRect();ndc.x=(e.clientX-r.left)/r.width*2-1;ndc.y=-((e.clientY-r.top)/r.height)*2+1;inside=true};
  cv.addEventListener('pointerdown',e=>{setPtr(e);drag=true;moved=0;lastX=e.clientX;lastY=e.clientY;cv.setPointerCapture(e.pointerId)});
  cv.addEventListener('pointermove',e=>{setPtr(e);if(!drag)return;
@@ -329,7 +329,7 @@ function field(){const host=$('#mag');if(!host)return;
    else{const want=hov>=0?AUTO*.3:AUTO;spinV+=(want-spinV)*(1-Math.exp(-dt*1.6));spin+=spinV*dt}}
   elev+=(elevT-elev)*(1-Math.exp(-dt*5));
   const halfW=Math.tan(THREE.MathUtils.degToRad(camera.fov/2))*camera.aspect;
-  const dist=Math.max(4.4,2.05/halfW);
+  const dist=Math.max(3.5,1.85/halfW);
   camera.position.set(0,Math.sin(elev)*dist,Math.cos(elev)*dist);camera.lookAt(0,-.04,0);camera.getWorldDirection(camDir);
   if(inside&&!drag){ray.setFromCamera(ndc,camera);const hits=ray.intersectObjects(pick,false),ids=hits.map(h=>h.object.userData.idx);
    hov=ids.includes(hov)?hov:(ids.length?ids[0]:-1)}else hov=-1;
