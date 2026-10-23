@@ -179,16 +179,18 @@ function field(){const host=$('#mag');if(!host)return;
  const LW=1.25,LH=LW*700/1024,SPINE=.1;
  const fGeo=new THREE.PlaneGeometry(LW,LH);fGeo.translate(LW/2,0,0);
  const bGeo=new THREE.PlaneGeometry(LW,LH);bGeo.rotateY(Math.PI);bGeo.translate(LW/2,0,0);
- const books=[],pick=[];let k=0;
- base.forEach((p,pi)=>{const tex=spread(p);
-  for(let c=0;c<COPIES;c++){
-   const a0=(pi/base.length)*360+(c-1)*1.6+(pi%2?4:-4);
-   const front=new THREE.Mesh(fGeo,new THREE.MeshBasicMaterial({map:tex}));
-   const back=new THREE.Mesh(bGeo,new THREE.MeshBasicMaterial({map:tex}));
-   front.userData.idx=back.userData.idx=k;const holder=new THREE.Group();holder.add(front,back);scene.add(holder);
-   const ang=a0*Math.PI/180;
-   books.push({i:k,id:p.id,holder,ang,cur:ang,phase:Math.random()*6.28,hover:0,v:{hover:0}});
-   holder.traverse(o=>{if(o.isMesh)pick.push(o)});k++}});
+ const books=[],pick=[];
+ // one texture per project, then the projects interleaved round the spine,
+ // so the same cover never sits next to itself
+ const tex=new Map();base.forEach(p=>tex.set(p.id,spread(p)));
+ const seq=[];for(let c=0;c<COPIES;c++)base.forEach(p=>seq.push(p));
+ seq.forEach((p,k)=>{const a0=(k/seq.length)*360;
+  const front=new THREE.Mesh(fGeo,new THREE.MeshBasicMaterial({map:tex.get(p.id)}));
+  const back=new THREE.Mesh(bGeo,new THREE.MeshBasicMaterial({map:tex.get(p.id)}));
+  front.userData.idx=back.userData.idx=k;const holder=new THREE.Group();holder.add(front,back);scene.add(holder);
+  const ang=a0*Math.PI/180;
+  books.push({i:k,id:p.id,holder,ang,cur:ang,phase:Math.random()*6.28,hover:0,v:{hover:0}});
+  holder.traverse(o=>{if(o.isMesh)pick.push(o)})});
  const norm=a=>((a%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
  [...books].sort((x,y)=>norm(x.ang-Math.PI/2)-norm(y.ang-Math.PI/2)).forEach((b,r)=>{b.rank=r});
  const DEG=Math.PI/180,NL=books.length,MID=(NL-1)/2;
