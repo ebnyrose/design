@@ -392,7 +392,7 @@ document.querySelectorAll('.tb-contact a[href="index.html"],.tb-logo').forEach(a
   const gc=page.querySelector('.pj-gal-c');if(gc){gc.innerHTML=Cx.map((src,k)=>imgTile(src,k,['1'],null)).join('');gc.hidden=!Cx.length}
   const gl=GLANCE[P.id]||[];
   page.querySelector('.pj-end').innerHTML=gl.length?trow('At a glance',`<dl class="pj-glance">${gl.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>`):'';
-  page.querySelectorAll('.art-grid a').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
+  page.querySelectorAll('.art-grid a.wtile').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
   const nxt=page.querySelector('.pj-next');nxt.href='project.html?p='+((i+1)%PROJECTS.length);
   nxt.querySelector('.pj-next-name').textContent=nx.n};
  render(cur);
