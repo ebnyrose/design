@@ -380,7 +380,7 @@ document.querySelectorAll('.tb-contact a[href="index.html"],.tb-logo').forEach(a
  const layOf=(k,fb)=>P_LAY&&P_LAY[k]&&LAYS[P_LAY[k]]||fb;let P_LAY=null;
  const idxOf=()=>{const q=+new URLSearchParams(location.search).get('p');return q>=0&&q<PROJECTS.length?q:0};
  let cur=idxOf();
- const render=i=>{cur=i;const P=PROJECTS[i],nx=PROJECTS[(i+1)%PROJECTS.length];
+ const render=i=>{cur=i;const P=PROJECTS[i],nx=PROJECTS[(i+1)%PROJECTS.length];page.dataset.pid=P.id;
   document.title=P.n+' | Ebony Rose';
   P_LAY=P.lay||null;const vt=(src,alt)=>{const v=P.vids&&P.vids[src];return v?`<video src="${v[0]}" poster="${v[1]}" muted loop playsinline ${reduce?'':'autoplay '}preload="metadata" aria-label="${alt}"></video>`:imgTag(src,alt)};
   const imgTile=(src,k,sizes,lay)=>`<a class="wtile pl sz-${sizes[k%sizes.length]}" ${lay?`style="${placeAt(lay,k)}"`:''} href="${src}">${vt(src,P.n+' image '+(k+1))}</a>`;
@@ -521,6 +521,16 @@ document.querySelectorAll('.tb-contact a[href="index.html"],.tb-logo').forEach(a
  let outfit=[],walk=first?{started:false,done:false}:null;
  if(home&&first)cv.style.display='none';
  greeted=first;gNext=first?(introOn?2600:1300):6000+Math.random()*7000;
+ const DINO_LINES={"australia-post": {"hero": "welcome to locker land!", "img/australia-post-01.jpg": "front row seats", "img/australia-post-02.jpg": "parcel's on the way", "img/australia-post-03.jpg": "ok, following", "img/australia-post-04.jpg": "market juice pls", "img/australia-post-05.jpg": "send, deliver, collect, return", "img/australia-post-06.jpg": "7 in 10, huh", "img/australia-post-07.jpg": "very isometric", "img/australia-post-08.jpg": "i'd wear that badge", "img/australia-post-09.jpg": "is this seat taken?", "img/australia-post-10.jpg": "tiny locker town", "img/australia-post-11.jpg": "myth: busted", "img/australia-post-12.jpg": "full house", "img/australia-post-13.jpg": "follow me!", "img/australia-post-14.jpg": "indoor grass?", "img/australia-post-15.jpg": "big screen energy"}, "youi": {"hero": "hold on, caravan", "img/youi-01.jpg": "shine on, lighthouse", "img/youi-02.jpg": "stay dry out there", "img/youi-03.jpg": "shiny new car", "img/youi-04.jpg": "too hot!", "img/youi-05.jpg": "hammock nap? same", "img/youi-06.jpg": "is that a turtle?", "img/youi-07.jpg": "nice smile", "img/youi-08.jpg": "charging up", "img/youi-09.jpg": "up the hill we go", "img/youi-10.jpg": "a matching pair", "img/youi-11.jpg": "scroll, scroll, ad", "img/youi-12.jpg": "go lions", "img/youi-13.jpg": "loud lounge room", "img/youi-14.jpg": "push!"}, "rounds": {"img/rounds-thumb.jpg": "tap for a plan", "img/rounds-hero.jpg": "tonight, sorted", "img/rounds-plan.jpg": "three stops, easy", "img/rounds-places.jpg": "so many bars", "img/rounds-icon.jpg": "target acquired", "img/rounds-shuffle.gif": "shuffle again!"}, "pirate-life": {"img/pirate-life-thumb.jpg": "one of each pls", "img/pirate-life-01.jpg": "merch? yes", "img/pirate-life-02.jpg": "so many beers", "img/pirate-life-03.jpg": "hazy pale, nice", "img/pirate-life-04.jpg": "shop on the go", "img/pirate-life-05.jpg": "already registered"}, "small-victories": {"img/small-victories-thumb.jpg": "cheers to small wins", "img/small-victories-01.jpg": "small wins add up", "img/small-victories-02.jpg": "that's a lot of wine", "img/small-victories-03.jpg": "making memories", "img/small-victories-04.jpg": "scroll for rosé", "img/small-victories-05.jpg": "pink drink spotted"}, "spellmans": {"img/spellmans-thumb.jpg": "cheers!", "img/spellmans-01.jpg": "very green, very nice", "img/spellmans-02.jpg": "cold one", "img/spellmans-03.jpg": "coffee stop", "img/spellmans-04.jpg": "monogram heaven", "img/spellmans-05.jpg": "so many s's", "img/spellmans-06.jpg": "love the sign", "img/spellmans-07.jpg": "moodboard mood"}, "clearkind": {"img/clearkind-01.jpg": "take a breather", "img/clearkind-02.jpg": "so many screens", "img/clearkind-03.jpg": "sketches first", "img/clearkind-04.jpg": "soft colours", "img/clearkind-05.jpg": "nice type"}, "link": {"img/link-thumb.jpg": "tap to enter", "img/link-01.jpg": "tap to enter", "img/link-02.jpg": "connect the dots", "img/link-03.jpg": "pocket sized", "img/link-04.jpg": "link up", "img/link-05.jpg": "confetti!"}, "rufus": {"img/rufus-thumb.jpg": "so swirly", "img/rufus-01.jpg": "drop the needle", "img/rufus-02.jpg": "now playing", "img/rufus-03.jpg": "double vinyl", "img/rufus-04.jpg": "head in the clouds", "img/rufus-05.jpg": "all the colours"}, "more-dood": {"img/more-dood-thumb.jpg": "so many doodles", "img/more-dood-01.jpg": "start doodling", "img/more-dood-02.jpg": "go to desktop!", "img/more-dood-03.jpg": "chicken leg!", "img/more-dood-04.gif": "wiggly", "img/more-dood-05.gif": "draw me next", "img/more-dood-06.jpg": "more dood!", "img/more-dood-07.jpg": "nice palette"}};
+ // on project pages he comments on whichever piece of work is most in view
+ const saidLines=new Set();
+ const workLine=()=>{const pg=document.querySelector('.project-page');if(!pg)return null;const L=DINO_LINES[pg.dataset.pid];if(!L)return null;
+  const vh=innerHeight;let best=null,ba=0;
+  pg.querySelectorAll('.pj-hero,.pj-gallery .wtile').forEach(el=>{const r=el.getBoundingClientRect(),vis=Math.max(0,Math.min(r.bottom,vh)-Math.max(r.top,0))*Math.max(0,Math.min(r.right,innerWidth)-Math.max(r.left,0)),a=r.width*r.height;
+   if(a&&vis/a>.4&&vis>ba){ba=vis;best=el}});
+  if(!best)return null;
+  const key=best.classList.contains('pj-hero')?(best.querySelector('video')?'hero':best.querySelector('img')?.getAttribute('src')):best.getAttribute('href');
+  const line=L[key];if(!line||saidLines.has(line))return null;saidLines.add(line);return line};
  const QUIPS=['hey, nice to see you','psst. keep scrolling','just passing through','dont mind me, carry on','you have excellent taste in websites','hey, you. yes, you'];
  addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY},{passive:true});
  const say=(txt,ms,t)=>{bub.textContent=txt;bub.hidden=false;sayEnd=t+ms};
@@ -595,7 +605,7 @@ document.querySelectorAll('.tb-contact a[href="index.html"],.tb-logo').forEach(a
   if(plat&&pr){if(x<pr.left+8){x=pr.left+8;u=x-gx;dir=1}if(x>pr.right-W-8){x=pr.right-W-8;u=x-gx;dir=-1}}
   // guest visits on the other pages
   if(!home&&gOn&&run){
-   if(!gSaid&&Math.abs(x+W/2-vw/2)<70){gSaid=true;if(walk&&!walk.done){walk.done=true;startAct(PLAN.then,t,PLAN.line)}else say(QUIPS[Math.floor(Math.random()*QUIPS.length)],1700,t)}
+   if(!gSaid&&Math.abs(x+W/2-vw/2)<70){gSaid=true;if(walk&&!walk.done){walk.done=true;startAct(PLAN.then,t,PLAN.line)}else say(workLine()||QUIPS[Math.floor(Math.random()*QUIPS.length)],1700,t)}
    if(airT<0&&t>gHop){jump(t,.9);gHop=t+1300+Math.random()*1600}
    if((dir>0&&x>vw+W)||(dir<0&&x<-W*2.5)){gOn=false;gNext=t+26000+Math.random()*22000;cv.style.display='none';bub.hidden=true;return}}
   if(home&&run&&walk&&walk.started&&!walk.done&&x>=vw*(mobile?.25:.3)){walk.done=true;startAct(PLAN.then,t,PLAN.line)}
