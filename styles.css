@@ -717,3 +717,5 @@ html.light .wtile img,html.light .pv img,html.light .lb-img img{filter:invert(1)
 .pj-gal-c{margin-top:12px}
 html.light .wtile video,html.light .lb-img video{filter:invert(1) hue-rotate(180deg)}
 .pj-callout{margin:0;font-size:clamp(22px,2.6vw,38px);font-weight:500;line-height:1.2;letter-spacing:-.02em;max-width:22em;text-wrap:balance}
+.pj-cols p a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+html.light .pj-cols p a{color:inherit}
