@@ -712,3 +712,7 @@ html.light .wtile img,html.light .pv img,html.light .lb-img img{filter:invert(1)
 .pj-glance dd{margin:0;font-size:clamp(18px,1.6vw,24px);font-weight:500;letter-spacing:-.01em;line-height:1.2;color:#fff}
 @media(max-width:700px){.pj-glance{grid-template-columns:1fr 1fr}}
 .pj-gal-b[hidden]{display:none}
+.wtile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.lb-img video{display:block;max-width:100%;max-height:100%;width:auto;height:auto}
+.pj-gal-c{margin-top:12px}
+html.light .wtile video,html.light .lb-img video{filter:invert(1) hue-rotate(180deg)}
