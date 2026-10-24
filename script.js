@@ -386,9 +386,10 @@ document.querySelectorAll('.tb-contact a[href="index.html"],.tb-logo').forEach(a
   const imgTile=(src,k,sizes,lay)=>`<a class="wtile pl sz-${sizes[k%sizes.length]}" ${lay?`style="${placeAt(lay,k)}"`:''} href="${src}">${vt(src,P.n+' image '+(k+1))}</a>`;
   page.querySelector('.pj-title').textContent=P.n;
   page.querySelector('.pj-sub').textContent=P.sub;
-  page.querySelector('.pj-top').innerHTML=`<div class="wtile pl sz-c pj-hero" data-group="${P.g}" style="--gc:1 / span 3;--gr:1 / span 3;view-transition-name:project-hero">${P.vid?`<video src="${P.vid}" poster="${P.poster||P.th}" muted loop playsinline ${reduce?'':'autoplay '}preload="auto" aria-label="${P.n}, animated main screen"></video>`:imgTag(P.th,P.n)}</div>
-   <div class="pj-details">${row('Client',P.cl)}${row('Discipline',P.t)}${P.link?`<div class="work-more"><a href="${P.link}" target="_blank" rel="noopener">${P.ll||'Visit project'} <span aria-hidden="true">&#8599;</span></a></div>`:''}</div>`;
-  page.querySelector('.pj-over').innerHTML=trow('Overview',`<p class="pj-lead">${P.line}</p><div class="pj-cols"><p>${P.desc[0]}</p>${P.desc[1]?`<p>${P.desc[1]}</p>`:''}</div>`);
+  page.querySelector('.pj-top').innerHTML=`<div class="pj-intro"><h2 class="pj-tl">Overview</h2><p class="pj-lead">${P.line}</p><div class="pj-cols"><p>${P.desc[0]}</p>${P.desc[1]?`<p>${P.desc[1]}</p>`:''}</div></div><div class="wtile pl sz-c pj-hero" data-group="${P.g}" style="--gc:2 / span 3;--gr:1 / span 3;view-transition-name:project-hero">${P.vid?`<video src="${P.vid}" poster="${P.poster||P.th}" muted loop playsinline ${reduce?'':'autoplay '}preload="auto" aria-label="${P.n}, animated main screen"></video>`:imgTag(P.th,P.n)}</div>
+`;
+  const meta=page.querySelector('.pj-meta');if(meta)meta.innerHTML=`<div class="pj-m"><span>Client</span>${P.cl}</div><div class="pj-m"><span>Discipline</span>${P.t}</div>${P.link?`<div class="work-more"><a href="${P.link}" target="_blank" rel="noopener">${P.ll||'Visit project'} <span aria-hidden="true">&#8599;</span></a></div>`:''}`;
+  page.querySelector('.pj-over').innerHTML='';
   const imgs=P.imgs.filter(src=>src!==P.th),S=P.sets||[5,imgs.length],A=imgs.slice(0,S[0]),Bx=imgs.slice(S[0],S[0]+S[1]),Cx=imgs.slice(S[0]+S[1]);
   const copyRow=c=>c?trow(c.h,`${c.lead?`<p class="pj-callout">${c.lead}</p>`:''}<div class="pj-cols">${c.p.map(t=>`<p>${t}</p>`).join('')}</div>`):'';
   const La=layOf(0,[A.length===5?LAY_PA:null,SZ_PA]);page.querySelector('.pj-gal-a').innerHTML=A.map((src,k)=>imgTile(src,k,La[1],La[0])).join('');
