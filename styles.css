@@ -559,8 +559,8 @@ main{animation:none!important}
 
 /* ---------- light mode: the page is inverted, and images are inverted back so they keep their colours ---------- */
 html{transition:filter .4s ease}
-html.light{filter:invert(1) hue-rotate(180deg);background:#0c0c0d}
-html.light .wtile svg,html.light .tile>svg,html.light .art-img svg,html.light .pv svg,html.light .lb-img svg,html.light iframe,html.light .article .figure svg{filter:invert(1) hue-rotate(180deg)}
+html.light{filter:invert(1);background:#0c0c0d}
+html.light .wtile svg,html.light .tile>svg,html.light .art-img svg,html.light .pv svg,html.light .lb-img svg,html.light iframe,html.light .article .figure svg{filter:invert(1)}
 .theme-toggle{display:inline-flex;align-items:center;gap:8px;margin-left:4px;padding:0 0 0 14px;border:0;border-left:1px solid #ffffff26;background:none;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;white-space:nowrap;height:22px}
 .tt-dot{width:12px;height:12px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
 @media(hover:hover){.theme-toggle:hover{opacity:.7}}
@@ -612,7 +612,7 @@ html.intro-pending body>*:not(.intro){visibility:hidden}
 .wtile img,.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
 @media(hover:hover){.wtile:hover img{transform:scale(1.05)}}
 .wtile{background:#161617}
-html.light .wtile img,html.light .pv img,html.light .lb-img img{filter:invert(1) hue-rotate(180deg)}
+html.light .wtile img,html.light .pv img,html.light .lb-img img{filter:invert(1)}
 .pv{aspect-ratio:auto;max-height:320px;background:#161617}
 .pv img{display:block;width:100%;height:auto;max-height:320px;object-fit:cover}
 .lb-img{width:auto;max-width:92vw;max-height:84vh;aspect-ratio:auto;display:flex;align-items:center;justify-content:center}
@@ -715,7 +715,7 @@ html.light .wtile img,html.light .pv img,html.light .lb-img img{filter:invert(1)
 .wtile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .lb-img video{display:block;max-width:100%;max-height:100%;width:auto;height:auto}
 .pj-gal-c{margin-top:12px}
-html.light .wtile video,html.light .lb-img video{filter:invert(1) hue-rotate(180deg)}
+html.light .wtile video,html.light .lb-img video{filter:invert(1)}
 .pj-callout{margin:0;font-size:clamp(22px,2.6vw,38px);font-weight:500;line-height:1.2;letter-spacing:-.02em;max-width:22em;text-wrap:balance}
 .pj-cols p a{color:#fff;text-decoration:underline;text-underline-offset:3px}
 html.light .pj-cols p a{color:inherit}
@@ -736,3 +736,5 @@ html.light .pj-cols p a{color:inherit}
 .pj-trow{padding:56px 0 68px}
 .pj-mid,.pj-end{margin:24px 0}
 @media(max-width:800px){.pj-trow{padding:40px 0 48px}}
+/* light mode inverts the page; images and video invert back exactly (no hue shift, so saturated colours stay true). Coloured UI keeps its hues */
+html.light .dino,html.light .dino-ob,html.light .live-dot,html.light .eng-banner,html.light .confetti{filter:hue-rotate(180deg)}
