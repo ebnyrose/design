@@ -370,6 +370,8 @@ document.querySelectorAll('.tb-contact a[href="index.html"],.tb-logo').forEach(a
   link:[['Type','Concept'],['Product','NFC badge + pin'],['Power','No charging']],
   rufus:[['Type','Self-initiated'],['Format','Vinyl sleeve'],['Process','Watercolour + geometry']],
   'more-dood':[['Type','RMIT brief'],['For','LESS Festival 2021'],['Scope','Desktop UI']]};
+ const nb=t=>String(t).replace(/(?<=^|\s)(a|an|the|to|of|and|from|for|with|by|in|on|at|as|my|your|its|is|it|or|\+)\s+(?=\S)/gi,'$1\u00a0');
+ const np=t=>String(t).replace(/\s+(\S+)\s*$/,'\u00a0$1');
  const row=(l,v)=>`<div class="pj-row"><span class="pj-l">${l}</span><span class="pj-v">${v}</span></div>`;
  const trow=(l,body)=>`<section class="pj-trow"><h2 class="pj-tl">${l}</h2><div class="pj-tb">${body}</div></section>`;
  const LAY_PA=[['1 / span 2','1 / span 2'],[3,1],[4,1],[3,2],[4,2]];LAY_PA.rows=2;const SZ_PA=['b','1','1','1','1'];
@@ -385,20 +387,20 @@ document.querySelectorAll('.tb-contact a[href="index.html"],.tb-logo').forEach(a
   P_LAY=P.lay||null;const vt=(src,alt)=>{const v=P.vids&&P.vids[src];return v?`<video src="${v[0]}" poster="${v[1]}" muted loop playsinline ${reduce?'':'autoplay '}preload="metadata" aria-label="${alt}"></video>`:imgTag(src,alt)};
   const imgTile=(src,k,sizes,lay)=>`<a class="wtile pl sz-${sizes[k%sizes.length]}" ${lay?`style="${placeAt(lay,k)}"`:''} href="${src}">${vt(src,P.n+' image '+(k+1))}</a>`;
   page.querySelector('.pj-title').textContent=P.n;
-  page.querySelector('.pj-sub').textContent=P.sub;
-  page.querySelector('.pj-top').innerHTML=`<div class="pj-intro"><h2 class="pj-tl">Overview</h2><p class="pj-lead">${P.line}</p><div class="pj-cols"><p>${P.desc[0]}</p>${P.desc[1]?`<p>${P.desc[1]}</p>`:''}</div></div><div class="wtile pl sz-c pj-hero" data-group="${P.g}" style="--gc:1 / span 3;--gr:1 / span 3;view-transition-name:project-hero">${P.vid?`<video src="${P.vid}" poster="${P.poster||P.th}" muted loop playsinline ${reduce?'':'autoplay '}preload="auto" aria-label="${P.n}, animated main screen"></video>`:imgTag(P.th,P.n)}</div>
+  page.querySelector('.pj-sub').textContent=nb(P.sub);
+  page.querySelector('.pj-top').innerHTML=`<div class="pj-intro"><h2 class="pj-tl">Overview</h2><p class="pj-lead">${nb(P.line)}</p><div class="pj-cols"><p>${np(P.desc[0])}</p>${P.desc[1]?`<p>${np(P.desc[1])}</p>`:''}</div></div><div class="wtile pl sz-c pj-hero" data-group="${P.g}" style="--gc:1 / span 3;--gr:1 / span 3;view-transition-name:project-hero">${P.vid?`<video src="${P.vid}" poster="${P.poster||P.th}" muted loop playsinline ${reduce?'':'autoplay '}preload="auto" aria-label="${P.n}, animated main screen"></video>`:imgTag(P.th,P.n)}</div>
 `;
-  const meta=page.querySelector('.pj-meta');if(meta)meta.innerHTML=`<div class="pj-m"><span>Client</span>${P.cl}</div><div class="pj-m"><span>Discipline</span>${P.t}</div>${P.link?`<div class="work-more"><a href="${P.link}" target="_blank" rel="noopener">${P.ll||'Visit project'} <span aria-hidden="true">&#8599;</span></a></div>`:''}`;
+  const meta=page.querySelector('.pj-meta');if(meta)meta.innerHTML=`<div class="pj-m"><span>Client</span>${nb(P.cl)}</div><div class="pj-m"><span>Discipline</span>${nb(P.t)}</div>${P.link?`<div class="work-more"><a href="${P.link}" target="_blank" rel="noopener">${P.ll||'Visit project'} <span aria-hidden="true">&#8599;</span></a></div>`:''}`;
   page.querySelector('.pj-over').innerHTML='';
   const imgs=P.imgs.filter(src=>src!==P.th),S=P.sets||[5,imgs.length],A=imgs.slice(0,S[0]),Bx=imgs.slice(S[0],S[0]+S[1]),Cx=imgs.slice(S[0]+S[1]);
-  const copyRow=c=>c?trow(c.h,`${c.lead?`<p class="pj-callout">${c.lead}</p>`:''}<div class="pj-cols">${c.p.map(t=>`<p>${t}</p>`).join('')}</div>`):'';
+  const copyRow=c=>c?trow(c.h,`${c.lead?`<p class="pj-callout">${nb(c.lead)}</p>`:''}<div class="pj-cols">${c.p.map(t=>`<p>${np(t)}</p>`).join('')}</div>`):'';
   const La=layOf(0,[A.length===5?LAY_PA:null,SZ_PA]);page.querySelector('.pj-gal-a').innerHTML=A.map((src,k)=>imgTile(src,k,La[1],La[0])).join('');
-  page.querySelector('.pj-mid').innerHTML=P.copy?copyRow(P.copy[0]):P.desc.length>2?trow('More',`<div class="pj-cols">${P.desc.slice(2).map(t=>`<p>${t}</p>`).join('')}</div>`):'';
+  page.querySelector('.pj-mid').innerHTML=P.copy?copyRow(P.copy[0]):P.desc.length>2?trow('More',`<div class="pj-cols">${P.desc.slice(2).map(t=>`<p>${np(t)}</p>`).join('')}</div>`):'';
   const gb=page.querySelector('.pj-gal-b');const Lb=layOf(1,[P.sets&&Bx.length===2?LAY_PB:null,['b']]);gb.innerHTML=Bx.map((src,k)=>imgTile(src,k,Lb[1],Lb[0])).join('');gb.hidden=!Bx.length;
   const m2=page.querySelector('.pj-mid-2');if(m2)m2.innerHTML=P.copy?copyRow(P.copy[1]):'';
   const gc=page.querySelector('.pj-gal-c');if(gc){const Lc=layOf(2,[null,['1']]);gc.innerHTML=Cx.map((src,k)=>imgTile(src,k,Lc[1],Lc[0])).join('');gc.hidden=!Cx.length}
   const gl=GLANCE[P.id]||[];
-  page.querySelector('.pj-end').innerHTML=gl.length?trow('At a glance',`<dl class="pj-glance">${gl.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>`):'';
+  page.querySelector('.pj-end').innerHTML=gl.length?trow('At a glance',`<dl class="pj-glance">${gl.map(([k,v])=>`<div><dt>${k}</dt><dd>${nb(v)}</dd></div>`).join('')}</dl>`):'';
   page.querySelectorAll('.art-grid a.wtile').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
   const nxt=page.querySelector('.pj-next');nxt.href='project.html?p='+((i+1)%PROJECTS.length);
   nxt.querySelector('.pj-next-name').textContent=nx.n};

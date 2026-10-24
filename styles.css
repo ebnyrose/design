@@ -738,3 +738,6 @@ html.light .pj-cols p a{color:inherit}
 @media(max-width:800px){.pj-trow{padding:40px 0 48px}}
 /* light mode inverts the page; images and video invert back exactly (no hue shift, so saturated colours stay true). Coloured UI keeps its hues */
 html.light .dino,html.light .dino-ob,html.light .live-dot,html.light .eng-banner,html.light .confetti{filter:hue-rotate(180deg)}
+/* line breaks: no single-word last lines in body copy, balanced short labels */
+.pj-cols p{text-wrap:pretty}
+.pj-sub,.pj-glance dd,.pj-m,.pj-callout,.pj-lead,.pj-title{text-wrap:balance}
