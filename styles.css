@@ -725,12 +725,12 @@ html.light .pj-cols p a{color:inherit}
 .pj-m span{color:#8d8d8d;margin-right:10px}
 .pj-meta .work-more{margin:0 0 0 auto}
 .pj-over:empty{display:none}
-.pj-intro{display:flex;flex-direction:column;gap:24px;min-width:0;padding-right:8px}
+.pj-intro{display:flex;flex-direction:column;gap:24px;min-width:0;padding-left:8px}
 .pj-intro .pj-tl{position:static}
 .pj-intro .pj-lead{font-size:clamp(20px,1.7vw,26px);width:auto}
 .pj-intro .pj-cols{display:flex;flex-direction:column;gap:14px}
 .pj-intro .pj-cols p{font-size:15px}
-@media(min-width:1001px){.pj-intro{grid-column:1;grid-row:1 / span 3;overflow:auto;scrollbar-width:none}}
+@media(min-width:1001px){.pj-intro{grid-column:4;grid-row:1 / span 3;overflow:auto;scrollbar-width:none}}
 @media(max-width:1000px){.pj-top .pj-hero{order:-1}.pj-intro{padding:28px 0 8px}.pj-intro .pj-lead{font-size:clamp(22px,5vw,30px)}.pj-intro .pj-cols p{font-size:16px}.pj-meta .work-more{margin:0}}
 /* more breathing room around the copy sections */
 .pj-trow{padding:56px 0 68px}
